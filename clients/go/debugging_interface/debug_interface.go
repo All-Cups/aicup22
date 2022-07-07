@@ -1,4 +1,4 @@
-package debugginginterface
+package debugging_interface
 
 import (
     "bufio"

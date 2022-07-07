@@ -7,7 +7,7 @@ import (
     . "ai_cup_22/codegame"
     . "ai_cup_22/model"
     . "ai_cup_22/stream"
-    . "ai_cup_22/debugginginterface"
+    . "ai_cup_22/debugging_interface"
     "strconv"
 )
 
