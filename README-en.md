@@ -52,3 +52,5 @@ You can see example strategy in several languages that goes to center of the map
 ## Dockerfiles
 
 You can see dockerfiles, compilation scripts and client source codes in [clients folder](clients).
+
+![gameplay](gameplay.gif)
