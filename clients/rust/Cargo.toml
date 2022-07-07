@@ -1,0 +1,16 @@
+[package]
+name = "ai-cup-22"
+version = "1.0.1"
+edition = "2021"
+
+[dependencies]
+anyhow = "1"
+byteorder = "1"
+chrono = "0.4.19"
+itertools = "0.10.3"
+libc = "0.2.126"
+rand = "0.8.5"
+regex = "1"
+time = "0.3.11"
+ndarray = "0.15.4"
+ndarray-npy = "0.8.1"

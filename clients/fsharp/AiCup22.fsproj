@@ -1,0 +1,41 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net6.0</TargetFramework>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <Compile Include="Model/WeaponProperties.fs" />
+        <Compile Include="Model/SoundProperties.fs" />
+        <Compile Include="Model/Vec2.fs" />
+        <Compile Include="Model/Obstacle.fs" />
+        <Compile Include="Model/Constants.fs" />
+        <Compile Include="Model/Player.fs" />
+        <Compile Include="Model/ActionType.fs" />
+        <Compile Include="Model/Action.fs" />
+        <Compile Include="Model/Unit.fs" />
+        <Compile Include="Model/Item.fs" />
+        <Compile Include="Model/Loot.fs" />
+        <Compile Include="Model/Projectile.fs" />
+        <Compile Include="Model/Zone.fs" />
+        <Compile Include="Model/Sound.fs" />
+        <Compile Include="Model/Game.fs" />
+        <Compile Include="Codegame/ServerMessage.fs" />
+        <Compile Include="Debugging/Color.fs" />
+        <Compile Include="Debugging/ColoredVertex.fs" />
+        <Compile Include="Debugging/DebugData.fs" />
+        <Compile Include="Debugging/DebugCommand.fs" />
+        <Compile Include="Model/ActionOrder.fs" />
+        <Compile Include="Model/UnitOrder.fs" />
+        <Compile Include="Model/Order.fs" />
+        <Compile Include="Codegame/ClientMessage.fs" />
+        <Compile Include="Debugging/Camera.fs" />
+        <Compile Include="Debugging/DebugState.fs" />
+        <Compile Include="DebugInterface.fs" />
+        <Compile Include="MyStrategy.fs" />
+        <Compile Include="Runner.fs" />
+    </ItemGroup>
+
+</Project>
