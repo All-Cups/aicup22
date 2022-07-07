@@ -17,6 +17,7 @@ Details:
 - [Game logic](game.md)
 - [Differences between rounds](rounds.md)
 - [Working with app for local testing](app.md)
+- [Controls in the visualizer](controls.md)
 - [Building your strategy](client.md)
 - [Game API objects description](api/model.md)
 - [Debug interface objects description](api/debugging.md)
