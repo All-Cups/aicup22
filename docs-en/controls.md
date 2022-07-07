@@ -5,6 +5,7 @@
 - Right click on empty space - stop following
 - Drag LMB - move camera
 - Scroll - zoom camera
+- V - change visualization mode (schematic/magical)
 
 ## Controlling keyboard player
 
