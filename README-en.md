@@ -15,6 +15,10 @@ Current version: **1.0.1**
 
 [Round configurations](presets)
 
+## Strategy code example
+
+You can see example strategy in several languages that goes to center of the map, rotates around and shoots in [quickstart folder](quickstart).
+
 ## Direct download links
 
 ### Current version of app for local testing for each OS
