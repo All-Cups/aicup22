@@ -1,0 +1,75 @@
+# Configuring game options
+
+You can see examples in the `presets` folder available with the app.
+You may, for example, use existing preset, changing only couple of options from the list (use `Override` in the config file).
+Detailed format description:
+
+- `ticks_per_second` - Number of ticks per game second
+- `team_size` - number of units in each team
+- `initial_zone_radius` - initial zone radius
+- `zone_speed` - speed of zone radius
+- `zone_damage_per_second` - damage dealt by the zone
+- `spawn_time` - unit spawn time
+- `spawn_collision_damage_per_second` - damage dealt when colliding with objects during spawn
+- `obstacles` - list of objects describing obstacle generation:
+  - `name` - obstacle name (for visualization)
+  - `radius` - obstacle's radius
+  - `can_see_through` - whether you can see through the obstacle
+  - `can_shoot_through` - whether projectiles go through the obstacle
+  - `spawn_weight` - obstacle's weight when choosing next random one
+- `obstacle_density` - obstacle density on the map
+- `loot_spawn_collision_radius` - radius used for loot when generating the map
+- `loot_multiplier` - loot multiplier
+- `min_distance_between_obstacles` - minimal distance between obstacles
+- `bot_players` - number of auto bot teams
+- `continue_until` - condition of game ending (`AllDead`/`OneSurvivor`/`BotsOnly`)
+- `unit_radius` - units' radius
+- `unit_health` - units' health points
+- `max_shield` - max unit's shield value
+- `health_regeneration_per_second` - speed of automatic health regeneration
+- `health_regeneration_delay` - delay of automatic health regeneration
+- `spawn_shield` - shield value on unit spawn
+- `extra_lives` - number of extra lives
+- `last_respawn_zone_radius` - zone radius when respawning is deactivated
+- `field_of_view` - units' field of view
+- `view_distance` - units' view distance
+- `view_blocking` - whether view is blocked by obstacles
+- `rotation_speed` - units' rotation speed
+- `spawn_movement_speed` - units' movement speed during spawn
+- `max_unit_forward_speed` - forward movement speed
+- `max_unit_backward_speed` - backward movement speed
+- `unit_acceleration` - acceleration
+- `friendly_fire` - whether you can damage teammates
+- `kill_score` - score given for killing enemy unit
+- `damage_score_multiplier` - score multiplier for damage dealt to enemies
+- `score_per_place` - survival score (score given per each team eliminated before you)
+- `starting_weapon` - starting weapon (may be `null`)
+- `starting_weapon_ammo` - number of ammo for the starting weapon
+- `weapons` - list of weapon properties
+  - `name` - name (for visualization)
+  - `rounds_per_second` - shooting speed
+  - `spread` - spread
+  - `ammo_per_loot` - amount of ammo in one item when generating the map
+  - `aim_time` - time to aim
+  - `aim_field_of_view` - field of view while aiming
+  - `aim_rotation_speed` - rotation speed while aiming
+  - `aim_movement_speed_modifier` - movement speed modifier while aiming
+  - `projectile_speed` - projectiles' speed
+  - `projectile_damage` - damage dealt by single projectile
+  - `projectile_life_time` - life time of a projectile
+  - `weapon_loot_base_density` - relative number of weapon items generated
+  - `ammo_loot_base_density` - relative number of ammo items generated
+  - `shot_sound_type_index` - index of shot sound type (or `null`)
+  - `projectile_hit_sound_type_index` - index of projectile hit sound type (or `null`)
+  - `max_inventory_ammo` - max amount of ammo in unit's inventory
+- `max_shield_potions_in_inventory` - max amount of shield potions in the inventory
+- `shield_potion_loot_base_density` - relative number of shield potion items generated
+- `shield_potions_per_loot` - number of shield potions per item generated
+- `shield_per_potion` - shield value restored when using a potion
+- `shield_potion_use_time` - time of using a shield potion
+- `sounds` - list of sound properties
+  - `name` - name
+  - `distance` - distance at which this can be heard
+  - `offset` - offset multiplier
+- `steps_sound_type_index` - index of steps sound type
+- `steps_sound_travel_distance` - distance that makes step sound happen with 100% probability
