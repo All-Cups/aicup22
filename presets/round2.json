@@ -1,0 +1,18 @@
+{
+    "team_size": 2,
+    "initial_zone_radius": 300.0,
+    "spawn_time": 5.0,
+    "obstacle_density": 0.1,
+    "loot_multiplier": 5.0,
+    "min_distance_between_obstacles": 4.5,
+    "bot_players": 54,
+    "extra_lives": 2,
+    "last_respawn_zone_radius": 0.0,
+    "view_blocking": false,
+    "friendly_fire": false,
+    "kill_score": 100.0,
+    "damage_score_multiplier": 0.2,
+    "score_per_place": 40.0,
+    "starting_weapon": 0,
+    "starting_weapon_ammo": 30
+}

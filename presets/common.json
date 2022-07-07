@@ -1,0 +1,173 @@
+{
+    "ticks_per_second": 30.0,
+    "zone_speed": 1.0,
+    "zone_damage_per_second": 20.0,
+    "spawn_collision_damage_per_second": 50.0,
+    "obstacles": [
+        {
+            "name": "Stone",
+            "radius": 2.0,
+            "can_see_through": true,
+            "can_shoot_through": true,
+            "spawn_weight": 3.0
+        },
+        {
+            "name": "Stump",
+            "radius": 1.5,
+            "can_see_through": true,
+            "can_shoot_through": true,
+            "spawn_weight": 2.0
+        },
+        {
+            "name": "Mushrooms",
+            "radius": 3.0,
+            "can_see_through": true,
+            "can_shoot_through": false,
+            "spawn_weight": 5.0
+        },
+        {
+            "name": "Big mushroom",
+            "radius": 3.0,
+            "can_see_through": true,
+            "can_shoot_through": false,
+            "spawn_weight": 4.0
+        },
+        {
+            "name": "Tree",
+            "radius": 2.5,
+            "can_see_through": false,
+            "can_shoot_through": false,
+            "spawn_weight": 6.0
+        },
+        {
+            "name": "Bare tree",
+            "radius": 1.5,
+            "can_see_through": false,
+            "can_shoot_through": false,
+            "spawn_weight": 4.0
+        },
+        {
+            "name": "Well",
+            "radius": 3.0,
+            "can_see_through": false,
+            "can_shoot_through": true,
+            "spawn_weight": 0.2
+        }
+    ],
+    "loot_spawn_collision_radius": 0.5,
+    "looting_time": 0.5,
+    "continue_until": "BotsOnly",
+    "unit_radius": 1.0,
+    "unit_health": 100.0,
+    "max_shield": 200.0,
+    "health_regeneration_per_second": 20.0,
+    "health_regeneration_delay": 4.0,
+    "spawn_shield": 100.0,
+    "field_of_view": 120.0,
+    "view_distance": 50.0,
+    "rotation_speed": 360.0,
+    "spawn_movement_speed": 20.0,
+    "max_unit_forward_speed": 10.0,
+    "max_unit_backward_speed": 5.0,
+    "unit_acceleration": 30.0,
+    "weapons": [
+        {
+            "name": "Magic wand",
+            "rounds_per_second": 2.0,
+            "spread": 10.0,
+            "ammo_per_loot": 20,
+            "aim_time": 0.1,
+            "aim_field_of_view": 90.0,
+            "aim_rotation_speed": 200.0,
+            "aim_movement_speed_modifier": 0.6,
+            "projectile_speed": 30.0,
+            "projectile_damage": 20.0,
+            "projectile_life_time": 1.0,
+            "weapon_loot_base_density": 24,
+            "ammo_loot_base_density": 50,
+            "shot_sound_type_index": 1,
+            "projectile_hit_sound_type_index": 4,
+            "max_inventory_ammo": 100
+        },
+        {
+            "name": "Staff",
+            "rounds_per_second": 10.0,
+            "spread": 20.0,
+            "ammo_per_loot": 50,
+            "aim_time": 0.5,
+            "aim_field_of_view": 70.0,
+            "aim_rotation_speed": 150.0,
+            "aim_movement_speed_modifier": 0.5,
+            "projectile_speed": 20.0,
+            "projectile_damage": 10.0,
+            "projectile_life_time": 1.0,
+            "weapon_loot_base_density": 24,
+            "ammo_loot_base_density": 50,
+            "shot_sound_type_index": 2,
+            "projectile_hit_sound_type_index": 5,
+            "max_inventory_ammo": 250
+        },
+        {
+            "name": "Bow",
+            "rounds_per_second": 1.0,
+            "spread": 5.0,
+            "ammo_per_loot": 5,
+            "aim_time": 1.0,
+            "aim_field_of_view": 50.0,
+            "aim_rotation_speed": 100.0,
+            "aim_movement_speed_modifier": 0.4,
+            "projectile_speed": 40.0,
+            "projectile_damage": 100.0,
+            "projectile_life_time": 1.0,
+            "weapon_loot_base_density": 24,
+            "ammo_loot_base_density": 50,
+            "shot_sound_type_index": 3,
+            "projectile_hit_sound_type_index": 6,
+            "max_inventory_ammo": 25
+        }
+    ],
+    "max_shield_potions_in_inventory": 10,
+    "shield_potion_loot_base_density": 50,
+    "shield_potions_per_loot": 3,
+    "shield_per_potion": 50.0,
+    "shield_potion_use_time": 1.5,
+    "sounds": [
+        {
+            "name": "Steps",
+            "distance": 10.0,
+            "offset": 0.05
+        },
+        {
+            "name": "Wand",
+            "distance": 30.0,
+            "offset": 0.1
+        },
+        {
+            "name": "Staff",
+            "distance": 40.0,
+            "offset": 0.1
+        },
+        {
+            "name": "Bow",
+            "distance": 20.0,
+            "offset": 0.1
+        },
+        {
+            "name": "WandHit",
+            "distance": 40.0,
+            "offset": 0.15
+        },
+        {
+            "name": "StaffHit",
+            "distance": 40.0,
+            "offset": 0.15
+        },
+        {
+            "name": "BowHit",
+            "distance": 40.0,
+            "offset": 0.15
+        }
+    ],
+    "steps_sound_type_index": 0,
+    "steps_sound_travel_distance": 1.0
+}
