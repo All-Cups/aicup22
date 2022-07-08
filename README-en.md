@@ -9,7 +9,7 @@
 In this repository you can download everything needed for participating.
 If needed you can see history of changes on [releases page](https://github.com/All-Cups/aicup22/releases).
 
-Current version: **1.1.0** ([Changelog](CHANGELOG.md))
+Current version: **1.1.0** ([Changelog](CHANGELOG-en.md))
 
 [**Documentation**](docs-en/doc.md)
 
