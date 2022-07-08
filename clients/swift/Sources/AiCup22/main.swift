@@ -1,4 +1,8 @@
-import Glibc
+#if os(Linux)
+    import Glibc
+#else
+    import Darwin
+#endif
 
 class Runner {
     private let inputStream: BufferedInputStream
