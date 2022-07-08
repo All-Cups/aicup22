@@ -61,9 +61,9 @@
 - `team_size`: `int32` &mdash; Начальное количество юнитов в каждой команде
 - `initial_zone_radius`: `float64` &mdash; Начальный радиус зоны
 - `zone_speed`: `float64` &mdash; Скорость изменения радиуса зоны
-- `zone_damage_per_second`: `float64` &mdash; Урон, наносимый юнитом за зоной в секунду
+- `zone_damage_per_second`: `float64` &mdash; Урон, наносимый юнитам за зоной в секунду
 - `spawn_time`: `float64` &mdash; Время появления юнитов
-- `spawn_collision_damage_per_second`: `float64` &mdash; Урон наносимый юнитам, пытающимся появиться на ненекорректной позиции в секунду
+- `spawn_collision_damage_per_second`: `float64` &mdash; Урон, наносимый юнитам, пытающимся появиться на некорректной позиции, в секунду
 - `looting_time`: `float64` &mdash; Время выполнения действий с лутом (в секундах)
 - `bot_players`: `int32` &mdash; Количество игроков (команд) ботов
 - `unit_radius`: `float64` &mdash; Радиус юнитов
