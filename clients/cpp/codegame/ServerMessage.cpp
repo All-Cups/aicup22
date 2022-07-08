@@ -80,28 +80,32 @@ bool ServerMessage::Finish::operator ==(const ServerMessage::Finish& other) cons
     return true;
 }
 
-ServerMessage::DebugUpdate::DebugUpdate() { }
+ServerMessage::DebugUpdate::DebugUpdate(int displayedTick) : displayedTick(displayedTick) { }
 
 // Read DebugUpdate from input stream
 ServerMessage::DebugUpdate ServerMessage::DebugUpdate::readFrom(InputStream& stream) {
-    return ServerMessage::DebugUpdate();
+    int displayedTick = stream.readInt();
+    return ServerMessage::DebugUpdate(displayedTick);
 }
 
 // Write DebugUpdate to output stream
 void ServerMessage::DebugUpdate::writeTo(OutputStream& stream) const {
     stream.write(TAG);
+    stream.write(displayedTick);
 }
 
 // Get string representation of DebugUpdate
 std::string ServerMessage::DebugUpdate::toString() const {
     std::stringstream ss;
     ss << "ServerMessage::DebugUpdate { ";
+    ss << "displayedTick: ";
+    ss << displayedTick;
     ss << " }";
     return ss.str();
 }
 
 bool ServerMessage::DebugUpdate::operator ==(const ServerMessage::DebugUpdate& other) const {
-    return true;
+    return displayedTick == other.displayedTick;
 }
 
 // Read ServerMessage from input stream

@@ -10,7 +10,7 @@ class MyStrategy:
         pass
     def get_order(self, game: Game, debug_interface: Optional[DebugInterface]) -> Order:
         return Order({})
-    def debug_update(self, debug_interface: DebugInterface):
+    def debug_update(self, displayed_tick: int, debug_interface: DebugInterface):
         pass
     def finish(self):
         pass

@@ -12,8 +12,8 @@ public:
     {
         tcpStream.write(token);
         tcpStream.write(int(1));
-        tcpStream.write(int(0));
         tcpStream.write(int(1));
+        tcpStream.write(int(0));
         tcpStream.flush();
     }
     void run()
@@ -31,7 +31,7 @@ public:
                 myStrategy->finish();
                 break;
             } else if (auto debugUpdateMessage = std::dynamic_pointer_cast<codegame::ServerMessage::DebugUpdate>(message)) {
-                myStrategy->debugUpdate(debugInterface);
+                myStrategy->debugUpdate(debugUpdateMessage->displayedTick, debugInterface);
                 codegame::ClientMessage::DebugUpdateDone().writeTo(tcpStream);
                 tcpStream.flush();
             } else {

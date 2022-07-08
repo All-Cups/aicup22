@@ -61,7 +61,9 @@ type
 type
     // Debug update
     TServerMessageDebugUpdate = class (TServerMessage)
-        constructor Create();
+        // Displayed tick
+        displayedTick: Int32;
+        constructor Create(displayedTick: Int32);
         // Read ServerMessageDebugUpdate from input stream
         class function ReadFrom(stream: TStream): TServerMessageDebugUpdate; static;
         // Write ServerMessageDebugUpdate to output stream
@@ -163,23 +165,29 @@ begin
     result += '}';
 end;
 
-constructor TServerMessageDebugUpdate.Create();
+constructor TServerMessageDebugUpdate.Create(displayedTick: Int32);
 begin
+    self.displayedTick := displayedTick;
 end;
 
 class function TServerMessageDebugUpdate.ReadFrom(stream: TStream): TServerMessageDebugUpdate;
+var displayedTick: Int32;
 begin
-    result := TServerMessageDebugUpdate.Create();
+    displayedTick := stream.ReadInt32;
+    result := TServerMessageDebugUpdate.Create(displayedTick);
 end;
 
 procedure TServerMessageDebugUpdate.WriteTo(stream: TStream);
 begin
     stream.WriteInt32(3);
+    stream.WriteInt32(displayedTick);
 end;
 
 function TServerMessageDebugUpdate.ToString: ansistring;
 begin
     result := 'DebugUpdate {';
+    result += 'displayedTick=';
+    result += IntToStr(displayedTick);
     result += '}';
 end;
 

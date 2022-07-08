@@ -17,8 +17,8 @@ fun main(args: Array<String>) {
     val outputStream = BufferedOutputStream(socket.getOutputStream())
     StreamUtil.writeString(outputStream, token)
     StreamUtil.writeInt(outputStream, 1)
-    StreamUtil.writeInt(outputStream, 0)
     StreamUtil.writeInt(outputStream, 1)
+    StreamUtil.writeInt(outputStream, 0)
     outputStream.flush()
     
     var myStrategy: MyStrategy? = null
@@ -34,7 +34,7 @@ fun main(args: Array<String>) {
             myStrategy!!.finish()
             break
         } else if (message is ai_cup_22.codegame.ServerMessage.DebugUpdate) {
-            myStrategy!!.debugUpdate(debugInterface)
+            myStrategy!!.debugUpdate(message.displayedTick, debugInterface)
             ai_cup_22.codegame.ClientMessage.DebugUpdateDone().writeTo(outputStream)
             outputStream.flush()
         } else {

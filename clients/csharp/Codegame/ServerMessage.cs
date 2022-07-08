@@ -162,13 +162,23 @@ namespace AiCup22.Codegame
         {
             public const int TAG = 3;
         
+            /// <summary>
+            /// Displayed tick
+            /// </summary>
+            public int DisplayedTick { get; set; }
         
             public DebugUpdate() { }
+        
+            public DebugUpdate(int displayedTick)
+            {
+                this.DisplayedTick = displayedTick;
+            }
         
             /// <summary> Read DebugUpdate from reader </summary>
             public static new DebugUpdate ReadFrom(System.IO.BinaryReader reader)
             {
                 var result = new DebugUpdate();
+                result.DisplayedTick = reader.ReadInt32();
                 return result;
             }
         
@@ -176,11 +186,14 @@ namespace AiCup22.Codegame
             public override void WriteTo(System.IO.BinaryWriter writer)
             {
                 writer.Write(TAG);
+                writer.Write(DisplayedTick);
             }
         
             /// <summary> Get string representation of DebugUpdate </summary>
             public override string ToString() {
                 string stringResult = "DebugUpdate { ";
+                stringResult += "DisplayedTick: ";
+                stringResult += DisplayedTick.ToString();
                 stringResult += " }";
                 return stringResult;
             }

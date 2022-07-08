@@ -31,8 +31,8 @@ begin
     stream := TBufferedStream.Create(TTcpStream.Create(host, port));
     stream.WriteString(token);
     stream.WriteInt32(1);
-    stream.WriteInt32(0);
     stream.WriteInt32(1);
+    stream.WriteInt32(0);
     stream.Flush;
 
     while true do begin

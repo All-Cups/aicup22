@@ -19,8 +19,8 @@ object Runner {
 
     StreamUtil.writeString(outputStream, token)
     StreamUtil.writeInt(outputStream, 1)
-    StreamUtil.writeInt(outputStream, 0)
     StreamUtil.writeInt(outputStream, 1)
+    StreamUtil.writeInt(outputStream, 0)
     outputStream.flush()
 
     var myStrategy: Option[MyStrategy] = None
@@ -35,8 +35,8 @@ object Runner {
         case ai_cup_22.codegame.ServerMessage.Finish() =>
           myStrategy.get.finish()
           return
-        case ai_cup_22.codegame.ServerMessage.DebugUpdate() =>
-          myStrategy.get.debugUpdate(debugInterface)
+        case ai_cup_22.codegame.ServerMessage.DebugUpdate(displayedTick) =>
+          myStrategy.get.debugUpdate(displayedTick, debugInterface)
           ai_cup_22.codegame.ClientMessage.DebugUpdateDone().writeTo(outputStream)
           outputStream.flush()
       }

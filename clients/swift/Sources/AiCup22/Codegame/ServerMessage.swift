@@ -17,7 +17,8 @@ enum ServerMessage {
 
     /// Debug update
     ///
-    case debugUpdate
+    /// - displayedTick: Displayed tick
+    case debugUpdate(displayedTick: Int32)
 
     /// Read ServerMessage from input stream
     static func readFrom<S: InputStream>(_ stream: S) -> ServerMessage {
@@ -35,7 +36,9 @@ enum ServerMessage {
             case 2:
                 return ServerMessage.finish
             case 3:
-                return ServerMessage.debugUpdate
+                var displayedTick: Int32
+                displayedTick = stream.readInt32()
+                return ServerMessage.debugUpdate(displayedTick: displayedTick)
             default:
                 fatalError("Unexpected tag value")
         }
@@ -53,8 +56,9 @@ enum ServerMessage {
                 stream.writeBool(debugAvailable)
             case .finish:
                 stream.writeInt32(2)
-            case .debugUpdate:
+            case let .debugUpdate(displayedTick):
                 stream.writeInt32(3)
+                stream.writeInt32(displayedTick)
         }
     }
 }

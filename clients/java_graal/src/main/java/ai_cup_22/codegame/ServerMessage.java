@@ -216,15 +216,36 @@ public abstract class ServerMessage {
     public static class DebugUpdate extends ServerMessage {
         public static final int TAG = 3;
     
+        /**
+         * Displayed tick
+         */
+        private int displayedTick;
     
-        public DebugUpdate() {
+        /**
+         * Displayed tick
+         */
+        public int getDisplayedTick() {
+            return displayedTick;
+        }
+    
+        /**
+         * Displayed tick
+         */
+        public void setDisplayedTick(int value) {
+            this.displayedTick = value;
+        }
+    
+        public DebugUpdate(int displayedTick) {
+            this.displayedTick = displayedTick;
         }
     
         /**
          * Read DebugUpdate from input stream
          */
         public static DebugUpdate readFrom(java.io.InputStream stream) throws java.io.IOException {
-            return new DebugUpdate();
+            int displayedTick;
+            displayedTick = StreamUtil.readInt(stream);
+            return new DebugUpdate(displayedTick);
         }
     
         /**
@@ -233,6 +254,7 @@ public abstract class ServerMessage {
         @Override
         public void writeTo(java.io.OutputStream stream) throws java.io.IOException {
             StreamUtil.writeInt(stream, TAG);
+            StreamUtil.writeInt(stream, displayedTick);
         }
     
         /**
@@ -241,6 +263,8 @@ public abstract class ServerMessage {
         @Override
         public String toString() {
             StringBuilder stringBuilder = new StringBuilder("DebugUpdate { ");
+            stringBuilder.append("displayedTick: ");
+            stringBuilder.append(String.valueOf(displayedTick));
             stringBuilder.append(" }");
             return stringBuilder.toString();
         }

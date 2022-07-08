@@ -6,6 +6,6 @@ type MyStrategy(constants: Model.Constants) =
             UnitOrders = Map.empty
         }
 
-    member this.debugUpdate(debugInterface: DebugInterface) = ()
+    member this.debugUpdate(displayedTick: int, debugInterface: DebugInterface) = ()
 
     member this.finish() = ()

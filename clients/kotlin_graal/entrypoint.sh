@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 PROJECT_NAME="ai-cup-22"
-SOLUTION_CODE_ENTRYPOINT="src/main/java/ai_cup_22/MyStrategy.java"
+SOLUTION_CODE_ENTRYPOINT="src/main/kotlin/ai_cup_22/MyStrategy.kt"
 function compile() (
     set -e
     mvn --offline package --batch-mode

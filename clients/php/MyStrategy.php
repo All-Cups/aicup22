@@ -11,6 +11,6 @@ class MyStrategy
     {
         return new \Model\Order([]);
     }
-    function debugUpdate(DebugInterface $debug_interface) {}
+    function debugUpdate(int $displayedTick, DebugInterface $debugInterface) {}
     function finish() {}
 }

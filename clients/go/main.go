@@ -25,8 +25,8 @@ func NewRunner(host string, port uint16, token string) Runner {
     writer := bufio.NewWriter(conn)
     WriteString(writer, token)
     WriteInt32(writer, 1)
-    WriteInt32(writer, 0)
     WriteInt32(writer, 1)
+    WriteInt32(writer, 0)
     err = writer.Flush()
     if err != nil {
         panic(err)
@@ -67,7 +67,7 @@ loop:
             myStrategy.finish()
             break loop
         case ServerMessageDebugUpdate:
-            myStrategy.debugUpdate(debugInterface)
+            myStrategy.debugUpdate(message.DisplayedTick, debugInterface)
             ClientMessageDebugUpdateDone{}.Write(runner.writer)
             err := runner.writer.Flush()
             if err != nil {

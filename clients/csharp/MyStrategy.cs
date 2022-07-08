@@ -7,7 +7,7 @@ namespace AiCup22
         {
             return new AiCup22.Model.Order(new System.Collections.Generic.Dictionary<int, AiCup22.Model.UnitOrder>());
         }
-        public void DebugUpdate(DebugInterface debugInterface) {}
+        public void DebugUpdate(int displayedTick, DebugInterface debugInterface) {}
         public void Finish() {}
     }
 }

@@ -126,25 +126,30 @@ class DebugUpdate(ServerMessage):
 
     TAG = 3
 
-    __slots__ = ()
+    __slots__ = ("displayed_tick",)
 
+    displayed_tick: int
 
-    def __init__(self):
-        pass
+    def __init__(self, displayed_tick: int):
+        self.displayed_tick = displayed_tick
+        """Displayed tick"""
 
     @staticmethod
     def read_from(stream: StreamWrapper) -> "DebugUpdate":
         """Read DebugUpdate from input stream
         """
-        return DebugUpdate()
+        displayed_tick = stream.read_int()
+        return DebugUpdate(displayed_tick)
     
     def write_to(self, stream: StreamWrapper):
         """Write DebugUpdate to output stream
         """
         stream.write_int(self.TAG)
+        stream.write_int(self.displayed_tick)
     
     def __repr__(self):
         return "DebugUpdate(" + \
+            repr(self.displayed_tick) + \
             ")"
 
 ServerMessage.DebugUpdate = DebugUpdate

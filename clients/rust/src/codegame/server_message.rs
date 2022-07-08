@@ -20,6 +20,8 @@ pub enum ServerMessage {
     },
     /// Debug update
     DebugUpdate {
+        /// Displayed tick
+        displayed_tick: i32,
     },
 }
 
@@ -45,8 +47,10 @@ impl trans::Trans for ServerMessage {
                 <i32 as trans::Trans>::write_to(&2, writer)?;
             }
             Self::DebugUpdate {
+                displayed_tick,
             } => {
                 <i32 as trans::Trans>::write_to(&3, writer)?;
+                displayed_tick.write_to(writer)?;
             }
         }
         Ok(())
@@ -73,7 +77,9 @@ impl trans::Trans for ServerMessage {
                 })
             }
             3 => {
+                let displayed_tick: i32 = trans::Trans::read_from(reader)?;
                 Ok(Self::DebugUpdate {
+                    displayed_tick,
                 })
             }
             _ => Err(std::io::Error::new(

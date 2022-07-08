@@ -177,8 +177,13 @@ abstract class ServerMessage {
      * Debug update
      */
     class DebugUpdate : ServerMessage {
+        /**
+         * Displayed tick
+         */
+        var displayedTick: Int
     
-        constructor() {
+        constructor(displayedTick: Int) {
+            this.displayedTick = displayedTick
         }
     
         /**
@@ -187,6 +192,7 @@ abstract class ServerMessage {
         @Throws(java.io.IOException::class)
         override fun writeTo(stream: java.io.OutputStream) {
             StreamUtil.writeInt(stream, TAG)
+            StreamUtil.writeInt(stream, displayedTick)
         }
     
         /**
@@ -194,6 +200,8 @@ abstract class ServerMessage {
          */
         override fun toString(): String {
             var stringBuilder = StringBuilder("DebugUpdate { ")
+            stringBuilder.append("displayedTick: ")
+            stringBuilder.append(displayedTick)
             stringBuilder.append(" }")
             return stringBuilder.toString()
         }
@@ -206,7 +214,9 @@ abstract class ServerMessage {
              */
             @Throws(java.io.IOException::class)
             fun readFrom(stream: java.io.InputStream): DebugUpdate {
-                return DebugUpdate()
+                var displayedTick: Int
+                displayedTick = StreamUtil.readInt(stream)
+                return DebugUpdate(displayedTick)
             }
         }
     }

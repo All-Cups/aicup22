@@ -20,8 +20,8 @@ class Runner
         stream = new BufferedStream(new SocketStream(socket));
         stream.write(token);
         stream.write(1);
-        stream.write(0);
         stream.write(1);
+        stream.write(0);
         stream.flush();
     }
 
@@ -49,7 +49,7 @@ class Runner
             }
             else if (auto debugUpdateMessage = cast(codegame.ServerMessage.DebugUpdate)(message))
             {
-                myStrategy.debugUpdate(debugInterface);
+                myStrategy.debugUpdate(debugUpdateMessage.displayedTick, debugInterface);
                 new codegame.ClientMessage.DebugUpdateDone().writeTo(stream);
                 stream.flush();
             }

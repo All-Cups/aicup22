@@ -133,22 +133,29 @@ class ServerMessage
     class DebugUpdate
         TAG = 3
     
+        # Displayed tick
+        attr_accessor :displayed_tick
     
-        def initialize()
+        def initialize(displayed_tick)
+            @displayed_tick = displayed_tick
         end
     
         # Read DebugUpdate from input stream
         def self.read_from(stream)
-            DebugUpdate.new()
+            displayed_tick = stream.read_int()
+            DebugUpdate.new(displayed_tick)
         end
     
         # Write DebugUpdate to output stream
         def write_to(stream)
             stream.write_int(TAG)
+            stream.write_int(@displayed_tick)
         end
     
         def to_s
             string_result = "DebugUpdate { "
+            string_result += "displayed_tick: "
+            string_result += @displayed_tick.to_s
             string_result += " }"
             string_result
         end

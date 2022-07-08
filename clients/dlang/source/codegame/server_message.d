@@ -109,17 +109,26 @@ abstract class ServerMessage {
     static class DebugUpdate : ServerMessage {
         static const int TAG = 3;
     
+        /// Displayed tick
+        int displayedTick;
     
         this() {}
     
+        this(int displayedTick) {
+            this.displayedTick = displayedTick;
+        }
+    
         /// Read DebugUpdate from reader
         static DebugUpdate readFrom(Stream reader) {
-            return new DebugUpdate();
+            int displayedTick;
+            displayedTick = reader.readInt();
+            return new DebugUpdate(displayedTick);
         }
     
         /// Write DebugUpdate to writer
         override void writeTo(Stream writer) const {
             writer.write(TAG);
+            writer.write(displayedTick);
         }
     }
 }

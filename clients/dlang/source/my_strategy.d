@@ -12,6 +12,6 @@ class MyStrategy
     {
         return model.Order((model.UnitOrder[int]).init);
     }
-    void debugUpdate(DebugInterface debugInterface) {}
+    void debugUpdate(int displayedTick, DebugInterface debugInterface) {}
     void finish() {}
 }

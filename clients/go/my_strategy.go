@@ -17,6 +17,6 @@ func (strategy MyStrategy) getOrder(game Game, debugInterface *DebugInterface) O
            }
 }
 
-func (strategy MyStrategy) debugUpdate(debugInterface DebugInterface) {}
+func (strategy MyStrategy) debugUpdate(displayedTick int32, debugInterface DebugInterface) {}
 
 func (strategy MyStrategy) finish() {}

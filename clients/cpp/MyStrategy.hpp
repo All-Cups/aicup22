@@ -10,7 +10,7 @@ class MyStrategy {
 public:
     MyStrategy(const model::Constants& constants);
     model::Order getOrder(const model::Game& game, DebugInterface* debugInterface);
-    void debugUpdate(DebugInterface& debugInterface);
+    void debugUpdate(int displayedTick, DebugInterface& debugInterface);
     void finish();
 };
 

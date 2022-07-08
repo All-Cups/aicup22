@@ -57,15 +57,20 @@ instance Trans ServerMessageFinish where
             return ()
 
 -- | Debug update
-data ServerMessageDebugUpdate = ServerMessageDebugUpdate { }
+data ServerMessageDebugUpdate = ServerMessageDebugUpdate {
+    -- | Displayed tick
+    displayedTick :: Int32 }
     deriving Show
 
 instance Trans ServerMessageDebugUpdate where
     read = do
-        return ServerMessageDebugUpdate { }
+        displayedTick <- Trans.read
+        return ServerMessageDebugUpdate {
+            displayedTick }
     
-    write ServerMessageDebugUpdate { } = do
-            return ()
+    write ServerMessageDebugUpdate {
+        displayedTick } = do
+            Trans.write displayedTick
 
 -- | Message sent from server
 data ServerMessage

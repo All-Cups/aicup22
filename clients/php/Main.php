@@ -15,8 +15,8 @@ class Runner
         $this->tcpStream = new TcpStream($host, $port);
         $this->tcpStream->outputStream->writeString($token);
         $this->tcpStream->outputStream->writeInt32(1);
-        $this->tcpStream->outputStream->writeInt32(0);
         $this->tcpStream->outputStream->writeInt32(1);
+        $this->tcpStream->outputStream->writeInt32(0);
         $this->tcpStream->outputStream->flush();
     }
 
@@ -36,7 +36,7 @@ class Runner
                 $strategy->finish();
                 break;
             } else if ($message instanceof \Codegame\ServerMessage\DebugUpdate) {
-                $strategy->debugUpdate($debugInterface);
+                $strategy->debugUpdate($message->displayedTick, $debugInterface);
                 (new \Codegame\ClientMessage\DebugUpdateDone())->writeTo($this->tcpStream->outputStream);
                 $this->tcpStream->outputStream->flush();
             } else {

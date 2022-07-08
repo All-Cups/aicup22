@@ -154,9 +154,14 @@ namespace Codegame\ServerMessage {
     {
         const TAG = 3;
     
+        /**
+         * Displayed tick
+         */
+        public int $displayedTick;
     
-        function __construct()
+        function __construct(int $displayedTick)
         {
+            $this->displayedTick = $displayedTick;
         }
     
         /**
@@ -164,7 +169,8 @@ namespace Codegame\ServerMessage {
          */
         public static function readFrom(\InputStream $stream): DebugUpdate
         {
-            return new DebugUpdate();
+            $displayedTick = $stream->readInt32();
+            return new DebugUpdate($displayedTick);
         }
         
         /**
@@ -173,6 +179,7 @@ namespace Codegame\ServerMessage {
         public function writeTo(\OutputStream $stream): void
         {
             $stream->writeInt32(DebugUpdate::TAG);
+            $stream->writeInt32($this->displayedTick);
         }
     }
 }

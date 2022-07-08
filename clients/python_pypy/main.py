@@ -18,8 +18,8 @@ class Runner:
         self.token = token
         self.writer.write_string(self.token)
         self.writer.write_int(1)
-        self.writer.write_int(0)
         self.writer.write_int(1)
+        self.writer.write_int(0)
         self.writer.flush()
 
     def run(self):
@@ -37,7 +37,7 @@ class Runner:
                 strategy.finish();
                 break
             elif isinstance(message, ServerMessage.DebugUpdate):
-                strategy.debug_update(debug_interface)
+                strategy.debug_update(message.displayed_tick, debug_interface)
                 ClientMessage.DebugUpdateDone().write_to(self.writer)
                 self.writer.flush()
             else:

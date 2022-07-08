@@ -55,15 +55,21 @@ type ServerMessageFinish = struct end with
     static member readFrom(reader: System.IO.BinaryReader) = new ServerMessageFinish()
 
 /// Debug update
-type ServerMessageDebugUpdate = struct end with
+type ServerMessageDebugUpdate = {
+    /// Displayed tick
+    DisplayedTick: int;
+} with
 
     /// Write DebugUpdate to writer
     member this.writeTo(writer: System.IO.BinaryWriter) =
         writer.Write 3
+        writer.Write this.DisplayedTick
         ()
 
     /// Read DebugUpdate from reader
-    static member readFrom(reader: System.IO.BinaryReader) = new ServerMessageDebugUpdate()
+    static member readFrom(reader: System.IO.BinaryReader) = {
+        DisplayedTick = reader.ReadInt32()
+    }
 
 /// Message sent from server
 type ServerMessage =

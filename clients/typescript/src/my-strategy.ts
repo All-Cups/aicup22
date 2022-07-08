@@ -8,6 +8,6 @@ export class MyStrategy {
     async getOrder(game: Game, debug_interface: DebugInterface | null): Promise<Order> {
         return new Order(new Map());
     }
-    async debugUpdate(debug_interface: DebugInterface) {}
+    async debugUpdate(displayed_tick: number, debug_interface: DebugInterface) {}
     finish() {}
 }

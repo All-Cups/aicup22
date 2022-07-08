@@ -22,8 +22,8 @@ public class Runner {
         outputStream = new BufferedOutputStream(socket.getOutputStream());
         StreamUtil.writeString(outputStream, token);
         StreamUtil.writeInt(outputStream, 1);
-        StreamUtil.writeInt(outputStream, 0);
         StreamUtil.writeInt(outputStream, 1);
+        StreamUtil.writeInt(outputStream, 0);
         outputStream.flush();
     }
 
@@ -44,7 +44,7 @@ public class Runner {
                 break;
             } else if (message instanceof ai_cup_22.codegame.ServerMessage.DebugUpdate) {
                 ai_cup_22.codegame.ServerMessage.DebugUpdate debugUpdateMessage = (ai_cup_22.codegame.ServerMessage.DebugUpdate) message;
-                myStrategy.debugUpdate(debugInterface);
+                myStrategy.debugUpdate(debugUpdateMessage.getDisplayedTick(), debugInterface);
                 new ai_cup_22.codegame.ClientMessage.DebugUpdateDone().writeTo(outputStream);
                 outputStream.flush();
             } else {

@@ -145,16 +145,23 @@ export namespace ServerMessage {
      * Debug update
      */
     export class DebugUpdate extends ServerMessage {
+        /**
+         * Displayed tick
+         */
+        displayedTick: number
     
-        constructor() {
+        constructor(displayedTick: number) {
             super();
+            this.displayedTick = displayedTick;
         }
     
         /**
          * Read DebugUpdate from input stream
          */
         static async readFrom(stream: Stream): Promise<ServerMessage.DebugUpdate> {
-            return new DebugUpdate()
+            let displayedTick;
+            displayedTick = await stream.readInt();
+            return new DebugUpdate(displayedTick)
         }
     
         /**
@@ -162,6 +169,8 @@ export namespace ServerMessage {
          */
         async writeTo(stream: Stream) {
             await stream.writeInt(DebugUpdate.TAG);
+            let displayedTick = this.displayedTick;
+            await stream.writeInt(displayedTick);
         }
     }
     

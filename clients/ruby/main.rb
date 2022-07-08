@@ -10,8 +10,8 @@ class Runner
         @token = token
         @stream.write_string(@token)
         @stream.write_int(1)
-        @stream.write_int(0)
         @stream.write_int(1)
+        @stream.write_int(0)
         @stream.flush()
     end
 
@@ -30,7 +30,7 @@ class Runner
                 strategy.finish()
                 break
             elsif message.instance_of? Codegame::ServerMessage::DebugUpdate
-                strategy.debug_update(debug_interface)
+                strategy.debug_update(message.displayed_tick, debug_interface)
                 Codegame::ClientMessage::DebugUpdateDone.new().write_to(@stream)
                 @stream.flush()
             else

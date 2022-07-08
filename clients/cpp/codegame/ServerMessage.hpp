@@ -115,8 +115,10 @@ class ServerMessage::DebugUpdate : public ServerMessage {
 public:
     static const int TAG = 3;
 
+    // Displayed tick
+    int displayedTick;
 
-    DebugUpdate();
+    DebugUpdate(int displayedTick);
 
     // Read DebugUpdate from input stream
     static DebugUpdate readFrom(InputStream& stream);

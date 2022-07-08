@@ -1,4 +1,8 @@
-import Glibc
+#if os(Linux)
+    import Glibc
+#else
+    import Darwin
+#endif
 
 class Runner {
     private let inputStream: BufferedInputStream
@@ -10,8 +14,8 @@ class Runner {
         outputStream = BufferedOutputStream(tcpStream)
         outputStream.writeString(token)
         outputStream.writeInt32(1)
-        outputStream.writeInt32(0)
         outputStream.writeInt32(1)
+        outputStream.writeInt32(0)
         outputStream.flush()
     }
 
@@ -29,8 +33,8 @@ class Runner {
             case .finish:
                 strategy!.finish()
                 break mainloop
-            case .debugUpdate:
-                strategy!.debugUpdate(debugInterface)
+            case .debugUpdate(let displayedTick):
+                strategy!.debugUpdate(displayedTick, debugInterface)
                 ClientMessage.debugUpdateDone.writeTo(outputStream)
                 outputStream.flush()
             }

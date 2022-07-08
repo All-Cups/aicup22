@@ -18,8 +18,8 @@ class Runner {
     async connect() {
         await this.stream.writeString(this.token);
         await this.stream.writeInt(1);
-        await this.stream.writeInt(0);
         await this.stream.writeInt(1);
+        await this.stream.writeInt(0);
         await this.stream.flush();
     }
 
@@ -39,7 +39,7 @@ class Runner {
                     strategy!.finish();
                     break;
                 } else if (message instanceof ServerMessage.DebugUpdate) {
-                    await strategy!.debugUpdate(debugInterface);
+                    await strategy!.debugUpdate(message.displayedTick, debugInterface);
                     await (new ClientMessage.DebugUpdateDone().writeTo(this.stream));
                     await this.stream.flush();
                 } else {

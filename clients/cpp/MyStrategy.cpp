@@ -8,6 +8,6 @@ model::Order MyStrategy::getOrder(const model::Game& game, DebugInterface* debug
     return model::Order(std::unordered_map<int, model::UnitOrder>());
 }
 
-void MyStrategy::debugUpdate(DebugInterface& debugInterface) {}
+void MyStrategy::debugUpdate(int displayedTick, DebugInterface& debugInterface) {}
 
 void MyStrategy::finish() {}

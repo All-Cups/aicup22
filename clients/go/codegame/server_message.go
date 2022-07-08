@@ -146,27 +146,38 @@ func (serverMessageFinish ServerMessageFinish) String() string {
 
 // Debug update
 type ServerMessageDebugUpdate struct {
+    // Displayed tick
+    DisplayedTick int32
 }
 
-func NewServerMessageDebugUpdate() ServerMessageDebugUpdate {
+func NewServerMessageDebugUpdate(displayedTick int32) ServerMessageDebugUpdate {
     return ServerMessageDebugUpdate {
+        DisplayedTick: displayedTick,
     }
 }
 
 // Read DebugUpdate from reader
 func ReadServerMessageDebugUpdate(reader io.Reader) ServerMessageDebugUpdate {
+    var displayedTick int32
+    displayedTick = ReadInt32(reader)
     return ServerMessageDebugUpdate {
+        DisplayedTick: displayedTick,
     }
 }
 
 // Write DebugUpdate to writer
 func (serverMessageDebugUpdate ServerMessageDebugUpdate) Write(writer io.Writer) {
     WriteInt32(writer, 3)
+    displayedTick := serverMessageDebugUpdate.DisplayedTick
+    WriteInt32(writer, displayedTick)
 }
 
 // Get string representation of DebugUpdate
 func (serverMessageDebugUpdate ServerMessageDebugUpdate) String() string {
     stringResult := "{ "
+    stringResult += "DisplayedTick: "
+    displayedTick := serverMessageDebugUpdate.DisplayedTick
+    stringResult += fmt.Sprint(displayedTick)
     stringResult += " }"
     return stringResult
 }

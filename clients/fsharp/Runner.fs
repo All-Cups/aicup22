@@ -17,8 +17,8 @@ module Runner =
             writer.Write tokenData.Length
             writer.Write tokenData
             writer.Write 1
-            writer.Write 0
             writer.Write 1
+            writer.Write 0
             writer.Flush()
 
         member this.run =
@@ -37,7 +37,7 @@ module Runner =
                 | Codegame.ServerMessage.Finish message ->
                     myStrategy.Value.finish()
                 | Codegame.ServerMessage.DebugUpdate message ->
-                    myStrategy.Value.debugUpdate (debugInterface)
+                    myStrategy.Value.debugUpdate(message.DisplayedTick, debugInterface)
                     (new Codegame.ClientMessageDebugUpdateDone()).writeTo writer
                     writer.Flush()
                     loop ()

@@ -126,13 +126,16 @@ object ServerMessage {
 
     /**
      * Debug update
+     *
+     * @param displayedTick Displayed tick
      */
-    case class DebugUpdate() extends ServerMessage {
+    case class DebugUpdate(displayedTick: Int) extends ServerMessage {
         /**
          * Write DebugUpdate to output stream
          */
         override def writeTo(stream: java.io.OutputStream): scala.Unit = {
             StreamUtil.writeInt(stream, DebugUpdate.TAG)
+            StreamUtil.writeInt(stream, displayedTick)
         }
     
         /**
@@ -140,6 +143,8 @@ object ServerMessage {
          */
         override def toString(): String = {
             var stringBuilder = new StringBuilder("DebugUpdate { ")
+            stringBuilder.append("displayedTick: ")
+            stringBuilder.append(displayedTick)
             stringBuilder.append(" }")
             stringBuilder.toString()
         }
@@ -152,6 +157,7 @@ object ServerMessage {
          * Read DebugUpdate from input stream
          */
         def readFrom(stream: java.io.InputStream): DebugUpdate = DebugUpdate(
+            StreamUtil.readInt(stream)
         )
     }
 

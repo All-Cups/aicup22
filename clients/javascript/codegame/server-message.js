@@ -134,16 +134,23 @@ ServerMessage.Finish = Finish;
  * Debug update
  */
 class DebugUpdate extends ServerMessage {
+    /**
+     * Displayed tick
+     */
+    displayedTick;
 
-    constructor() {
+    constructor(displayedTick) {
         super();
+        this.displayedTick = displayedTick;
     }
 
     /**
      * Read DebugUpdate from input stream
      */
     static async readFrom(stream) {
-        return new DebugUpdate();
+        let displayedTick;
+        displayedTick = await stream.readInt();
+        return new DebugUpdate(displayedTick);
     }
 
     /**
@@ -151,6 +158,8 @@ class DebugUpdate extends ServerMessage {
      */
     async writeTo(stream) {
         await stream.writeInt(DebugUpdate.TAG);
+        let displayedTick = this.displayedTick;
+        await stream.writeInt(displayedTick);
     }
 }
 

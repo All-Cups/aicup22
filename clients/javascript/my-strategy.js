@@ -5,7 +5,7 @@ class MyStrategy {
     async getOrder(game, debugInterface) {
         return new Order(new Map());
     }
-    async debugUpdate(debugInterface) {}
+    async debugUpdate(displayedTick, debugInterface) {}
     finish() {}
 }
 

@@ -21,8 +21,8 @@ namespace AiCup22
             writer.Write(tokenData.Length);
             writer.Write(tokenData);
             writer.Write((int) 1);
-            writer.Write((int) 0);
             writer.Write((int) 1);
+            writer.Write((int) 0);
             writer.Flush();
         }
         public void Run()
@@ -46,7 +46,7 @@ namespace AiCup22
                         myStrategy.Finish();
                         break;
                     case AiCup22.Codegame.ServerMessage.DebugUpdate message:
-                        myStrategy.DebugUpdate(debugInterface);
+                        myStrategy.DebugUpdate(message.DisplayedTick, debugInterface);
                         new AiCup22.Codegame.ClientMessage.DebugUpdateDone().WriteTo(writer);
                         writer.Flush();
                         break;
