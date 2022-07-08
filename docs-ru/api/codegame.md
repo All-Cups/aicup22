@@ -25,7 +25,9 @@
 
 - `DebugUpdate` &mdash; Отладочное обновление
 
-  Нет полей
+  Поля:
+
+  - `displayed_tick`: `int32` &mdash; Текущий отрисовываемый тик
 
 ## `ClientMessage`
 

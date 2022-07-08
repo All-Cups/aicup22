@@ -25,7 +25,9 @@ One of:
 
 - `DebugUpdate` &mdash; Debug update
 
-  No fields
+  Fields:
+
+  - `displayed_tick`: `int32` &mdash; Displayed tick
 
 ## `ClientMessage`
 

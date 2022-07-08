@@ -31,6 +31,7 @@ Unit's view is limited:
 - If `view_blocking = true`, a fully spawned unit (with `remaining_spawn_time` field being absent) may not see through other units (fully spawned) and obstacles (if not specified otherwise).
   This rule does include enemy spawning usings.
   In other words, spawning units can see and can be seen through obstacles.
+- Entities intersecting with the unit are always visible (for example loot under the unit)
 
 If enemy unit or other entity is at least partially in unit's view, you will see it in the API.
 
@@ -187,7 +188,8 @@ Projectiles are modeled as points (circles with zero radius).
 Projectiles are processed sequentially in random order.
 
 Projectiles move with constant speed.
-Projectiles move until collision with unit or obstacle (some obstacles may still be shot through).
+Projectiles move until collision with unit or obstacle (some obstacles may still be shot through),
+or until their lifetime reaches zero (initially equal to `projectile_life_time` seconds).
 Collision with spawning units is ignored.
 
 When calculating collision of projectile with a unit, unit is considered to be moving with constant speed from the position at the beginning of the tick to the position at the end of the tick (calculated in "Movement" step).
