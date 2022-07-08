@@ -1,7 +1,7 @@
 # Configuring game options
 
 You can see examples in the `presets` folder available with the app.
-You may, for example, use existing preset, changing only couple of options from the list (use `Override` in the config file).
+You may, for example, use existing preset, changing only couple of options from the list (use [`Override` in the config file](app.md#config-file-format)).
 Detailed format description:
 
 - `ticks_per_second` - Number of ticks per game second
