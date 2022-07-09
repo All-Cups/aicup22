@@ -19,7 +19,7 @@ type Item interface {
 // Read Item from reader
 func ReadItem(reader io.Reader) Item {
 	// FIXME: магические константы
-	switch stream.ReadInt32(reader) {
+	switch stream.Flow().ReadInt32() {
 	case 0:
 		return ReadItemWeapon(reader)
 	case 1:
@@ -45,7 +45,7 @@ func NewItemWeapon(typeIndex int32) ItemWeapon {
 
 // Read Weapon from reader
 func ReadItemWeapon(reader io.Reader) ItemWeapon {
-	typeIndex := stream.ReadInt32(reader)
+	typeIndex := stream.Flow().ReadInt32()
 	return ItemWeapon{
 		TypeIndex: typeIndex,
 	}
@@ -82,7 +82,7 @@ func NewItemShieldPotions(amount int32) ItemShieldPotions {
 
 // Read ShieldPotions from reader
 func ReadItemShieldPotions(reader io.Reader) ItemShieldPotions {
-	amount := stream.ReadInt32(reader)
+	amount := stream.Flow().ReadInt32()
 	return ItemShieldPotions{
 		Amount: amount,
 	}
@@ -123,8 +123,8 @@ func NewItemAmmo(weaponTypeIndex int32, amount int32) ItemAmmo {
 
 // Read Ammo from reader
 func ReadItemAmmo(reader io.Reader) ItemAmmo {
-	weaponTypeIndex := stream.ReadInt32(reader)
-	amount := stream.ReadInt32(reader)
+	weaponTypeIndex := stream.Flow().ReadInt32()
+	amount := stream.Flow().ReadInt32()
 	return ItemAmmo{
 		WeaponTypeIndex: weaponTypeIndex,
 		Amount:          amount,

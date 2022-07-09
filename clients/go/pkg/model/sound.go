@@ -27,8 +27,8 @@ func NewSound(typeIndex, unitId int32, position Vec2) Sound {
 
 // Read Sound from reader
 func ReadSound(reader io.Reader) Sound {
-	typeIndex := stream.ReadInt32(reader)
-	unitId := stream.ReadInt32(reader)
+	typeIndex := stream.Flow().ReadInt32()
+	unitId := stream.Flow().ReadInt32()
 	position := ReadVec2(reader)
 	return Sound{
 		TypeIndex: typeIndex,

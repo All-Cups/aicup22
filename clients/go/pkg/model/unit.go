@@ -66,14 +66,14 @@ func NewUnit(id, playerId int32, health, shield float64, extraLives int32, posit
 
 // Read Unit from reader
 func ReadUnit(reader io.Reader) Unit {
-	id := stream.ReadInt32(reader)
-	playerId := stream.ReadInt32(reader)
+	id := stream.Flow().ReadInt32()
+	playerId := stream.Flow().ReadInt32()
 	health := stream.ReadFloat64(reader)
 	shield := stream.ReadFloat64(reader)
-	extraLives := stream.ReadInt32(reader)
+	extraLives := stream.Flow().ReadInt32()
 	position := ReadVec2(reader)
 	var remainingSpawnTime *float64
-	if stream.ReadBool(reader) {
+	if stream.Flow().ReadBool() {
 		remainingSpawnTimeValue := stream.ReadFloat64(reader)
 		remainingSpawnTime = &remainingSpawnTimeValue
 	} else {
@@ -83,28 +83,28 @@ func ReadUnit(reader io.Reader) Unit {
 	direction := ReadVec2(reader)
 	aim := stream.ReadFloat64(reader)
 	var action *Action
-	if stream.ReadBool(reader) {
+	if stream.Flow().ReadBool() {
 		var actionValue Action
 		actionValue = ReadAction(reader)
 		action = &actionValue
 	} else {
 		action = nil
 	}
-	healthRegenerationStartTick := stream.ReadInt32(reader)
+	healthRegenerationStartTick := stream.Flow().ReadInt32()
 	var weapon *int32
-	if stream.ReadBool(reader) {
-		weaponValue := stream.ReadInt32(reader)
+	if stream.Flow().ReadBool() {
+		weaponValue := stream.Flow().ReadInt32()
 		weapon = &weaponValue
 	} else {
 		weapon = nil
 	}
-	nextShotTick := stream.ReadInt32(reader)
-	ammo := make([]int32, stream.ReadInt32(reader))
+	nextShotTick := stream.Flow().ReadInt32()
+	ammo := make([]int32, stream.Flow().ReadInt32())
 	for ammoIndex := range ammo {
-		ammoElement := stream.ReadInt32(reader)
+		ammoElement := stream.Flow().ReadInt32()
 		ammo[ammoIndex] = ammoElement
 	}
-	shieldPotions := stream.ReadInt32(reader)
+	shieldPotions := stream.Flow().ReadInt32()
 	return Unit{
 		Id:                          id,
 		PlayerId:                    playerId,

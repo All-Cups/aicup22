@@ -29,7 +29,7 @@ func ReadUnitOrder(reader io.Reader) UnitOrder {
 	targetVelocity := ReadVec2(reader)
 	targetDirection := ReadVec2(reader)
 	var action *ActionOrder
-	if stream.ReadBool(reader) {
+	if stream.Flow().ReadBool() {
 		var actionValue ActionOrder
 		actionValue = ReadActionOrder(reader)
 		action = &actionValue

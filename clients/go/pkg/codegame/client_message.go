@@ -19,7 +19,7 @@ type ClientMessage interface {
 
 // Read ClientMessage from reader
 func ReadClientMessage(reader io.Reader) ClientMessage {
-	switch stream.ReadInt32(reader) {
+	switch stream.Flow().ReadInt32() {
 	case 0:
 		return ReadClientMessageDebugMessage(reader)
 	case 1:

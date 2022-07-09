@@ -19,7 +19,7 @@ const (
 // Read ActionType from reader
 func ReadActionType(reader io.Reader) ActionType {
 	// FIXME: опять магические константы?! Да сколько можно-то?!
-	switch stream.ReadInt32(reader) {
+	switch stream.Flow().ReadInt32() {
 	case 0:
 		return ActionTypeLooting
 	case 1:

@@ -27,7 +27,7 @@ func NewLoot(id int32, position Vec2, item Item) Loot {
 
 // Read Loot from reader
 func ReadLoot(reader io.Reader) Loot {
-	id := stream.ReadInt32(reader)
+	id := stream.Flow().ReadInt32()
 	position := ReadVec2(reader)
 	item := ReadItem(reader)
 	return Loot{

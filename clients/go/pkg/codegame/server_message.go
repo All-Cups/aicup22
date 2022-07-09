@@ -19,7 +19,7 @@ type ServerMessage interface {
 
 // Read ServerMessage from reader
 func ReadServerMessage(reader io.Reader) ServerMessage {
-	switch stream.ReadInt32(reader) {
+	switch stream.Flow().ReadInt32() {
 	case 0:
 		return ReadServerMessageUpdateConstants(reader)
 	case 1:
@@ -87,7 +87,7 @@ func NewServerMessageGetOrder(playerView model.Game, debugAvailable bool) Server
 // Read GetOrder from reader
 func ReadServerMessageGetOrder(reader io.Reader) ServerMessageGetOrder {
 	playerView := model.ReadGame(reader)
-	debugAvailable := stream.ReadBool(reader)
+	debugAvailable := stream.Flow().ReadBool()
 	return ServerMessageGetOrder{
 		PlayerView:     playerView,
 		DebugAvailable: debugAvailable,
@@ -157,7 +157,7 @@ func NewServerMessageDebugUpdate(displayedTick int32) ServerMessageDebugUpdate {
 
 // Read DebugUpdate from reader
 func ReadServerMessageDebugUpdate(reader io.Reader) ServerMessageDebugUpdate {
-	displayedTick := stream.ReadInt32(reader)
+	displayedTick := stream.Flow().ReadInt32()
 	return ServerMessageDebugUpdate{
 		DisplayedTick: displayedTick,
 	}

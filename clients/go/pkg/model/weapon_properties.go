@@ -60,7 +60,7 @@ func NewWeaponProperties(name string,
 
 // Read WeaponProperties from reader
 func ReadWeaponProperties(reader io.Reader) WeaponProperties {
-	name := stream.ReadString(reader)
+	name := stream.Flow().ReadString()
 	roundsPerSecond := stream.ReadFloat64(reader)
 	spread := stream.ReadFloat64(reader)
 	aimTime := stream.ReadFloat64(reader)
@@ -71,20 +71,20 @@ func ReadWeaponProperties(reader io.Reader) WeaponProperties {
 	projectileDamage := stream.ReadFloat64(reader)
 	projectileLifeTime := stream.ReadFloat64(reader)
 	var shotSoundTypeIndex *int32
-	if stream.ReadBool(reader) {
-		shotSoundTypeIndexValue := stream.ReadInt32(reader)
+	if stream.Flow().ReadBool() {
+		shotSoundTypeIndexValue := stream.Flow().ReadInt32()
 		shotSoundTypeIndex = &shotSoundTypeIndexValue
 	} else {
 		shotSoundTypeIndex = nil
 	}
 	var projectileHitSoundTypeIndex *int32
-	if stream.ReadBool(reader) {
-		projectileHitSoundTypeIndexValue := stream.ReadInt32(reader)
+	if stream.Flow().ReadBool() {
+		projectileHitSoundTypeIndexValue := stream.Flow().ReadInt32()
 		projectileHitSoundTypeIndex = &projectileHitSoundTypeIndexValue
 	} else {
 		projectileHitSoundTypeIndex = nil
 	}
-	maxInventoryAmmo := stream.ReadInt32(reader)
+	maxInventoryAmmo := stream.Flow().ReadInt32()
 	return WeaponProperties{
 		Name:                        name,
 		RoundsPerSecond:             roundsPerSecond,

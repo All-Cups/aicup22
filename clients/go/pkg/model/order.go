@@ -21,10 +21,10 @@ func NewOrder(unitOrders map[int32]UnitOrder) Order {
 
 // Read Order from reader
 func ReadOrder(reader io.Reader) Order {
-	unitOrdersSize := stream.ReadInt32(reader)
+	unitOrdersSize := stream.Flow().ReadInt32()
 	unitOrders := make(map[int32]UnitOrder)
 	for unitOrdersIndex := int32(0); unitOrdersIndex < unitOrdersSize; unitOrdersIndex++ {
-		unitOrdersKey := stream.ReadInt32(reader)
+		unitOrdersKey := stream.Flow().ReadInt32()
 		unitOrdersValue := ReadUnitOrder(reader)
 		unitOrders[unitOrdersKey] = unitOrdersValue
 	}

@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"fmt"
 	"net"
 	"os"
 	"strconv"
@@ -17,6 +18,7 @@ type Runner struct {
 	conn   net.Conn
 	reader *bufio.Reader
 	writer *bufio.Writer
+	flow   *stream.Stream
 }
 
 func NewRunner(host string, port uint16, token string) Runner {
@@ -33,10 +35,16 @@ func NewRunner(host string, port uint16, token string) Runner {
 	if err != nil {
 		panic(err)
 	}
+	reader := bufio.NewReader(conn)
+	flow, err := stream.NewStream(reader, writer)
+	if err != nil {
+		panic(fmt.Errorf("NewRunner(): in create flow, err=\n\t%w", err))
+	}
 	return Runner{
 		conn:   conn,
-		reader: bufio.NewReader(conn),
+		reader: reader,
 		writer: writer,
+		flow:   flow,
 	}
 }
 
@@ -73,9 +81,11 @@ loop:
 			codegame.ClientMessageDebugUpdateDone{}.Write(runner.writer)
 			err := runner.writer.Flush()
 			if err != nil {
+				// FIXME: так делать нельзя
 				panic(err)
 			}
 		default:
+			// FIXME: так делать нельзя
 			panic("Unexpected server message")
 		}
 	}

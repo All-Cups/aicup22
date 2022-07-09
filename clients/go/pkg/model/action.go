@@ -24,7 +24,7 @@ func NewAction(finishTick int32, actionType ActionType) Action {
 
 // Read Action from reader
 func ReadAction(reader io.Reader) Action {
-	finishTick := stream.ReadInt32(reader)
+	finishTick := stream.Flow().ReadInt32()
 	actionType := ReadActionType(reader)
 	return Action{
 		FinishTick: finishTick,

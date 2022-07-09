@@ -19,7 +19,7 @@ type ActionOrder interface {
 // Read ActionOrder from reader
 func ReadActionOrder(reader io.Reader) ActionOrder {
 	// FIXME: сплошные магические константы
-	switch stream.ReadInt32(reader) {
+	switch stream.Flow().ReadInt32() {
 	case 0:
 		return ReadActionOrderPickup(reader)
 	case 1:
@@ -50,7 +50,7 @@ func NewActionOrderPickup(loot int32) ActionOrderPickup {
 
 // Read Pickup from reader
 func ReadActionOrderPickup(reader io.Reader) ActionOrderPickup {
-	loot := stream.ReadInt32(reader)
+	loot := stream.Flow().ReadInt32()
 	return ActionOrderPickup{
 		Loot: loot,
 	}
@@ -112,7 +112,7 @@ func NewActionOrderDropShieldPotions(amount int32) ActionOrderDropShieldPotions 
 
 // Read DropShieldPotions from reader
 func ReadActionOrderDropShieldPotions(reader io.Reader) ActionOrderDropShieldPotions {
-	amount := stream.ReadInt32(reader)
+	amount := stream.Flow().ReadInt32()
 	return ActionOrderDropShieldPotions{
 		Amount: amount,
 	}
@@ -177,8 +177,8 @@ func NewActionOrderDropAmmo(weaponTypeIndex int32, amount int32) ActionOrderDrop
 
 // Read DropAmmo from reader
 func ReadActionOrderDropAmmo(reader io.Reader) ActionOrderDropAmmo {
-	weaponTypeIndex := stream.ReadInt32(reader)
-	amount := stream.ReadInt32(reader)
+	weaponTypeIndex := stream.Flow().ReadInt32()
+	amount := stream.Flow().ReadInt32()
 	return ActionOrderDropAmmo{
 		WeaponTypeIndex: weaponTypeIndex,
 		Amount:          amount,
@@ -222,7 +222,7 @@ func NewActionOrderAim(shoot bool) ActionOrderAim {
 
 // Read Aim from reader
 func ReadActionOrderAim(reader io.Reader) ActionOrderAim {
-	shoot := stream.ReadBool(reader)
+	shoot := stream.Flow().ReadBool()
 	return ActionOrderAim{
 		Shoot: shoot,
 	}

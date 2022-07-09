@@ -18,7 +18,8 @@ type DebugCommand interface {
 
 // Read DebugCommand from reader
 func ReadDebugCommand(reader io.Reader) DebugCommand {
-	switch stream.ReadInt32(reader) {
+	// FIXME: магические константы
+	switch stream.Flow().ReadInt32() {
 	case 0:
 		return ReadDebugCommandAdd(reader)
 	case 1:
@@ -107,7 +108,7 @@ func NewDebugCommandSetAutoFlush(enable bool) DebugCommandSetAutoFlush {
 
 // Read SetAutoFlush from reader
 func ReadDebugCommandSetAutoFlush(reader io.Reader) DebugCommandSetAutoFlush {
-	enable := stream.ReadBool(reader)
+	enable := stream.Flow().ReadBool()
 	return DebugCommandSetAutoFlush{
 		Enable: enable,
 	}

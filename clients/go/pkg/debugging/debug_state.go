@@ -31,15 +31,15 @@ func NewDebugState(pressedKeys []string, cursorWorldPosition model.Vec2, lockedU
 
 // Read DebugState from reader
 func ReadDebugState(reader io.Reader) DebugState {
-	pressedKeys := make([]string, stream.ReadInt32(reader))
+	pressedKeys := make([]string, stream.Flow().ReadInt32())
 	for pressedKeysIndex := range pressedKeys {
-		pressedKeysElement := stream.ReadString(reader)
+		pressedKeysElement := stream.Flow().ReadString()
 		pressedKeys[pressedKeysIndex] = pressedKeysElement
 	}
 	cursorWorldPosition := model.ReadVec2(reader)
 	var lockedUnit *int32
-	if stream.ReadBool(reader) {
-		lockedUnitValue := stream.ReadInt32(reader)
+	if stream.Flow().ReadBool() {
+		lockedUnitValue := stream.Flow().ReadInt32()
 		lockedUnit = &lockedUnitValue
 	} else {
 		lockedUnit = nil

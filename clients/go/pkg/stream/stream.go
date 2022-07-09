@@ -2,22 +2,58 @@ package stream
 
 import (
 	"encoding/binary"
+	"fmt"
 	"io"
 )
 
-func ReadBool(reader io.Reader) bool {
-	var value bool
-	err := binary.Read(reader, binary.LittleEndian, &value)
+// Stream -- абстракция входящег ои исходящего потока
+type Stream struct {
+	reader io.Reader
+	writer io.Writer
+}
+
+var (
+	flow *Stream // Глобальный объект потока
+)
+
+// Flow -- возвращает объект потока
+func Flow() *Stream {
+	return flow
+}
+
+// NewStream -- возвращает новый поток
+func NewStream(reader io.Reader, writer io.Writer) (*Stream, error) {
+	if flow != nil {
+		return flow, nil
+	}
+	{ // Предусловия
+		if reader == nil {
+			return nil, fmt.Errorf("NewStream(): reader is nil")
+		}
+		if writer == nil {
+			return nil, fmt.Errorf("NewStream(): writer is nil")
+		}
+	}
+	flow = &Stream{
+		reader: reader,
+		writer: writer,
+	}
+	return flow, nil
+}
+
+func (sf *Stream) ReadBool() bool {
+	var value *bool
+	err := binary.Read(sf.reader, binary.LittleEndian, value)
 	if err != nil {
 		// FIXME: так делать нельзя
 		panic(err)
 	}
-	return value
+	return *value
 }
 
-func ReadInt32(reader io.Reader) int32 {
+func (sf *Stream) ReadInt32() int32 {
 	var value *int32
-	err := binary.Read(reader, binary.LittleEndian, value)
+	err := binary.Read(sf.reader, binary.LittleEndian, value)
 	if err != nil {
 		// FIXME: так делать нельзя
 		panic(err)
@@ -55,9 +91,9 @@ func ReadFloat64(reader io.Reader) float64 {
 	return *value
 }
 
-func ReadString(reader io.Reader) string {
-	bytes := make([]byte, ReadInt32(reader))
-	_, err := io.ReadFull(reader, bytes)
+func (sf *Stream) ReadString() string {
+	bytes := make([]byte, sf.ReadInt32())
+	_, err := io.ReadFull(sf.reader, bytes)
 	if err != nil {
 		// FIXME: так делать нельзя
 		panic(err)

@@ -39,10 +39,10 @@ func NewProjectile(id, weaponTypeIndex, shooterId, shooterPlayerId int32, positi
 
 // Read Projectile from reader
 func ReadProjectile(reader io.Reader) Projectile {
-	id := stream.ReadInt32(reader)
-	weaponTypeIndex := stream.ReadInt32(reader)
-	shooterId := stream.ReadInt32(reader)
-	shooterPlayerId := stream.ReadInt32(reader)
+	id := stream.Flow().ReadInt32()
+	weaponTypeIndex := stream.Flow().ReadInt32()
+	shooterId := stream.Flow().ReadInt32()
+	shooterPlayerId := stream.Flow().ReadInt32()
 	position := ReadVec2(reader)
 	velocity := ReadVec2(reader)
 	lifeTime := stream.ReadFloat64(reader)

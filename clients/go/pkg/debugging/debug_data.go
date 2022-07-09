@@ -19,7 +19,7 @@ type DebugData interface {
 
 // Read DebugData from reader
 func ReadDebugData(reader io.Reader) DebugData {
-	switch stream.ReadInt32(reader) {
+	switch stream.Flow().ReadInt32() {
 	case 0:
 		return ReadDebugDataPlacedText(reader)
 	case 1:
@@ -77,7 +77,7 @@ func NewDebugDataPlacedText(position model.Vec2, text string, alignment model.Ve
 // Read PlacedText from reader
 func ReadDebugDataPlacedText(reader io.Reader) DebugDataPlacedText {
 	position := model.ReadVec2(reader)
-	text := stream.ReadString(reader)
+	text := stream.Flow().ReadString()
 	alignment := model.ReadVec2(reader)
 	size := stream.ReadFloat64(reader)
 	color := ReadColor(reader)
@@ -579,7 +579,7 @@ func NewDebugDataPolygon(vertices []model.Vec2, color Color) DebugDataPolygon {
 
 // Read Polygon from reader
 func ReadDebugDataPolygon(reader io.Reader) DebugDataPolygon {
-	vertices := make([]model.Vec2, stream.ReadInt32(reader))
+	vertices := make([]model.Vec2, stream.Flow().ReadInt32())
 	for verticesIndex := range vertices {
 		verticesElement := model.ReadVec2(reader)
 		vertices[verticesIndex] = verticesElement
@@ -638,7 +638,7 @@ func NewDebugDataGradientPolygon(vertices []ColoredVertex) DebugDataGradientPoly
 
 // Read GradientPolygon from reader
 func ReadDebugDataGradientPolygon(reader io.Reader) DebugDataGradientPolygon {
-	vertices := make([]ColoredVertex, stream.ReadInt32(reader))
+	vertices := make([]ColoredVertex, stream.Flow().ReadInt32())
 	for verticesIndex := range vertices {
 		verticesElement := ReadColoredVertex(reader)
 		vertices[verticesIndex] = verticesElement
@@ -846,7 +846,7 @@ func NewDebugDataPolyLine(vertices []model.Vec2, width float64, color Color) Deb
 
 // Read PolyLine from reader
 func ReadDebugDataPolyLine(reader io.Reader) DebugDataPolyLine {
-	vertices := make([]model.Vec2, stream.ReadInt32(reader))
+	vertices := make([]model.Vec2, stream.Flow().ReadInt32())
 	for verticesIndex := range vertices {
 		verticesElement := model.ReadVec2(reader)
 		vertices[verticesIndex] = verticesElement
@@ -916,7 +916,7 @@ func NewDebugDataGradientPolyLine(vertices []ColoredVertex, width float64) Debug
 
 // Read GradientPolyLine from reader
 func ReadDebugDataGradientPolyLine(reader io.Reader) DebugDataGradientPolyLine {
-	vertices := make([]ColoredVertex, stream.ReadInt32(reader))
+	vertices := make([]ColoredVertex, stream.Flow().ReadInt32())
 	for verticesIndex := range vertices {
 		verticesElement := ReadColoredVertex(reader)
 		vertices[verticesIndex] = verticesElement
