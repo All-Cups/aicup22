@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"io"
 
-	. "aicup22/model"
+	"aicup22/model"
 
 	. "aicup22/stream"
 )
@@ -36,10 +36,10 @@ func ReadServerMessage(reader io.Reader) ServerMessage {
 // Update constants
 type ServerMessageUpdateConstants struct {
 	// New constants
-	Constants Constants
+	Constants model.Constants
 }
 
-func NewServerMessageUpdateConstants(constants Constants) ServerMessageUpdateConstants {
+func NewServerMessageUpdateConstants(constants model.Constants) ServerMessageUpdateConstants {
 	return ServerMessageUpdateConstants{
 		Constants: constants,
 	}
@@ -47,7 +47,7 @@ func NewServerMessageUpdateConstants(constants Constants) ServerMessageUpdateCon
 
 // Read UpdateConstants from reader
 func ReadServerMessageUpdateConstants(reader io.Reader) ServerMessageUpdateConstants {
-	constants := ReadConstants(reader)
+	constants := model.ReadConstants(reader)
 	return ServerMessageUpdateConstants{
 		Constants: constants,
 	}
@@ -73,12 +73,12 @@ func (serverMessageUpdateConstants ServerMessageUpdateConstants) String() string
 // Get order for next tick
 type ServerMessageGetOrder struct {
 	// Player's view
-	PlayerView Game
+	PlayerView model.Game
 	// Whether app is running with debug interface available
 	DebugAvailable bool
 }
 
-func NewServerMessageGetOrder(playerView Game, debugAvailable bool) ServerMessageGetOrder {
+func NewServerMessageGetOrder(playerView model.Game, debugAvailable bool) ServerMessageGetOrder {
 	return ServerMessageGetOrder{
 		PlayerView:     playerView,
 		DebugAvailable: debugAvailable,
@@ -87,7 +87,7 @@ func NewServerMessageGetOrder(playerView Game, debugAvailable bool) ServerMessag
 
 // Read GetOrder from reader
 func ReadServerMessageGetOrder(reader io.Reader) ServerMessageGetOrder {
-	playerView := ReadGame(reader)
+	playerView := model.ReadGame(reader)
 	debugAvailable := ReadBool(reader)
 	return ServerMessageGetOrder{
 		PlayerView:     playerView,
