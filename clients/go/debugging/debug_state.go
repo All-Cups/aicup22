@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"io"
 
-	. "aicup22/model"
+	"aicup22/model"
 
 	. "aicup22/stream"
 )
@@ -14,14 +14,14 @@ type DebugState struct {
 	// Pressed keys
 	PressedKeys []string
 	// Cursor's position in game coordinates
-	CursorWorldPosition Vec2
+	CursorWorldPosition model.Vec2
 	// Id of unit which is followed by the camera, or None
 	LockedUnit *int32
 	// Current camera state
 	Camera Camera
 }
 
-func NewDebugState(pressedKeys []string, cursorWorldPosition Vec2, lockedUnit *int32, camera Camera) DebugState {
+func NewDebugState(pressedKeys []string, cursorWorldPosition model.Vec2, lockedUnit *int32, camera Camera) DebugState {
 	return DebugState{
 		PressedKeys:         pressedKeys,
 		CursorWorldPosition: cursorWorldPosition,
@@ -37,7 +37,7 @@ func ReadDebugState(reader io.Reader) DebugState {
 		pressedKeysElement := ReadString(reader)
 		pressedKeys[pressedKeysIndex] = pressedKeysElement
 	}
-	cursorWorldPosition := ReadVec2(reader)
+	cursorWorldPosition := model.ReadVec2(reader)
 	var lockedUnit *int32
 	if ReadBool(reader) {
 		lockedUnitValue := ReadInt32(reader)
