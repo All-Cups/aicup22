@@ -5,7 +5,6 @@ import (
 	"io"
 
 	"aicup22/model"
-
 	"aicup22/stream"
 )
 

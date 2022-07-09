@@ -1,10 +1,10 @@
 package codegame
 
 import (
-	"aicup22/debugging"
-	"aicup22/model"
 	"io"
 
+	"aicup22/debugging"
+	"aicup22/model"
 	"aicup22/stream"
 )
 
