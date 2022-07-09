@@ -21,7 +21,7 @@ class MyStrategy:
                 Vec2(-unit.direction.y, unit.direction.x),
                 ActionOrder.Aim(True))
         return Order(orders)
-    def debug_update(self, debug_interface: DebugInterface):
+    def debug_update(self, displayed_tick: int, debug_interface: DebugInterface):
         pass
     def finish(self):
         pass

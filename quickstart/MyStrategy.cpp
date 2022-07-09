@@ -20,6 +20,6 @@ model::Order MyStrategy::getOrder(const model::Game &game, DebugInterface *debug
     return model::Order(actions);
 }
 
-void MyStrategy::debugUpdate(DebugInterface &debugInterface) {}
+void MyStrategy::debugUpdate(int displayed_tick, DebugInterface &debugInterface) {}
 
 void MyStrategy::finish() {}

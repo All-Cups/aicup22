@@ -17,6 +17,6 @@ public class MyStrategy {
         }
         return new Order(orders);
     }
-    public void debugUpdate(DebugInterface debugInterface) {}
+    public void debugUpdate(int displayedTick, DebugInterface debugInterface) {}
     public void finish() {}
 }
