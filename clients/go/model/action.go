@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"io"
 
-	. "aicup22/stream"
+	"aicup22/stream"
 )
 
 // Action unit is currently performing
@@ -24,10 +24,8 @@ func NewAction(finishTick int32, actionType ActionType) Action {
 
 // Read Action from reader
 func ReadAction(reader io.Reader) Action {
-	var finishTick int32
-	finishTick = ReadInt32(reader)
-	var actionType ActionType
-	actionType = ReadActionType(reader)
+	finishTick := stream.ReadInt32(reader)
+	actionType := ReadActionType(reader)
 	return Action{
 		FinishTick: finishTick,
 		ActionType: actionType,
@@ -37,9 +35,9 @@ func ReadAction(reader io.Reader) Action {
 // Write Action to writer
 func (action Action) Write(writer io.Writer) {
 	finishTick := action.FinishTick
-	WriteInt32(writer, finishTick)
+	stream.WriteInt32(writer, finishTick)
 	actionType := action.ActionType
-	WriteInt32(writer, int32(actionType))
+	stream.WriteInt32(writer, int32(actionType))
 }
 
 // Get string representation of Action
