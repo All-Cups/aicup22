@@ -19,7 +19,7 @@ type Color struct {
 	A float64
 }
 
-func NewColor(r float64, g float64, b float64, a float64) Color {
+func NewColor(r, g, b, a float64) Color {
 	return Color{
 		R: r,
 		G: g,
