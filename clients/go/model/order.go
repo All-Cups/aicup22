@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"io"
 
-	. "aicup22/stream"
+	"aicup22/stream"
 )
 
 // Player's (team's) orders
@@ -21,14 +21,11 @@ func NewOrder(unitOrders map[int32]UnitOrder) Order {
 
 // Read Order from reader
 func ReadOrder(reader io.Reader) Order {
-	var unitOrders map[int32]UnitOrder
-	unitOrdersSize := ReadInt32(reader)
-	unitOrders = make(map[int32]UnitOrder)
+	unitOrdersSize := stream.ReadInt32(reader)
+	unitOrders := make(map[int32]UnitOrder)
 	for unitOrdersIndex := int32(0); unitOrdersIndex < unitOrdersSize; unitOrdersIndex++ {
-		var unitOrdersKey int32
-		unitOrdersKey = ReadInt32(reader)
-		var unitOrdersValue UnitOrder
-		unitOrdersValue = ReadUnitOrder(reader)
+		unitOrdersKey := stream.ReadInt32(reader)
+		unitOrdersValue := ReadUnitOrder(reader)
 		unitOrders[unitOrdersKey] = unitOrdersValue
 	}
 	return Order{
@@ -39,9 +36,9 @@ func ReadOrder(reader io.Reader) Order {
 // Write Order to writer
 func (order Order) Write(writer io.Writer) {
 	unitOrders := order.UnitOrders
-	WriteInt32(writer, int32(len(unitOrders)))
+	stream.WriteInt32(writer, int32(len(unitOrders)))
 	for unitOrdersKey, unitOrdersValue := range unitOrders {
-		WriteInt32(writer, unitOrdersKey)
+		stream.WriteInt32(writer, unitOrdersKey)
 		unitOrdersValue.Write(writer)
 	}
 }
