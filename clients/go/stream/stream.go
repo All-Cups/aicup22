@@ -1,7 +1,9 @@
 package stream
 
-import "io"
-import "encoding/binary"
+import (
+	"encoding/binary"
+	"io"
+)
 
 func ReadBool(reader io.Reader) bool {
 	var value bool
