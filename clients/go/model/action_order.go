@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"io"
 
-	. "aicup22/stream"
+	"aicup22/stream"
 )
 
 // Order to perform an action for unit
@@ -18,7 +18,8 @@ type ActionOrder interface {
 
 // Read ActionOrder from reader
 func ReadActionOrder(reader io.Reader) ActionOrder {
-	switch ReadInt32(reader) {
+	// FIXME: сплошные магические константы
+	switch stream.ReadInt32(reader) {
 	case 0:
 		return ReadActionOrderPickup(reader)
 	case 1:
@@ -49,8 +50,7 @@ func NewActionOrderPickup(loot int32) ActionOrderPickup {
 
 // Read Pickup from reader
 func ReadActionOrderPickup(reader io.Reader) ActionOrderPickup {
-	var loot int32
-	loot = ReadInt32(reader)
+	loot := stream.ReadInt32(reader)
 	return ActionOrderPickup{
 		Loot: loot,
 	}
@@ -58,9 +58,9 @@ func ReadActionOrderPickup(reader io.Reader) ActionOrderPickup {
 
 // Write Pickup to writer
 func (actionOrderPickup ActionOrderPickup) Write(writer io.Writer) {
-	WriteInt32(writer, 0)
+	stream.WriteInt32(writer, 0)
 	loot := actionOrderPickup.Loot
-	WriteInt32(writer, loot)
+	stream.WriteInt32(writer, loot)
 }
 
 // Get string representation of Pickup
@@ -88,7 +88,7 @@ func ReadActionOrderUseShieldPotion(reader io.Reader) ActionOrderUseShieldPotion
 
 // Write UseShieldPotion to writer
 func (actionOrderUseShieldPotion ActionOrderUseShieldPotion) Write(writer io.Writer) {
-	WriteInt32(writer, 1)
+	stream.WriteInt32(writer, 1)
 }
 
 // Get string representation of UseShieldPotion
@@ -112,8 +112,7 @@ func NewActionOrderDropShieldPotions(amount int32) ActionOrderDropShieldPotions 
 
 // Read DropShieldPotions from reader
 func ReadActionOrderDropShieldPotions(reader io.Reader) ActionOrderDropShieldPotions {
-	var amount int32
-	amount = ReadInt32(reader)
+	amount := stream.ReadInt32(reader)
 	return ActionOrderDropShieldPotions{
 		Amount: amount,
 	}
@@ -121,9 +120,9 @@ func ReadActionOrderDropShieldPotions(reader io.Reader) ActionOrderDropShieldPot
 
 // Write DropShieldPotions to writer
 func (actionOrderDropShieldPotions ActionOrderDropShieldPotions) Write(writer io.Writer) {
-	WriteInt32(writer, 2)
+	stream.WriteInt32(writer, 2)
 	amount := actionOrderDropShieldPotions.Amount
-	WriteInt32(writer, amount)
+	stream.WriteInt32(writer, amount)
 }
 
 // Get string representation of DropShieldPotions
@@ -151,7 +150,7 @@ func ReadActionOrderDropWeapon(reader io.Reader) ActionOrderDropWeapon {
 
 // Write DropWeapon to writer
 func (actionOrderDropWeapon ActionOrderDropWeapon) Write(writer io.Writer) {
-	WriteInt32(writer, 3)
+	stream.WriteInt32(writer, 3)
 }
 
 // Get string representation of DropWeapon
@@ -178,10 +177,8 @@ func NewActionOrderDropAmmo(weaponTypeIndex int32, amount int32) ActionOrderDrop
 
 // Read DropAmmo from reader
 func ReadActionOrderDropAmmo(reader io.Reader) ActionOrderDropAmmo {
-	var weaponTypeIndex int32
-	weaponTypeIndex = ReadInt32(reader)
-	var amount int32
-	amount = ReadInt32(reader)
+	weaponTypeIndex := stream.ReadInt32(reader)
+	amount := stream.ReadInt32(reader)
 	return ActionOrderDropAmmo{
 		WeaponTypeIndex: weaponTypeIndex,
 		Amount:          amount,
@@ -190,11 +187,11 @@ func ReadActionOrderDropAmmo(reader io.Reader) ActionOrderDropAmmo {
 
 // Write DropAmmo to writer
 func (actionOrderDropAmmo ActionOrderDropAmmo) Write(writer io.Writer) {
-	WriteInt32(writer, 4)
+	stream.WriteInt32(writer, 4)
 	weaponTypeIndex := actionOrderDropAmmo.WeaponTypeIndex
-	WriteInt32(writer, weaponTypeIndex)
+	stream.WriteInt32(writer, weaponTypeIndex)
 	amount := actionOrderDropAmmo.Amount
-	WriteInt32(writer, amount)
+	stream.WriteInt32(writer, amount)
 }
 
 // Get string representation of DropAmmo
@@ -225,8 +222,7 @@ func NewActionOrderAim(shoot bool) ActionOrderAim {
 
 // Read Aim from reader
 func ReadActionOrderAim(reader io.Reader) ActionOrderAim {
-	var shoot bool
-	shoot = ReadBool(reader)
+	shoot := stream.ReadBool(reader)
 	return ActionOrderAim{
 		Shoot: shoot,
 	}
@@ -234,9 +230,9 @@ func ReadActionOrderAim(reader io.Reader) ActionOrderAim {
 
 // Write Aim to writer
 func (actionOrderAim ActionOrderAim) Write(writer io.Writer) {
-	WriteInt32(writer, 5)
+	stream.WriteInt32(writer, 5)
 	shoot := actionOrderAim.Shoot
-	WriteBool(writer, shoot)
+	stream.WriteBool(writer, shoot)
 }
 
 // Get string representation of Aim
