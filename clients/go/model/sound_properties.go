@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"io"
 
-	. "aicup22/stream"
+	"aicup22/stream"
 )
 
 // Sound properties
@@ -17,7 +17,7 @@ type SoundProperties struct {
 	Offset float64
 }
 
-func NewSoundProperties(name string, distance float64, offset float64) SoundProperties {
+func NewSoundProperties(name string, distance, offset float64) SoundProperties {
 	return SoundProperties{
 		Name:     name,
 		Distance: distance,
@@ -27,12 +27,9 @@ func NewSoundProperties(name string, distance float64, offset float64) SoundProp
 
 // Read SoundProperties from reader
 func ReadSoundProperties(reader io.Reader) SoundProperties {
-	var name string
-	name = ReadString(reader)
-	var distance float64
-	distance = ReadFloat64(reader)
-	var offset float64
-	offset = ReadFloat64(reader)
+	name := stream.ReadString(reader)
+	distance := stream.ReadFloat64(reader)
+	offset := stream.ReadFloat64(reader)
 	return SoundProperties{
 		Name:     name,
 		Distance: distance,
@@ -43,11 +40,11 @@ func ReadSoundProperties(reader io.Reader) SoundProperties {
 // Write SoundProperties to writer
 func (soundProperties SoundProperties) Write(writer io.Writer) {
 	name := soundProperties.Name
-	WriteString(writer, name)
+	stream.WriteString(writer, name)
 	distance := soundProperties.Distance
-	WriteFloat64(writer, distance)
+	stream.WriteFloat64(writer, distance)
 	offset := soundProperties.Offset
-	WriteFloat64(writer, offset)
+	stream.WriteFloat64(writer, offset)
 }
 
 // Get string representation of SoundProperties
