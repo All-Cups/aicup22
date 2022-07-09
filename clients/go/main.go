@@ -1,14 +1,15 @@
 package main
 
 import (
-	"aicup22/codegame"
-	"aicup22/model"
-	"aicup22/stream"
-	"aicup22/types"
 	"bufio"
 	"net"
 	"os"
 	"strconv"
+
+	"aicup22/pkg/codegame"
+	"aicup22/pkg/model"
+	"aicup22/pkg/stream"
+	"aicup22/pkg/types"
 )
 
 type Runner struct {

@@ -1,9 +1,9 @@
 package types
 
 import (
-	. "aicup22/codegame"
-	. "aicup22/debugging"
-	. "aicup22/model"
+	. "aicup22/pkg/codegame"
+	. "aicup22/pkg/debugging"
+	. "aicup22/pkg/model"
 	"bufio"
 )
 

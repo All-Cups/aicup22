@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"io"
 
-	"aicup22/stream"
+	"aicup22/pkg/stream"
 )
 
 // Current state of the game zone

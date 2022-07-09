@@ -3,7 +3,7 @@ package debugging
 import (
 	"io"
 
-	"aicup22/model"
+	"aicup22/pkg/model"
 )
 
 // Point + color

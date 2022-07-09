@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"io"
 
-	"aicup22/stream"
+	"aicup22/pkg/stream"
 )
 
 // Debug commands that can be sent while debugging with the app

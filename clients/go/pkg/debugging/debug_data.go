@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"io"
 
-	"aicup22/model"
-	"aicup22/stream"
+	"aicup22/pkg/model"
+	"aicup22/pkg/stream"
 )
 
 // Data for debug rendering

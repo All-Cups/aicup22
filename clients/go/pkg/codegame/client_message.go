@@ -3,9 +3,9 @@ package codegame
 import (
 	"io"
 
-	"aicup22/debugging"
-	"aicup22/model"
-	"aicup22/stream"
+	"aicup22/pkg/debugging"
+	"aicup22/pkg/model"
+	"aicup22/pkg/stream"
 )
 
 // Message sent from client

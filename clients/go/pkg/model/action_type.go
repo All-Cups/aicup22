@@ -3,7 +3,7 @@ package model
 import (
 	"io"
 
-	"aicup22/stream"
+	"aicup22/pkg/stream"
 )
 
 // Type of action a unit is currently performing
