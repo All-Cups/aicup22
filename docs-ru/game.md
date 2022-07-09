@@ -172,9 +172,9 @@
 Дополнительное ограничение возникает при прицеливании:
 при полном входе в прицел ограничения умножаются на коэффициент `aim_movement_speed_modifier`, указанный в свойствах оружия.
 При неполном входе в прицел коэффициент линейно интерполируется между `1` и заданным.
-Таким образом, скорость движения вперед ограничена `max_forward_speed = max_unit_forward_speed * (1 - (1 - aim_movement_speed_modifier) * aim)`, а скорость движения назад `max_backward_speed = max_unit_backward_speed * (1 - (1 - aim_movement_speed_modifier) * aim)`.
-После расчета ограничений вперед/назад, вектор целевой скорости ограничивается кругом радиуса `(max_forward_speed + max_backward_speed) / 2`.
-Центр круга ограничения скорости лежит по направлению зрения юнита на расстоянии `(max_forward_speed - max_backward_speed) / 2`.
+Таким образом, скорость движения вперед ограничена `max_unit_forward_speed = max_unit_forward_speed * (1 - (1 - aim_movement_speed_modifier) * aim)`, а скорость движения назад `max_unit_backward_speed = max_unit_backward_speed * (1 - (1 - aim_movement_speed_modifier) * aim)`.
+После расчета ограничений вперед/назад, вектор целевой скорости ограничивается кругом радиуса `(max_unit_forward_speed + max_unit_backward_speed) / 2`.
+Центр круга ограничения скорости лежит по направлению зрения юнита на расстоянии `(max_unit_forward_speed - max_unit_backward_speed) / 2`.
 При применении ограничений на целевую скорость, указанную в приказе, направление сохраняется.
 
 После расчета целевой скорости происходит обновление вектора скорости юнита:

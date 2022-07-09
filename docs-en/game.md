@@ -164,9 +164,9 @@ By default forward speed is limited by `max_unit_forward_speed`, and backward sp
 Additional limits are in place when aiming:
 when in full aim limits are multiplied by `aim_movement_speed_modifier` specified in weapon's properties.
 When not in full aim modifier is linearly interpolated.
-So, forward movement speed is limited by `max_forward_speed = max_unit_forward_speed * (1 - (1 - aim_movement_speed_modifier) * aim)`, and backward speed is limited by `max_backward_speed = max_unit_backward_speed * (1 - (1 - aim_movement_speed_modifier) * aim)`.
-After calculated forward/backward limits, the vector of target velocity is limited with a circle of radius `(max_forward_speed + max_backward_speed) / 2`.
-The center of the circle is located in unit's view direction in distance of `(max_forward_speed - max_backward_speed) / 2`.
+So, forward movement speed is limited by `max_unit_forward_speed = max_unit_forward_speed * (1 - (1 - aim_movement_speed_modifier) * aim)`, and backward speed is limited by `max_unit_backward_speed = max_unit_backward_speed * (1 - (1 - aim_movement_speed_modifier) * aim)`.
+After calculated forward/backward limits, the vector of target velocity is limited with a circle of radius `(max_unit_forward_speed + max_unit_backward_speed) / 2`.
+The center of the circle is located in unit's view direction in distance of `(max_unit_forward_speed - max_unit_backward_speed) / 2`.
 When applying limits, the direction of the target velocity is preserved.
 
 After calculating target velocity unit's velocity is updated:
