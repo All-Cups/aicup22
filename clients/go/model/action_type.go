@@ -3,7 +3,7 @@ package model
 import (
 	"io"
 
-	. "aicup22/stream"
+	"aicup22/stream"
 )
 
 // Type of action a unit is currently performing
@@ -18,12 +18,14 @@ const (
 
 // Read ActionType from reader
 func ReadActionType(reader io.Reader) ActionType {
-	switch ReadInt32(reader) {
+	// FIXME: опять магические константы?! Да сколько можно-то?!
+	switch stream.ReadInt32(reader) {
 	case 0:
 		return ActionTypeLooting
 	case 1:
 		return ActionTypeUseShieldPotion
 	}
+	// FIXME: в инфраструктурном коде паника категорически противопоказана
 	panic("Unexpected tag value")
 }
 
