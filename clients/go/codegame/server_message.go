@@ -6,7 +6,7 @@ import (
 
 	"aicup22/model"
 
-	. "aicup22/stream"
+	"aicup22/stream"
 )
 
 // Message sent from server
@@ -20,7 +20,7 @@ type ServerMessage interface {
 
 // Read ServerMessage from reader
 func ReadServerMessage(reader io.Reader) ServerMessage {
-	switch ReadInt32(reader) {
+	switch stream.ReadInt32(reader) {
 	case 0:
 		return ReadServerMessageUpdateConstants(reader)
 	case 1:
@@ -55,7 +55,7 @@ func ReadServerMessageUpdateConstants(reader io.Reader) ServerMessageUpdateConst
 
 // Write UpdateConstants to writer
 func (serverMessageUpdateConstants ServerMessageUpdateConstants) Write(writer io.Writer) {
-	WriteInt32(writer, 0)
+	stream.WriteInt32(writer, 0)
 	constants := serverMessageUpdateConstants.Constants
 	constants.Write(writer)
 }
@@ -88,7 +88,7 @@ func NewServerMessageGetOrder(playerView model.Game, debugAvailable bool) Server
 // Read GetOrder from reader
 func ReadServerMessageGetOrder(reader io.Reader) ServerMessageGetOrder {
 	playerView := model.ReadGame(reader)
-	debugAvailable := ReadBool(reader)
+	debugAvailable := stream.ReadBool(reader)
 	return ServerMessageGetOrder{
 		PlayerView:     playerView,
 		DebugAvailable: debugAvailable,
@@ -97,11 +97,11 @@ func ReadServerMessageGetOrder(reader io.Reader) ServerMessageGetOrder {
 
 // Write GetOrder to writer
 func (serverMessageGetOrder ServerMessageGetOrder) Write(writer io.Writer) {
-	WriteInt32(writer, 1)
+	stream.WriteInt32(writer, 1)
 	playerView := serverMessageGetOrder.PlayerView
 	playerView.Write(writer)
 	debugAvailable := serverMessageGetOrder.DebugAvailable
-	WriteBool(writer, debugAvailable)
+	stream.WriteBool(writer, debugAvailable)
 }
 
 // Get string representation of GetOrder
@@ -133,7 +133,7 @@ func ReadServerMessageFinish(reader io.Reader) ServerMessageFinish {
 
 // Write Finish to writer
 func (serverMessageFinish ServerMessageFinish) Write(writer io.Writer) {
-	WriteInt32(writer, 2)
+	stream.WriteInt32(writer, 2)
 }
 
 // Get string representation of Finish
@@ -157,7 +157,7 @@ func NewServerMessageDebugUpdate(displayedTick int32) ServerMessageDebugUpdate {
 
 // Read DebugUpdate from reader
 func ReadServerMessageDebugUpdate(reader io.Reader) ServerMessageDebugUpdate {
-	displayedTick := ReadInt32(reader)
+	displayedTick := stream.ReadInt32(reader)
 	return ServerMessageDebugUpdate{
 		DisplayedTick: displayedTick,
 	}
@@ -165,9 +165,9 @@ func ReadServerMessageDebugUpdate(reader io.Reader) ServerMessageDebugUpdate {
 
 // Write DebugUpdate to writer
 func (serverMessageDebugUpdate ServerMessageDebugUpdate) Write(writer io.Writer) {
-	WriteInt32(writer, 3)
+	stream.WriteInt32(writer, 3)
 	displayedTick := serverMessageDebugUpdate.DisplayedTick
-	WriteInt32(writer, displayedTick)
+	stream.WriteInt32(writer, displayedTick)
 }
 
 // Get string representation of DebugUpdate
