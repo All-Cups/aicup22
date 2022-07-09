@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-PROJECT_NAME="ai_cup_22"
+PROJECT_NAME="aicup22"
 SOLUTION_CODE_ENTRYPOINT="my_strategy.go"
 function compile() (
     set -e

@@ -1,9 +1,13 @@
 package debugging
 
-import "fmt"
-import "io"
-import . "ai_cup_22/model"
-import . "ai_cup_22/stream"
+import (
+	"fmt"
+	"io"
+
+	. "aicup22/model"
+
+	. "aicup22/stream"
+)
 
 // Data for debug rendering
 type DebugData interface {

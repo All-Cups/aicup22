@@ -1,8 +1,11 @@
 package model
 
-import "fmt"
-import "io"
-import . "ai_cup_22/stream"
+import (
+	"fmt"
+	"io"
+
+	. "aicup22/stream"
+)
 
 // Weapon properties
 type WeaponProperties struct {

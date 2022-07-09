@@ -1,10 +1,10 @@
 package types
 
 import (
-    "bufio"
-    . "ai_cup_22/model"
-    . "ai_cup_22/codegame"
-    . "ai_cup_22/debugging"
+	. "aicup22/codegame"
+	. "aicup22/debugging"
+	. "aicup22/model"
+	"bufio"
 )
 
 type DebugInterface struct {

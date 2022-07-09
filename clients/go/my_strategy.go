@@ -1,20 +1,20 @@
 package main
 
 import (
-    . "ai_cup_22/model"
-    "ai_cup_22/types"
+	"aicup22/model"
+	"aicup22/types"
 )
 
 type MyStrategy struct{}
 
-func NewMyStrategy(constants Constants) *MyStrategy {
-    return &MyStrategy{}
+func NewMyStrategy(constants model.Constants) *MyStrategy {
+	return &MyStrategy{}
 }
 
-func (strategy MyStrategy) getOrder(game Game, debugInterface *types.DebugInterface) Order {
-    return Order {
-               UnitOrders: make(map[int32]UnitOrder),
-           }
+func (strategy MyStrategy) getOrder(game model.Game, debugInterface *types.DebugInterface) model.Order {
+	return model.Order{
+		UnitOrders: make(map[int32]model.UnitOrder),
+	}
 }
 
 func (strategy MyStrategy) debugUpdate(displayedTick int32, debugInterface types.DebugInterface) {}

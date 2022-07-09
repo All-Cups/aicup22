@@ -1,3 +1,3 @@
-module ai_cup_22
+module aicup22
 
 go 1.18
