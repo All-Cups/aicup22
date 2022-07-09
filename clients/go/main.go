@@ -7,7 +7,7 @@ import (
     "ai_cup_22/codegame"
     "ai_cup_22/model"
     "ai_cup_22/stream"
-    . "ai_cup_22/debugging_interface"
+    "ai_cup_22/types"
     "strconv"
 )
 
@@ -40,7 +40,7 @@ func NewRunner(host string, port uint16, token string) Runner {
 
 func (runner Runner) Run() {
     var myStrategy *MyStrategy = nil
-    debugInterface := DebugInterface{
+    debugInterface := types.DebugInterface{
         Reader: runner.reader,
         Writer: runner.writer,
     }
