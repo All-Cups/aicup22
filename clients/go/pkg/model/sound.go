@@ -37,29 +37,29 @@ func ReadSound() Sound {
 }
 
 // Write Sound to writer
-func (sound Sound) Write() {
-	typeIndex := sound.TypeIndex
+func (sf Sound) Write() {
+	typeIndex := sf.TypeIndex
 	flow.WriteInt32(typeIndex)
-	unitId := sound.UnitId
+	unitId := sf.UnitId
 	flow.WriteInt32(unitId)
-	position := sound.Position
+	position := sf.Position
 	position.Write()
 }
 
 // Get string representation of Sound
-func (sound Sound) String() string {
-	stringResult := "{ "
-	stringResult += "TypeIndex: "
-	typeIndex := sound.TypeIndex
-	stringResult += fmt.Sprint(typeIndex)
-	stringResult += ", "
-	stringResult += "UnitId: "
-	unitId := sound.UnitId
-	stringResult += fmt.Sprint(unitId)
-	stringResult += ", "
-	stringResult += "Position: "
-	position := sound.Position
-	stringResult += position.String()
-	stringResult += " }"
-	return stringResult
+func (sf Sound) String() string {
+	strRes := "{ "
+	strRes += "TypeIndex: "
+	typeIndex := sf.TypeIndex
+	strRes += fmt.Sprint(typeIndex)
+	strRes += ", "
+	strRes += "UnitId: "
+	unitId := sf.UnitId
+	strRes += fmt.Sprint(unitId)
+	strRes += ", "
+	strRes += "Position: "
+	position := sf.Position
+	strRes += position.String()
+	strRes += " }"
+	return strRes
 }

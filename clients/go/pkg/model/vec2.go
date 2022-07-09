@@ -31,23 +31,23 @@ func ReadVec2() Vec2 {
 }
 
 // Write Vec2 to writer
-func (vec2 Vec2) Write() {
-	x := vec2.X
+func (sf Vec2) Write() {
+	x := sf.X
 	flow.WriteFloat64(x)
-	y := vec2.Y
+	y := sf.Y
 	flow.WriteFloat64(y)
 }
 
 // Get string representation of Vec2
-func (vec2 Vec2) String() string {
-	stringResult := "{ "
-	stringResult += "X: "
-	x := vec2.X
-	stringResult += fmt.Sprint(x)
-	stringResult += ", "
-	stringResult += "Y: "
-	y := vec2.Y
-	stringResult += fmt.Sprint(y)
-	stringResult += " }"
-	return stringResult
+func (sf Vec2) String() string {
+	strRes := "{ "
+	strRes += "X: "
+	x := sf.X
+	strRes += fmt.Sprint(x)
+	strRes += ", "
+	strRes += "Y: "
+	y := sf.Y
+	strRes += fmt.Sprint(y)
+	strRes += " }"
+	return strRes
 }

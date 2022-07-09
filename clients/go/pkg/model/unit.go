@@ -42,7 +42,11 @@ type Unit struct {
 	ShieldPotions int32
 }
 
-func NewUnit(id, playerId int32, health, shield float64, extraLives int32, position Vec2, remainingSpawnTime *float64, velocity, direction Vec2, aim float64, action *Action, healthRegenerationStartTick int32, weapon *int32, nextShotTick int32, ammo []int32, shieldPotions int32) Unit {
+func NewUnit(id, playerId int32,
+	health, shield float64,
+	extraLives int32, position Vec2, remainingSpawnTime *float64,
+	velocity, direction Vec2, aim float64, action *Action,
+	healthRegenerationStartTick int32, weapon *int32, nextShotTick int32, ammo []int32, shieldPotions int32) Unit {
 	return Unit{
 		Id:                          id,
 		PlayerId:                    playerId,
@@ -124,20 +128,20 @@ func ReadUnit() Unit {
 }
 
 // Write Unit to writer
-func (unit Unit) Write() {
-	id := unit.Id
+func (sf Unit) Write() {
+	id := sf.Id
 	flow.WriteInt32(id)
-	playerId := unit.PlayerId
+	playerId := sf.PlayerId
 	flow.WriteInt32(playerId)
-	health := unit.Health
+	health := sf.Health
 	flow.WriteFloat64(health)
-	shield := unit.Shield
+	shield := sf.Shield
 	flow.WriteFloat64(shield)
-	extraLives := unit.ExtraLives
+	extraLives := sf.ExtraLives
 	flow.WriteInt32(extraLives)
-	position := unit.Position
+	position := sf.Position
 	position.Write()
-	remainingSpawnTime := unit.RemainingSpawnTime
+	remainingSpawnTime := sf.RemainingSpawnTime
 	if remainingSpawnTime == nil {
 		flow.WriteBool(false)
 	} else {
@@ -145,13 +149,13 @@ func (unit Unit) Write() {
 		remainingSpawnTimeValue := *remainingSpawnTime
 		flow.WriteFloat64(remainingSpawnTimeValue)
 	}
-	velocity := unit.Velocity
+	velocity := sf.Velocity
 	velocity.Write()
-	direction := unit.Direction
+	direction := sf.Direction
 	direction.Write()
-	aim := unit.Aim
+	aim := sf.Aim
 	flow.WriteFloat64(aim)
-	action := unit.Action
+	action := sf.Action
 	if action == nil {
 		flow.WriteBool(false)
 	} else {
@@ -159,9 +163,9 @@ func (unit Unit) Write() {
 		actionValue := *action
 		actionValue.Write()
 	}
-	healthRegenerationStartTick := unit.HealthRegenerationStartTick
+	healthRegenerationStartTick := sf.HealthRegenerationStartTick
 	flow.WriteInt32(healthRegenerationStartTick)
-	weapon := unit.Weapon
+	weapon := sf.Weapon
 	if weapon == nil {
 		flow.WriteBool(false)
 	} else {
@@ -169,105 +173,105 @@ func (unit Unit) Write() {
 		weaponValue := *weapon
 		flow.WriteInt32(weaponValue)
 	}
-	nextShotTick := unit.NextShotTick
+	nextShotTick := sf.NextShotTick
 	flow.WriteInt32(nextShotTick)
-	ammo := unit.Ammo
+	ammo := sf.Ammo
 	flow.WriteInt32(int32(len(ammo)))
 	for _, ammoElement := range ammo {
 		flow.WriteInt32(ammoElement)
 	}
-	shieldPotions := unit.ShieldPotions
+	shieldPotions := sf.ShieldPotions
 	flow.WriteInt32(shieldPotions)
 }
 
 // Get string representation of Unit
-func (unit Unit) String() string {
-	stringResult := "{ "
-	stringResult += "Id: "
-	id := unit.Id
-	stringResult += fmt.Sprint(id)
-	stringResult += ", "
-	stringResult += "PlayerId: "
-	playerId := unit.PlayerId
-	stringResult += fmt.Sprint(playerId)
-	stringResult += ", "
-	stringResult += "Health: "
-	health := unit.Health
-	stringResult += fmt.Sprint(health)
-	stringResult += ", "
-	stringResult += "Shield: "
-	shield := unit.Shield
-	stringResult += fmt.Sprint(shield)
-	stringResult += ", "
-	stringResult += "ExtraLives: "
-	extraLives := unit.ExtraLives
-	stringResult += fmt.Sprint(extraLives)
-	stringResult += ", "
-	stringResult += "Position: "
-	position := unit.Position
-	stringResult += position.String()
-	stringResult += ", "
-	stringResult += "RemainingSpawnTime: "
-	remainingSpawnTime := unit.RemainingSpawnTime
+func (sf Unit) String() string {
+	strRes := "{ "
+	strRes += "Id: "
+	id := sf.Id
+	strRes += fmt.Sprint(id)
+	strRes += ", "
+	strRes += "PlayerId: "
+	playerId := sf.PlayerId
+	strRes += fmt.Sprint(playerId)
+	strRes += ", "
+	strRes += "Health: "
+	health := sf.Health
+	strRes += fmt.Sprint(health)
+	strRes += ", "
+	strRes += "Shield: "
+	shield := sf.Shield
+	strRes += fmt.Sprint(shield)
+	strRes += ", "
+	strRes += "ExtraLives: "
+	extraLives := sf.ExtraLives
+	strRes += fmt.Sprint(extraLives)
+	strRes += ", "
+	strRes += "Position: "
+	position := sf.Position
+	strRes += position.String()
+	strRes += ", "
+	strRes += "RemainingSpawnTime: "
+	remainingSpawnTime := sf.RemainingSpawnTime
 	if remainingSpawnTime == nil {
-		stringResult += "nil"
+		strRes += "nil"
 	} else {
 		remainingSpawnTimeValue := *remainingSpawnTime
-		stringResult += fmt.Sprint(remainingSpawnTimeValue)
+		strRes += fmt.Sprint(remainingSpawnTimeValue)
 	}
-	stringResult += ", "
-	stringResult += "Velocity: "
-	velocity := unit.Velocity
-	stringResult += velocity.String()
-	stringResult += ", "
-	stringResult += "Direction: "
-	direction := unit.Direction
-	stringResult += direction.String()
-	stringResult += ", "
-	stringResult += "Aim: "
-	aim := unit.Aim
-	stringResult += fmt.Sprint(aim)
-	stringResult += ", "
-	stringResult += "Action: "
-	action := unit.Action
+	strRes += ", "
+	strRes += "Velocity: "
+	velocity := sf.Velocity
+	strRes += velocity.String()
+	strRes += ", "
+	strRes += "Direction: "
+	direction := sf.Direction
+	strRes += direction.String()
+	strRes += ", "
+	strRes += "Aim: "
+	aim := sf.Aim
+	strRes += fmt.Sprint(aim)
+	strRes += ", "
+	strRes += "Action: "
+	action := sf.Action
 	if action == nil {
-		stringResult += "nil"
+		strRes += "nil"
 	} else {
 		actionValue := *action
-		stringResult += actionValue.String()
+		strRes += actionValue.String()
 	}
-	stringResult += ", "
-	stringResult += "HealthRegenerationStartTick: "
-	healthRegenerationStartTick := unit.HealthRegenerationStartTick
-	stringResult += fmt.Sprint(healthRegenerationStartTick)
-	stringResult += ", "
-	stringResult += "Weapon: "
-	weapon := unit.Weapon
+	strRes += ", "
+	strRes += "HealthRegenerationStartTick: "
+	healthRegenerationStartTick := sf.HealthRegenerationStartTick
+	strRes += fmt.Sprint(healthRegenerationStartTick)
+	strRes += ", "
+	strRes += "Weapon: "
+	weapon := sf.Weapon
 	if weapon == nil {
-		stringResult += "nil"
+		strRes += "nil"
 	} else {
 		weaponValue := *weapon
-		stringResult += fmt.Sprint(weaponValue)
+		strRes += fmt.Sprint(weaponValue)
 	}
-	stringResult += ", "
-	stringResult += "NextShotTick: "
-	nextShotTick := unit.NextShotTick
-	stringResult += fmt.Sprint(nextShotTick)
-	stringResult += ", "
-	stringResult += "Ammo: "
-	ammo := unit.Ammo
-	stringResult += "[ "
+	strRes += ", "
+	strRes += "NextShotTick: "
+	nextShotTick := sf.NextShotTick
+	strRes += fmt.Sprint(nextShotTick)
+	strRes += ", "
+	strRes += "Ammo: "
+	ammo := sf.Ammo
+	strRes += "[ "
 	for ammoIndex, ammoElement := range ammo {
 		if ammoIndex != 0 {
-			stringResult += ", "
+			strRes += ", "
 		}
-		stringResult += fmt.Sprint(ammoElement)
+		strRes += fmt.Sprint(ammoElement)
 	}
-	stringResult += " ]"
-	stringResult += ", "
-	stringResult += "ShieldPotions: "
-	shieldPotions := unit.ShieldPotions
-	stringResult += fmt.Sprint(shieldPotions)
-	stringResult += " }"
-	return stringResult
+	strRes += " ]"
+	strRes += ", "
+	strRes += "ShieldPotions: "
+	shieldPotions := sf.ShieldPotions
+	strRes += fmt.Sprint(shieldPotions)
+	strRes += " }"
+	return strRes
 }

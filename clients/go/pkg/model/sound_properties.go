@@ -36,29 +36,29 @@ func ReadSoundProperties() SoundProperties {
 }
 
 // Write SoundProperties to writer
-func (soundProperties SoundProperties) Write() {
-	name := soundProperties.Name
+func (sf SoundProperties) Write() {
+	name := sf.Name
 	flow.WriteString(name)
-	distance := soundProperties.Distance
+	distance := sf.Distance
 	flow.WriteFloat64(distance)
-	offset := soundProperties.Offset
+	offset := sf.Offset
 	flow.WriteFloat64(offset)
 }
 
 // Get string representation of SoundProperties
-func (soundProperties SoundProperties) String() string {
-	stringResult := "{ "
-	stringResult += "Name: "
-	name := soundProperties.Name
-	stringResult += "\"" + name + "\""
-	stringResult += ", "
-	stringResult += "Distance: "
-	distance := soundProperties.Distance
-	stringResult += fmt.Sprint(distance)
-	stringResult += ", "
-	stringResult += "Offset: "
-	offset := soundProperties.Offset
-	stringResult += fmt.Sprint(offset)
-	stringResult += " }"
-	return stringResult
+func (sf SoundProperties) String() string {
+	strRes := "{ "
+	strRes += "Name: "
+	name := sf.Name
+	strRes += "\"" + name + "\""
+	strRes += ", "
+	strRes += "Distance: "
+	distance := sf.Distance
+	strRes += fmt.Sprint(distance)
+	strRes += ", "
+	strRes += "Offset: "
+	offset := sf.Offset
+	strRes += fmt.Sprint(offset)
+	strRes += " }"
+	return strRes
 }

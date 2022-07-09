@@ -50,20 +50,20 @@ func ReadDebugCommandAdd() DebugCommandAdd {
 }
 
 // Write Add to writer
-func (debugCommandAdd DebugCommandAdd) Write() {
+func (sf DebugCommandAdd) Write() {
 	flow.WriteInt32(0)
-	debugData := debugCommandAdd.DebugData
+	debugData := sf.DebugData
 	debugData.Write()
 }
 
 // Get string representation of Add
-func (debugCommandAdd DebugCommandAdd) String() string {
-	stringResult := "{ "
-	stringResult += "DebugData: "
-	debugData := debugCommandAdd.DebugData
-	stringResult += debugData.String()
-	stringResult += " }"
-	return stringResult
+func (sf DebugCommandAdd) String() string {
+	strRes := "{ "
+	strRes += "DebugData: "
+	debugData := sf.DebugData
+	strRes += debugData.String()
+	strRes += " }"
+	return strRes
 }
 
 // Clear current tick's debug data
@@ -80,12 +80,12 @@ func ReadDebugCommandClear() DebugCommandClear {
 }
 
 // Write Clear to writer
-func (debugCommandClear DebugCommandClear) Write() {
+func (sf DebugCommandClear) Write() {
 	flow.WriteInt32(1)
 }
 
 // Get string representation of Clear
-func (debugCommandClear DebugCommandClear) String() string {
+func (sf DebugCommandClear) String() string {
 	stringResult := "{ "
 	stringResult += " }"
 	return stringResult
@@ -112,20 +112,20 @@ func ReadDebugCommandSetAutoFlush() DebugCommandSetAutoFlush {
 }
 
 // Write SetAutoFlush to writer
-func (debugCommandSetAutoFlush DebugCommandSetAutoFlush) Write() {
+func (sf DebugCommandSetAutoFlush) Write() {
 	flow.WriteInt32(2)
-	enable := debugCommandSetAutoFlush.Enable
+	enable := sf.Enable
 	flow.WriteBool(enable)
 }
 
 // Get string representation of SetAutoFlush
-func (debugCommandSetAutoFlush DebugCommandSetAutoFlush) String() string {
-	stringResult := "{ "
-	stringResult += "Enable: "
-	enable := debugCommandSetAutoFlush.Enable
-	stringResult += fmt.Sprint(enable)
-	stringResult += " }"
-	return stringResult
+func (sf DebugCommandSetAutoFlush) String() string {
+	strRes := "{ "
+	strRes += "Enable: "
+	enable := sf.Enable
+	strRes += fmt.Sprint(enable)
+	strRes += " }"
+	return strRes
 }
 
 // Perform all previously sent commands
@@ -142,12 +142,12 @@ func ReadDebugCommandFlush() DebugCommandFlush {
 }
 
 // Write Flush to writer
-func (debugCommandFlush DebugCommandFlush) Write() {
+func (sf DebugCommandFlush) Write() {
 	flow.WriteInt32(3)
 }
 
 // Get string representation of Flush
-func (debugCommandFlush DebugCommandFlush) String() string {
+func (sf DebugCommandFlush) String() string {
 	stringResult := "{ "
 	stringResult += " }"
 	return stringResult

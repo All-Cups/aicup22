@@ -90,44 +90,44 @@ func ReadDebugDataPlacedText() DebugDataPlacedText {
 }
 
 // Write PlacedText to writer
-func (debugDataPlacedText DebugDataPlacedText) Write() {
+func (sf DebugDataPlacedText) Write() {
 	flow.WriteInt32(0)
-	position := debugDataPlacedText.Position
+	position := sf.Position
 	position.Write()
-	text := debugDataPlacedText.Text
+	text := sf.Text
 	flow.WriteString(text)
-	alignment := debugDataPlacedText.Alignment
+	alignment := sf.Alignment
 	alignment.Write()
-	size := debugDataPlacedText.Size
+	size := sf.Size
 	flow.WriteFloat64(size)
-	color := debugDataPlacedText.Color
+	color := sf.Color
 	color.Write()
 }
 
 // Get string representation of PlacedText
-func (debugDataPlacedText DebugDataPlacedText) String() string {
-	stringResult := "{ "
-	stringResult += "Position: "
-	position := debugDataPlacedText.Position
-	stringResult += position.String()
-	stringResult += ", "
-	stringResult += "Text: "
-	text := debugDataPlacedText.Text
-	stringResult += "\"" + text + "\""
-	stringResult += ", "
-	stringResult += "Alignment: "
-	alignment := debugDataPlacedText.Alignment
-	stringResult += alignment.String()
-	stringResult += ", "
-	stringResult += "Size: "
-	size := debugDataPlacedText.Size
-	stringResult += fmt.Sprint(size)
-	stringResult += ", "
-	stringResult += "Color: "
-	color := debugDataPlacedText.Color
-	stringResult += color.String()
-	stringResult += " }"
-	return stringResult
+func (sf DebugDataPlacedText) String() string {
+	strRes := "{ "
+	strRes += "Position: "
+	position := sf.Position
+	strRes += position.String()
+	strRes += ", "
+	strRes += "Text: "
+	text := sf.Text
+	strRes += "\"" + text + "\""
+	strRes += ", "
+	strRes += "Alignment: "
+	alignment := sf.Alignment
+	strRes += alignment.String()
+	strRes += ", "
+	strRes += "Size: "
+	size := sf.Size
+	strRes += fmt.Sprint(size)
+	strRes += ", "
+	strRes += "Color: "
+	color := sf.Color
+	strRes += color.String()
+	strRes += " }"
+	return strRes
 }
 
 // Circle
@@ -161,33 +161,33 @@ func ReadDebugDataCircle() DebugDataCircle {
 }
 
 // Write Circle to writer
-func (debugDataCircle DebugDataCircle) Write() {
+func (sf DebugDataCircle) Write() {
 	// FIXME: магическая константа
 	flow.WriteInt32(1)
-	position := debugDataCircle.Position
+	position := sf.Position
 	position.Write()
-	radius := debugDataCircle.Radius
+	radius := sf.Radius
 	flow.WriteFloat64(radius)
-	color := debugDataCircle.Color
+	color := sf.Color
 	color.Write()
 }
 
 // Get string representation of Circle
-func (debugDataCircle DebugDataCircle) String() string {
-	stringResult := "{ "
-	stringResult += "Position: "
-	position := debugDataCircle.Position
-	stringResult += position.String()
-	stringResult += ", "
-	stringResult += "Radius: "
-	radius := debugDataCircle.Radius
-	stringResult += fmt.Sprint(radius)
-	stringResult += ", "
-	stringResult += "Color: "
-	color := debugDataCircle.Color
-	stringResult += color.String()
-	stringResult += " }"
-	return stringResult
+func (sf DebugDataCircle) String() string {
+	strRes := "{ "
+	strRes += "Position: "
+	position := sf.Position
+	strRes += position.String()
+	strRes += ", "
+	strRes += "Radius: "
+	radius := sf.Radius
+	strRes += fmt.Sprint(radius)
+	strRes += ", "
+	strRes += "Color: "
+	color := sf.Color
+	strRes += color.String()
+	strRes += " }"
+	return strRes
 }
 
 // Circle with gradient fill
@@ -226,39 +226,39 @@ func ReadDebugDataGradientCircle() DebugDataGradientCircle {
 }
 
 // Write GradientCircle to writer
-func (debugDataGradientCircle DebugDataGradientCircle) Write() {
+func (sf DebugDataGradientCircle) Write() {
 	// FIXME: магическая константа
 	flow.WriteInt32(2)
-	position := debugDataGradientCircle.Position
+	position := sf.Position
 	position.Write()
-	radius := debugDataGradientCircle.Radius
+	radius := sf.Radius
 	flow.WriteFloat64(radius)
-	innerColor := debugDataGradientCircle.InnerColor
+	innerColor := sf.InnerColor
 	innerColor.Write()
-	outerColor := debugDataGradientCircle.OuterColor
+	outerColor := sf.OuterColor
 	outerColor.Write()
 }
 
 // Get string representation of GradientCircle
-func (debugDataGradientCircle DebugDataGradientCircle) String() string {
-	stringResult := "{ "
-	stringResult += "Position: "
-	position := debugDataGradientCircle.Position
-	stringResult += position.String()
-	stringResult += ", "
-	stringResult += "Radius: "
-	radius := debugDataGradientCircle.Radius
-	stringResult += fmt.Sprint(radius)
-	stringResult += ", "
-	stringResult += "InnerColor: "
-	innerColor := debugDataGradientCircle.InnerColor
-	stringResult += innerColor.String()
-	stringResult += ", "
-	stringResult += "OuterColor: "
-	outerColor := debugDataGradientCircle.OuterColor
-	stringResult += outerColor.String()
-	stringResult += " }"
-	return stringResult
+func (sf DebugDataGradientCircle) String() string {
+	strRes := "{ "
+	strRes += "Position: "
+	position := sf.Position
+	strRes += position.String()
+	strRes += ", "
+	strRes += "Radius: "
+	radius := sf.Radius
+	strRes += fmt.Sprint(radius)
+	strRes += ", "
+	strRes += "InnerColor: "
+	innerColor := sf.InnerColor
+	strRes += innerColor.String()
+	strRes += ", "
+	strRes += "OuterColor: "
+	outerColor := sf.OuterColor
+	strRes += outerColor.String()
+	strRes += " }"
+	return strRes
 }
 
 // Ring
@@ -297,39 +297,39 @@ func ReadDebugDataRing() DebugDataRing {
 }
 
 // Write Ring to writer
-func (debugDataRing DebugDataRing) Write() {
+func (sf DebugDataRing) Write() {
 	// FIXME: магическая константа
 	flow.WriteInt32(3)
-	position := debugDataRing.Position
+	position := sf.Position
 	position.Write()
-	radius := debugDataRing.Radius
+	radius := sf.Radius
 	flow.WriteFloat64(radius)
-	width := debugDataRing.Width
+	width := sf.Width
 	flow.WriteFloat64(width)
-	color := debugDataRing.Color
+	color := sf.Color
 	color.Write()
 }
 
 // Get string representation of Ring
-func (debugDataRing DebugDataRing) String() string {
-	stringResult := "{ "
-	stringResult += "Position: "
-	position := debugDataRing.Position
-	stringResult += position.String()
-	stringResult += ", "
-	stringResult += "Radius: "
-	radius := debugDataRing.Radius
-	stringResult += fmt.Sprint(radius)
-	stringResult += ", "
-	stringResult += "Width: "
-	width := debugDataRing.Width
-	stringResult += fmt.Sprint(width)
-	stringResult += ", "
-	stringResult += "Color: "
-	color := debugDataRing.Color
-	stringResult += color.String()
-	stringResult += " }"
-	return stringResult
+func (sf DebugDataRing) String() string {
+	strRes := "{ "
+	strRes += "Position: "
+	position := sf.Position
+	strRes += position.String()
+	strRes += ", "
+	strRes += "Radius: "
+	radius := sf.Radius
+	strRes += fmt.Sprint(radius)
+	strRes += ", "
+	strRes += "Width: "
+	width := sf.Width
+	strRes += fmt.Sprint(width)
+	strRes += ", "
+	strRes += "Color: "
+	color := sf.Color
+	strRes += color.String()
+	strRes += " }"
+	return strRes
 }
 
 // Sector of a circle
@@ -373,44 +373,44 @@ func ReadDebugDataPie() DebugDataPie {
 }
 
 // Write Pie to writer
-func (debugDataPie DebugDataPie) Write() {
+func (sf DebugDataPie) Write() {
 	flow.WriteInt32(4)
-	position := debugDataPie.Position
+	position := sf.Position
 	position.Write()
-	radius := debugDataPie.Radius
+	radius := sf.Radius
 	flow.WriteFloat64(radius)
-	startAngle := debugDataPie.StartAngle
+	startAngle := sf.StartAngle
 	flow.WriteFloat64(startAngle)
-	endAngle := debugDataPie.EndAngle
+	endAngle := sf.EndAngle
 	flow.WriteFloat64(endAngle)
-	color := debugDataPie.Color
+	color := sf.Color
 	color.Write()
 }
 
 // Get string representation of Pie
-func (debugDataPie DebugDataPie) String() string {
-	stringResult := "{ "
-	stringResult += "Position: "
-	position := debugDataPie.Position
-	stringResult += position.String()
-	stringResult += ", "
-	stringResult += "Radius: "
-	radius := debugDataPie.Radius
-	stringResult += fmt.Sprint(radius)
-	stringResult += ", "
-	stringResult += "StartAngle: "
-	startAngle := debugDataPie.StartAngle
-	stringResult += fmt.Sprint(startAngle)
-	stringResult += ", "
-	stringResult += "EndAngle: "
-	endAngle := debugDataPie.EndAngle
-	stringResult += fmt.Sprint(endAngle)
-	stringResult += ", "
-	stringResult += "Color: "
-	color := debugDataPie.Color
-	stringResult += color.String()
-	stringResult += " }"
-	return stringResult
+func (sf DebugDataPie) String() string {
+	strRes := "{ "
+	strRes += "Position: "
+	position := sf.Position
+	strRes += position.String()
+	strRes += ", "
+	strRes += "Radius: "
+	radius := sf.Radius
+	strRes += fmt.Sprint(radius)
+	strRes += ", "
+	strRes += "StartAngle: "
+	startAngle := sf.StartAngle
+	strRes += fmt.Sprint(startAngle)
+	strRes += ", "
+	strRes += "EndAngle: "
+	endAngle := sf.EndAngle
+	strRes += fmt.Sprint(endAngle)
+	strRes += ", "
+	strRes += "Color: "
+	color := sf.Color
+	strRes += color.String()
+	strRes += " }"
+	return strRes
 }
 
 // Arc
@@ -459,51 +459,51 @@ func ReadDebugDataArc() DebugDataArc {
 }
 
 // Write Arc to writer
-func (debugDataArc DebugDataArc) Write() {
+func (sf DebugDataArc) Write() {
 	// FIXME: магическая константа
 	flow.WriteInt32(5)
-	position := debugDataArc.Position
+	position := sf.Position
 	position.Write()
-	radius := debugDataArc.Radius
+	radius := sf.Radius
 	flow.WriteFloat64(radius)
-	width := debugDataArc.Width
+	width := sf.Width
 	flow.WriteFloat64(width)
-	startAngle := debugDataArc.StartAngle
+	startAngle := sf.StartAngle
 	flow.WriteFloat64(startAngle)
-	endAngle := debugDataArc.EndAngle
+	endAngle := sf.EndAngle
 	flow.WriteFloat64(endAngle)
-	color := debugDataArc.Color
+	color := sf.Color
 	color.Write()
 }
 
 // Get string representation of Arc
-func (debugDataArc DebugDataArc) String() string {
-	stringResult := "{ "
-	stringResult += "Position: "
-	position := debugDataArc.Position
-	stringResult += position.String()
-	stringResult += ", "
-	stringResult += "Radius: "
-	radius := debugDataArc.Radius
-	stringResult += fmt.Sprint(radius)
-	stringResult += ", "
-	stringResult += "Width: "
-	width := debugDataArc.Width
-	stringResult += fmt.Sprint(width)
-	stringResult += ", "
-	stringResult += "StartAngle: "
-	startAngle := debugDataArc.StartAngle
-	stringResult += fmt.Sprint(startAngle)
-	stringResult += ", "
-	stringResult += "EndAngle: "
-	endAngle := debugDataArc.EndAngle
-	stringResult += fmt.Sprint(endAngle)
-	stringResult += ", "
-	stringResult += "Color: "
-	color := debugDataArc.Color
-	stringResult += color.String()
-	stringResult += " }"
-	return stringResult
+func (sf DebugDataArc) String() string {
+	strRes := "{ "
+	strRes += "Position: "
+	position := sf.Position
+	strRes += position.String()
+	strRes += ", "
+	strRes += "Radius: "
+	radius := sf.Radius
+	strRes += fmt.Sprint(radius)
+	strRes += ", "
+	strRes += "Width: "
+	width := sf.Width
+	strRes += fmt.Sprint(width)
+	strRes += ", "
+	strRes += "StartAngle: "
+	startAngle := sf.StartAngle
+	strRes += fmt.Sprint(startAngle)
+	strRes += ", "
+	strRes += "EndAngle: "
+	endAngle := sf.EndAngle
+	strRes += fmt.Sprint(endAngle)
+	strRes += ", "
+	strRes += "Color: "
+	color := sf.Color
+	strRes += color.String()
+	strRes += " }"
+	return strRes
 }
 
 // Rectancle
@@ -537,32 +537,32 @@ func ReadDebugDataRect() DebugDataRect {
 }
 
 // Write Rect to writer
-func (debugDataRect DebugDataRect) Write() {
+func (sf DebugDataRect) Write() {
 	flow.WriteInt32(6)
-	bottomLeft := debugDataRect.BottomLeft
+	bottomLeft := sf.BottomLeft
 	bottomLeft.Write()
-	size := debugDataRect.Size
+	size := sf.Size
 	size.Write()
-	color := debugDataRect.Color
+	color := sf.Color
 	color.Write()
 }
 
 // Get string representation of Rect
-func (debugDataRect DebugDataRect) String() string {
-	stringResult := "{ "
-	stringResult += "BottomLeft: "
-	bottomLeft := debugDataRect.BottomLeft
-	stringResult += bottomLeft.String()
-	stringResult += ", "
-	stringResult += "Size: "
-	size := debugDataRect.Size
-	stringResult += size.String()
-	stringResult += ", "
-	stringResult += "Color: "
-	color := debugDataRect.Color
-	stringResult += color.String()
-	stringResult += " }"
-	return stringResult
+func (sf DebugDataRect) String() string {
+	strRes := "{ "
+	strRes += "BottomLeft: "
+	bottomLeft := sf.BottomLeft
+	strRes += bottomLeft.String()
+	strRes += ", "
+	strRes += "Size: "
+	size := sf.Size
+	strRes += size.String()
+	strRes += ", "
+	strRes += "Color: "
+	color := sf.Color
+	strRes += color.String()
+	strRes += " }"
+	return strRes
 }
 
 // Polygon (convex)
@@ -595,36 +595,36 @@ func ReadDebugDataPolygon() DebugDataPolygon {
 }
 
 // Write Polygon to writer
-func (debugDataPolygon DebugDataPolygon) Write() {
+func (sf DebugDataPolygon) Write() {
 	flow.WriteInt32(7)
-	vertices := debugDataPolygon.Vertices
+	vertices := sf.Vertices
 	flow.WriteInt32(int32(len(vertices)))
 	for _, verticesElement := range vertices {
 		verticesElement.Write()
 	}
-	color := debugDataPolygon.Color
+	color := sf.Color
 	color.Write()
 }
 
 // Get string representation of Polygon
-func (debugDataPolygon DebugDataPolygon) String() string {
-	stringResult := "{ "
-	stringResult += "Vertices: "
-	vertices := debugDataPolygon.Vertices
-	stringResult += "[ "
+func (sf DebugDataPolygon) String() string {
+	strRes := "{ "
+	strRes += "Vertices: "
+	vertices := sf.Vertices
+	strRes += "[ "
 	for verticesIndex, verticesElement := range vertices {
 		if verticesIndex != 0 {
-			stringResult += ", "
+			strRes += ", "
 		}
-		stringResult += verticesElement.String()
+		strRes += verticesElement.String()
 	}
-	stringResult += " ]"
-	stringResult += ", "
-	stringResult += "Color: "
-	color := debugDataPolygon.Color
-	stringResult += color.String()
-	stringResult += " }"
-	return stringResult
+	strRes += " ]"
+	strRes += ", "
+	strRes += "Color: "
+	color := sf.Color
+	strRes += color.String()
+	strRes += " }"
+	return strRes
 }
 
 // Polygon with gradient fill
@@ -652,9 +652,9 @@ func ReadDebugDataGradientPolygon() DebugDataGradientPolygon {
 }
 
 // Write GradientPolygon to writer
-func (debugDataGradientPolygon DebugDataGradientPolygon) Write() {
+func (sf DebugDataGradientPolygon) Write() {
 	flow.WriteInt32(8)
-	vertices := debugDataGradientPolygon.Vertices
+	vertices := sf.Vertices
 	flow.WriteInt32(int32(len(vertices)))
 	for _, verticesElement := range vertices {
 		verticesElement.Write()
@@ -662,20 +662,20 @@ func (debugDataGradientPolygon DebugDataGradientPolygon) Write() {
 }
 
 // Get string representation of GradientPolygon
-func (debugDataGradientPolygon DebugDataGradientPolygon) String() string {
-	stringResult := "{ "
-	stringResult += "Vertices: "
-	vertices := debugDataGradientPolygon.Vertices
-	stringResult += "[ "
+func (sf DebugDataGradientPolygon) String() string {
+	strRes := "{ "
+	strRes += "Vertices: "
+	vertices := sf.Vertices
+	strRes += "[ "
 	for verticesIndex, verticesElement := range vertices {
 		if verticesIndex != 0 {
-			stringResult += ", "
+			strRes += ", "
 		}
-		stringResult += verticesElement.String()
+		strRes += verticesElement.String()
 	}
-	stringResult += " ]"
-	stringResult += " }"
-	return stringResult
+	strRes += " ]"
+	strRes += " }"
+	return strRes
 }
 
 // Segment
@@ -714,38 +714,38 @@ func ReadDebugDataSegment() DebugDataSegment {
 }
 
 // Write Segment to writer
-func (debugDataSegment DebugDataSegment) Write() {
+func (sf DebugDataSegment) Write() {
 	flow.WriteInt32(9)
-	firstEnd := debugDataSegment.FirstEnd
+	firstEnd := sf.FirstEnd
 	firstEnd.Write()
-	secondEnd := debugDataSegment.SecondEnd
+	secondEnd := sf.SecondEnd
 	secondEnd.Write()
-	width := debugDataSegment.Width
+	width := sf.Width
 	flow.WriteFloat64(width)
-	color := debugDataSegment.Color
+	color := sf.Color
 	color.Write()
 }
 
 // Get string representation of Segment
-func (debugDataSegment DebugDataSegment) String() string {
-	stringResult := "{ "
-	stringResult += "FirstEnd: "
-	firstEnd := debugDataSegment.FirstEnd
-	stringResult += firstEnd.String()
-	stringResult += ", "
-	stringResult += "SecondEnd: "
-	secondEnd := debugDataSegment.SecondEnd
-	stringResult += secondEnd.String()
-	stringResult += ", "
-	stringResult += "Width: "
-	width := debugDataSegment.Width
-	stringResult += fmt.Sprint(width)
-	stringResult += ", "
-	stringResult += "Color: "
-	color := debugDataSegment.Color
-	stringResult += color.String()
-	stringResult += " }"
-	return stringResult
+func (sf DebugDataSegment) String() string {
+	strRes := "{ "
+	strRes += "FirstEnd: "
+	firstEnd := sf.FirstEnd
+	strRes += firstEnd.String()
+	strRes += ", "
+	strRes += "SecondEnd: "
+	secondEnd := sf.SecondEnd
+	strRes += secondEnd.String()
+	strRes += ", "
+	strRes += "Width: "
+	width := sf.Width
+	strRes += fmt.Sprint(width)
+	strRes += ", "
+	strRes += "Color: "
+	color := sf.Color
+	strRes += color.String()
+	strRes += " }"
+	return strRes
 }
 
 // Segment with gradient fill
@@ -789,41 +789,41 @@ func ReadDebugDataGradientSegment() DebugDataGradientSegment {
 }
 
 // Write GradientSegment to writer
-func (debugDataGradientSegment DebugDataGradientSegment) Write() {
+func (sf DebugDataGradientSegment) Write() {
 	flow.WriteInt32(10)
-	firstEnd := debugDataGradientSegment.FirstEnd
+	firstEnd := sf.FirstEnd
 	firstEnd.Write()
-	firstColor := debugDataGradientSegment.FirstColor
+	firstColor := sf.FirstColor
 	firstColor.Write()
-	secondEnd := debugDataGradientSegment.SecondEnd
+	secondEnd := sf.SecondEnd
 	secondEnd.Write()
-	secondColor := debugDataGradientSegment.SecondColor
+	secondColor := sf.SecondColor
 	secondColor.Write()
-	width := debugDataGradientSegment.Width
+	width := sf.Width
 	flow.WriteFloat64(width)
 }
 
 // Get string representation of GradientSegment
-func (debugDataGradientSegment DebugDataGradientSegment) String() string {
+func (sf DebugDataGradientSegment) String() string {
 	stringResult := "{ "
 	stringResult += "FirstEnd: "
-	firstEnd := debugDataGradientSegment.FirstEnd
+	firstEnd := sf.FirstEnd
 	stringResult += firstEnd.String()
 	stringResult += ", "
 	stringResult += "FirstColor: "
-	firstColor := debugDataGradientSegment.FirstColor
+	firstColor := sf.FirstColor
 	stringResult += firstColor.String()
 	stringResult += ", "
 	stringResult += "SecondEnd: "
-	secondEnd := debugDataGradientSegment.SecondEnd
+	secondEnd := sf.SecondEnd
 	stringResult += secondEnd.String()
 	stringResult += ", "
 	stringResult += "SecondColor: "
-	secondColor := debugDataGradientSegment.SecondColor
+	secondColor := sf.SecondColor
 	stringResult += secondColor.String()
 	stringResult += ", "
 	stringResult += "Width: "
-	width := debugDataGradientSegment.Width
+	width := sf.Width
 	stringResult += fmt.Sprint(width)
 	stringResult += " }"
 	return stringResult
@@ -864,42 +864,42 @@ func ReadDebugDataPolyLine() DebugDataPolyLine {
 }
 
 // Write PolyLine to writer
-func (debugDataPolyLine DebugDataPolyLine) Write() {
+func (sf DebugDataPolyLine) Write() {
 	flow.WriteInt32(11)
-	vertices := debugDataPolyLine.Vertices
+	vertices := sf.Vertices
 	flow.WriteInt32(int32(len(vertices)))
 	for _, verticesElement := range vertices {
 		verticesElement.Write()
 	}
-	width := debugDataPolyLine.Width
+	width := sf.Width
 	flow.WriteFloat64(width)
-	color := debugDataPolyLine.Color
+	color := sf.Color
 	color.Write()
 }
 
 // Get string representation of PolyLine
-func (debugDataPolyLine DebugDataPolyLine) String() string {
-	stringResult := "{ "
-	stringResult += "Vertices: "
-	vertices := debugDataPolyLine.Vertices
-	stringResult += "[ "
+func (sf DebugDataPolyLine) String() string {
+	strRes := "{ "
+	strRes += "Vertices: "
+	vertices := sf.Vertices
+	strRes += "[ "
 	for verticesIndex, verticesElement := range vertices {
 		if verticesIndex != 0 {
-			stringResult += ", "
+			strRes += ", "
 		}
-		stringResult += verticesElement.String()
+		strRes += verticesElement.String()
 	}
-	stringResult += " ]"
-	stringResult += ", "
-	stringResult += "Width: "
-	width := debugDataPolyLine.Width
-	stringResult += fmt.Sprint(width)
-	stringResult += ", "
-	stringResult += "Color: "
-	color := debugDataPolyLine.Color
-	stringResult += color.String()
-	stringResult += " }"
-	return stringResult
+	strRes += " ]"
+	strRes += ", "
+	strRes += "Width: "
+	width := sf.Width
+	strRes += fmt.Sprint(width)
+	strRes += ", "
+	strRes += "Color: "
+	color := sf.Color
+	strRes += color.String()
+	strRes += " }"
+	return strRes
 }
 
 // Poly line with gradient fill
@@ -932,34 +932,34 @@ func ReadDebugDataGradientPolyLine() DebugDataGradientPolyLine {
 }
 
 // Write GradientPolyLine to writer
-func (debugDataGradientPolyLine DebugDataGradientPolyLine) Write() {
+func (sf DebugDataGradientPolyLine) Write() {
 	flow.WriteInt32(12)
-	vertices := debugDataGradientPolyLine.Vertices
+	vertices := sf.Vertices
 	flow.WriteInt32(int32(len(vertices)))
 	for _, verticesElement := range vertices {
 		verticesElement.Write()
 	}
-	width := debugDataGradientPolyLine.Width
+	width := sf.Width
 	flow.WriteFloat64(width)
 }
 
 // Get string representation of GradientPolyLine
-func (debugDataGradientPolyLine DebugDataGradientPolyLine) String() string {
-	stringResult := "{ "
-	stringResult += "Vertices: "
-	vertices := debugDataGradientPolyLine.Vertices
-	stringResult += "[ "
+func (sf DebugDataGradientPolyLine) String() string {
+	strRes := "{ "
+	strRes += "Vertices: "
+	vertices := sf.Vertices
+	strRes += "[ "
 	for verticesIndex, verticesElement := range vertices {
 		if verticesIndex != 0 {
-			stringResult += ", "
+			strRes += ", "
 		}
-		stringResult += verticesElement.String()
+		strRes += verticesElement.String()
 	}
-	stringResult += " ]"
-	stringResult += ", "
-	stringResult += "Width: "
-	width := debugDataGradientPolyLine.Width
-	stringResult += fmt.Sprint(width)
-	stringResult += " }"
-	return stringResult
+	strRes += " ]"
+	strRes += ", "
+	strRes += "Width: "
+	width := sf.Width
+	strRes += fmt.Sprint(width)
+	strRes += " }"
+	return strRes
 }

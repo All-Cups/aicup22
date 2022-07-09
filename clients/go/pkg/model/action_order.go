@@ -54,17 +54,17 @@ func ReadActionOrderPickup() ActionOrderPickup {
 }
 
 // Write Pickup to writer
-func (actionOrderPickup ActionOrderPickup) Write() {
+func (sf ActionOrderPickup) Write() {
 	flow.WriteInt32(0)
-	loot := actionOrderPickup.Loot
+	loot := sf.Loot
 	flow.WriteInt32(loot)
 }
 
 // Get string representation of Pickup
-func (actionOrderPickup ActionOrderPickup) String() string {
+func (sf ActionOrderPickup) String() string {
 	stringResult := "{ "
 	stringResult += "Loot: "
-	loot := actionOrderPickup.Loot
+	loot := sf.Loot
 	stringResult += fmt.Sprint(loot)
 	stringResult += " }"
 	return stringResult
@@ -84,12 +84,12 @@ func ReadActionOrderUseShieldPotion() ActionOrderUseShieldPotion {
 }
 
 // Write UseShieldPotion to writer
-func (actionOrderUseShieldPotion ActionOrderUseShieldPotion) Write() {
+func (sf ActionOrderUseShieldPotion) Write() {
 	flow.WriteInt32(1)
 }
 
 // Get string representation of UseShieldPotion
-func (actionOrderUseShieldPotion ActionOrderUseShieldPotion) String() string {
+func (sf ActionOrderUseShieldPotion) String() string {
 	stringResult := "{ "
 	stringResult += " }"
 	return stringResult
@@ -116,17 +116,17 @@ func ReadActionOrderDropShieldPotions() ActionOrderDropShieldPotions {
 }
 
 // Write DropShieldPotions to writer
-func (actionOrderDropShieldPotions ActionOrderDropShieldPotions) Write() {
+func (sf ActionOrderDropShieldPotions) Write() {
 	flow.WriteInt32(2)
-	amount := actionOrderDropShieldPotions.Amount
+	amount := sf.Amount
 	flow.WriteInt32(amount)
 }
 
 // Get string representation of DropShieldPotions
-func (actionOrderDropShieldPotions ActionOrderDropShieldPotions) String() string {
+func (sf ActionOrderDropShieldPotions) String() string {
 	stringResult := "{ "
 	stringResult += "Amount: "
-	amount := actionOrderDropShieldPotions.Amount
+	amount := sf.Amount
 	stringResult += fmt.Sprint(amount)
 	stringResult += " }"
 	return stringResult
@@ -146,12 +146,12 @@ func ReadActionOrderDropWeapon() ActionOrderDropWeapon {
 }
 
 // Write DropWeapon to writer
-func (actionOrderDropWeapon ActionOrderDropWeapon) Write() {
+func (sf ActionOrderDropWeapon) Write() {
 	flow.WriteInt32(3)
 }
 
 // Get string representation of DropWeapon
-func (actionOrderDropWeapon ActionOrderDropWeapon) String() string {
+func (sf ActionOrderDropWeapon) String() string {
 	stringResult := "{ "
 	stringResult += " }"
 	return stringResult
@@ -183,23 +183,23 @@ func ReadActionOrderDropAmmo() ActionOrderDropAmmo {
 }
 
 // Write DropAmmo to writer
-func (actionOrderDropAmmo ActionOrderDropAmmo) Write() {
+func (sf ActionOrderDropAmmo) Write() {
 	flow.WriteInt32(4)
-	weaponTypeIndex := actionOrderDropAmmo.WeaponTypeIndex
+	weaponTypeIndex := sf.WeaponTypeIndex
 	flow.WriteInt32(weaponTypeIndex)
-	amount := actionOrderDropAmmo.Amount
+	amount := sf.Amount
 	flow.WriteInt32(amount)
 }
 
 // Get string representation of DropAmmo
-func (actionOrderDropAmmo ActionOrderDropAmmo) String() string {
+func (sf ActionOrderDropAmmo) String() string {
 	stringResult := "{ "
 	stringResult += "WeaponTypeIndex: "
-	weaponTypeIndex := actionOrderDropAmmo.WeaponTypeIndex
+	weaponTypeIndex := sf.WeaponTypeIndex
 	stringResult += fmt.Sprint(weaponTypeIndex)
 	stringResult += ", "
 	stringResult += "Amount: "
-	amount := actionOrderDropAmmo.Amount
+	amount := sf.Amount
 	stringResult += fmt.Sprint(amount)
 	stringResult += " }"
 	return stringResult
@@ -226,17 +226,17 @@ func ReadActionOrderAim() ActionOrderAim {
 }
 
 // Write Aim to writer
-func (actionOrderAim ActionOrderAim) Write() {
+func (sf ActionOrderAim) Write() {
 	flow.WriteInt32(5)
-	shoot := actionOrderAim.Shoot
+	shoot := sf.Shoot
 	flow.WriteBool(shoot)
 }
 
 // Get string representation of Aim
-func (actionOrderAim ActionOrderAim) String() string {
+func (sf ActionOrderAim) String() string {
 	stringResult := "{ "
 	stringResult += "Shoot: "
-	shoot := actionOrderAim.Shoot
+	shoot := sf.Shoot
 	stringResult += fmt.Sprint(shoot)
 	stringResult += " }"
 	return stringResult

@@ -8,7 +8,7 @@ import (
 	"net"
 )
 
-// Stream -- абстракция входящег ои исходящего потока
+// Stream -- абстракция входящего и исходящего потока
 type Stream struct {
 	reader *bufio.Reader
 	writer *bufio.Writer
@@ -20,6 +20,9 @@ var (
 
 // Flow -- возвращает объект потока
 func Flow() *Stream {
+	if flow == nil {
+		panic(fmt.Errorf("Flow(): flow is nil"))
+	}
 	return flow
 }
 

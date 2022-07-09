@@ -41,35 +41,35 @@ func ReadZone() Zone {
 }
 
 // Write Zone to writer
-func (zone Zone) Write() {
-	currentCenter := zone.CurrentCenter
+func (sf Zone) Write() {
+	currentCenter := sf.CurrentCenter
 	currentCenter.Write()
-	currentRadius := zone.CurrentRadius
+	currentRadius := sf.CurrentRadius
 	flow.WriteFloat64(currentRadius)
-	nextCenter := zone.NextCenter
+	nextCenter := sf.NextCenter
 	nextCenter.Write()
-	nextRadius := zone.NextRadius
+	nextRadius := sf.NextRadius
 	flow.WriteFloat64(nextRadius)
 }
 
 // Get string representation of Zone
-func (zone Zone) String() string {
-	stringResult := "{ "
-	stringResult += "CurrentCenter: "
-	currentCenter := zone.CurrentCenter
-	stringResult += currentCenter.String()
-	stringResult += ", "
-	stringResult += "CurrentRadius: "
-	currentRadius := zone.CurrentRadius
-	stringResult += fmt.Sprint(currentRadius)
-	stringResult += ", "
-	stringResult += "NextCenter: "
-	nextCenter := zone.NextCenter
-	stringResult += nextCenter.String()
-	stringResult += ", "
-	stringResult += "NextRadius: "
-	nextRadius := zone.NextRadius
-	stringResult += fmt.Sprint(nextRadius)
-	stringResult += " }"
-	return stringResult
+func (sf Zone) String() string {
+	strRes := "{ "
+	strRes += "CurrentCenter: "
+	currentCenter := sf.CurrentCenter
+	strRes += currentCenter.String()
+	strRes += ", "
+	strRes += "CurrentRadius: "
+	currentRadius := sf.CurrentRadius
+	strRes += fmt.Sprint(currentRadius)
+	strRes += ", "
+	strRes += "NextCenter: "
+	nextCenter := sf.NextCenter
+	strRes += nextCenter.String()
+	strRes += ", "
+	strRes += "NextRadius: "
+	nextRadius := sf.NextRadius
+	strRes += fmt.Sprint(nextRadius)
+	strRes += " }"
+	return strRes
 }

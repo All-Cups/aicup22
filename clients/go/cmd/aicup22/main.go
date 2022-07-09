@@ -11,7 +11,7 @@ import (
 	"aicup22/pkg/codegame"
 	"aicup22/pkg/model"
 	"aicup22/pkg/stream"
-	"aicup22/pkg/types"
+	"aicup22/pkg/debugout"
 )
 
 type Runner struct {
@@ -51,7 +51,7 @@ func NewRunner(host string, port uint16, token string) Runner {
 
 func (runner Runner) Run() {
 	var myStrategy *mystrategy.MyStrategy = nil
-	debugInterface := types.DebugInterface{
+	debugOut := debugout.DebugOut{
 		Reader: runner.reader,
 		Writer: runner.writer,
 	}
@@ -63,7 +63,7 @@ loop:
 		case codegame.ServerMessageGetOrder:
 			var order model.Order
 			if message.DebugAvailable {
-				order = myStrategy.GetOrder(message.PlayerView, &debugInterface)
+				order = myStrategy.GetOrder(message.PlayerView, &debugOut)
 			} else {
 				order = myStrategy.GetOrder(message.PlayerView, nil)
 			}
@@ -78,7 +78,7 @@ loop:
 			myStrategy.Finish()
 			break loop
 		case codegame.ServerMessageDebugUpdate:
-			myStrategy.DebugUpdate(message.DisplayedTick, debugInterface)
+			myStrategy.DebugUpdate(message.DisplayedTick, debugOut)
 			codegame.ClientMessageDebugUpdateDone{}.Write()
 			err := runner.writer.Flush()
 			if err != nil {

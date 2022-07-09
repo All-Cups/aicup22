@@ -45,41 +45,41 @@ func ReadPlayer() Player {
 }
 
 // Write Player to writer
-func (player Player) Write() {
-	id := player.Id
+func (sf Player) Write() {
+	id := sf.Id
 	flow.WriteInt32(id)
-	kills := player.Kills
+	kills := sf.Kills
 	flow.WriteInt32(kills)
-	damage := player.Damage
+	damage := sf.Damage
 	flow.WriteFloat64(damage)
-	place := player.Place
+	place := sf.Place
 	flow.WriteInt32(place)
-	score := player.Score
+	score := sf.Score
 	flow.WriteFloat64(score)
 }
 
 // Get string representation of Player
-func (player Player) String() string {
-	stringResult := "{ "
-	stringResult += "Id: "
-	id := player.Id
-	stringResult += fmt.Sprint(id)
-	stringResult += ", "
-	stringResult += "Kills: "
-	kills := player.Kills
-	stringResult += fmt.Sprint(kills)
-	stringResult += ", "
-	stringResult += "Damage: "
-	damage := player.Damage
-	stringResult += fmt.Sprint(damage)
-	stringResult += ", "
-	stringResult += "Place: "
-	place := player.Place
-	stringResult += fmt.Sprint(place)
-	stringResult += ", "
-	stringResult += "Score: "
-	score := player.Score
-	stringResult += fmt.Sprint(score)
-	stringResult += " }"
-	return stringResult
+func (sf Player) String() string {
+	strRes := "{ "
+	strRes += "Id: "
+	id := sf.Id
+	strRes += fmt.Sprint(id)
+	strRes += ", "
+	strRes += "Kills: "
+	kills := sf.Kills
+	strRes += fmt.Sprint(kills)
+	strRes += ", "
+	strRes += "Damage: "
+	damage := sf.Damage
+	strRes += fmt.Sprint(damage)
+	strRes += ", "
+	strRes += "Place: "
+	place := sf.Place
+	strRes += fmt.Sprint(place)
+	strRes += ", "
+	strRes += "Score: "
+	score := sf.Score
+	strRes += fmt.Sprint(score)
+	strRes += " }"
+	return strRes
 }

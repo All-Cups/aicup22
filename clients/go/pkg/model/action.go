@@ -30,22 +30,22 @@ func ReadAction() Action {
 }
 
 // Write Action to writer
-func (action Action) Write() {
-	finishTick := action.FinishTick
+func (sf Action) Write() {
+	finishTick := sf.FinishTick
 	flow.WriteInt32(finishTick)
-	actionType := action.ActionType
+	actionType := sf.ActionType
 	flow.WriteInt32(int32(actionType))
 }
 
 // Get string representation of Action
-func (action Action) String() string {
+func (sf Action) String() string {
 	stringResult := "{ "
 	stringResult += "FinishTick: "
-	finishTick := action.FinishTick
+	finishTick := sf.FinishTick
 	stringResult += fmt.Sprint(finishTick)
 	stringResult += ", "
 	stringResult += "ActionType: "
-	actionType := action.ActionType
+	actionType := sf.ActionType
 	stringResult += ActionTypeToString(actionType)
 	stringResult += " }"
 	return stringResult

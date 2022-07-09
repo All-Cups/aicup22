@@ -48,35 +48,35 @@ func ReadCamera() Camera {
 }
 
 // Write Camera to writer
-func (camera Camera) Write() {
-	center := camera.Center
+func (sf Camera) Write() {
+	center := sf.Center
 	center.Write()
-	rotation := camera.Rotation
+	rotation := sf.Rotation
 	flow.WriteFloat64(rotation)
-	attack := camera.Attack
+	attack := sf.Attack
 	flow.WriteFloat64(attack)
-	fov := camera.Fov
+	fov := sf.Fov
 	flow.WriteFloat64(fov)
 }
 
 // Get string representation of Camera
-func (camera Camera) String() string {
-	stringResult := "{ "
-	stringResult += "Center: "
-	center := camera.Center
-	stringResult += center.String()
-	stringResult += ", "
-	stringResult += "Rotation: "
-	rotation := camera.Rotation
-	stringResult += fmt.Sprint(rotation)
-	stringResult += ", "
-	stringResult += "Attack: "
-	attack := camera.Attack
-	stringResult += fmt.Sprint(attack)
-	stringResult += ", "
-	stringResult += "Fov: "
-	fov := camera.Fov
-	stringResult += fmt.Sprint(fov)
-	stringResult += " }"
-	return stringResult
+func (sf Camera) String() string {
+	strRes := "{ "
+	strRes += "Center: "
+	center := sf.Center
+	strRes += center.String()
+	strRes += ", "
+	strRes += "Rotation: "
+	rotation := sf.Rotation
+	strRes += fmt.Sprint(rotation)
+	strRes += ", "
+	strRes += "Attack: "
+	attack := sf.Attack
+	strRes += fmt.Sprint(attack)
+	strRes += ", "
+	strRes += "Fov: "
+	fov := sf.Fov
+	strRes += fmt.Sprint(fov)
+	strRes += " }"
+	return strRes
 }

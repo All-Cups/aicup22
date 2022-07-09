@@ -41,12 +41,12 @@ func ReadUnitOrder() UnitOrder {
 }
 
 // Write UnitOrder to writer
-func (unitOrder UnitOrder) Write() {
-	targetVelocity := unitOrder.TargetVelocity
+func (sf UnitOrder) Write() {
+	targetVelocity := sf.TargetVelocity
 	targetVelocity.Write()
-	targetDirection := unitOrder.TargetDirection
+	targetDirection := sf.TargetDirection
 	targetDirection.Write()
-	action := unitOrder.Action
+	action := sf.Action
 	if action == nil {
 		flow.WriteBool(false)
 	} else {
@@ -57,24 +57,24 @@ func (unitOrder UnitOrder) Write() {
 }
 
 // Get string representation of UnitOrder
-func (unitOrder UnitOrder) String() string {
-	stringResult := "{ "
-	stringResult += "TargetVelocity: "
-	targetVelocity := unitOrder.TargetVelocity
-	stringResult += targetVelocity.String()
-	stringResult += ", "
-	stringResult += "TargetDirection: "
-	targetDirection := unitOrder.TargetDirection
-	stringResult += targetDirection.String()
-	stringResult += ", "
-	stringResult += "Action: "
-	action := unitOrder.Action
+func (sf UnitOrder) String() string {
+	strRes := "{ "
+	strRes += "TargetVelocity: "
+	targetVelocity := sf.TargetVelocity
+	strRes += targetVelocity.String()
+	strRes += ", "
+	strRes += "TargetDirection: "
+	targetDirection := sf.TargetDirection
+	strRes += targetDirection.String()
+	strRes += ", "
+	strRes += "Action: "
+	action := sf.Action
 	if action == nil {
-		stringResult += "nil"
+		strRes += "nil"
 	} else {
 		actionValue := *action
-		stringResult += actionValue.String()
+		strRes += actionValue.String()
 	}
-	stringResult += " }"
-	return stringResult
+	strRes += " }"
+	return strRes
 }

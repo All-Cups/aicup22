@@ -56,53 +56,53 @@ func ReadProjectile() Projectile {
 }
 
 // Write Projectile to writer
-func (projectile Projectile) Write() {
-	id := projectile.Id
+func (sf Projectile) Write() {
+	id := sf.Id
 	flow.WriteInt32(id)
-	weaponTypeIndex := projectile.WeaponTypeIndex
+	weaponTypeIndex := sf.WeaponTypeIndex
 	flow.WriteInt32(weaponTypeIndex)
-	shooterId := projectile.ShooterId
+	shooterId := sf.ShooterId
 	flow.WriteInt32(shooterId)
-	shooterPlayerId := projectile.ShooterPlayerId
+	shooterPlayerId := sf.ShooterPlayerId
 	flow.WriteInt32(shooterPlayerId)
-	position := projectile.Position
+	position := sf.Position
 	position.Write()
-	velocity := projectile.Velocity
+	velocity := sf.Velocity
 	velocity.Write()
-	lifeTime := projectile.LifeTime
+	lifeTime := sf.LifeTime
 	flow.WriteFloat64(lifeTime)
 }
 
 // Get string representation of Projectile
-func (projectile Projectile) String() string {
-	stringResult := "{ "
-	stringResult += "Id: "
-	id := projectile.Id
-	stringResult += fmt.Sprint(id)
-	stringResult += ", "
-	stringResult += "WeaponTypeIndex: "
-	weaponTypeIndex := projectile.WeaponTypeIndex
-	stringResult += fmt.Sprint(weaponTypeIndex)
-	stringResult += ", "
-	stringResult += "ShooterId: "
-	shooterId := projectile.ShooterId
-	stringResult += fmt.Sprint(shooterId)
-	stringResult += ", "
-	stringResult += "ShooterPlayerId: "
-	shooterPlayerId := projectile.ShooterPlayerId
-	stringResult += fmt.Sprint(shooterPlayerId)
-	stringResult += ", "
-	stringResult += "Position: "
-	position := projectile.Position
-	stringResult += position.String()
-	stringResult += ", "
-	stringResult += "Velocity: "
-	velocity := projectile.Velocity
-	stringResult += velocity.String()
-	stringResult += ", "
-	stringResult += "LifeTime: "
-	lifeTime := projectile.LifeTime
-	stringResult += fmt.Sprint(lifeTime)
-	stringResult += " }"
-	return stringResult
+func (sf Projectile) String() string {
+	strRes := "{ "
+	strRes += "Id: "
+	id := sf.Id
+	strRes += fmt.Sprint(id)
+	strRes += ", "
+	strRes += "WeaponTypeIndex: "
+	weaponTypeIndex := sf.WeaponTypeIndex
+	strRes += fmt.Sprint(weaponTypeIndex)
+	strRes += ", "
+	strRes += "ShooterId: "
+	shooterId := sf.ShooterId
+	strRes += fmt.Sprint(shooterId)
+	strRes += ", "
+	strRes += "ShooterPlayerId: "
+	shooterPlayerId := sf.ShooterPlayerId
+	strRes += fmt.Sprint(shooterPlayerId)
+	strRes += ", "
+	strRes += "Position: "
+	position := sf.Position
+	strRes += position.String()
+	strRes += ", "
+	strRes += "Velocity: "
+	velocity := sf.Velocity
+	strRes += velocity.String()
+	strRes += ", "
+	strRes += "LifeTime: "
+	lifeTime := sf.LifeTime
+	strRes += fmt.Sprint(lifeTime)
+	strRes += " }"
+	return strRes
 }

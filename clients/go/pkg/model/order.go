@@ -31,8 +31,8 @@ func ReadOrder() Order {
 }
 
 // Write Order to writer
-func (order Order) Write() {
-	unitOrders := order.UnitOrders
+func (sf Order) Write() {
+	unitOrders := sf.UnitOrders
 	flow.WriteInt32(int32(len(unitOrders)))
 	for unitOrdersKey, unitOrdersValue := range unitOrders {
 		flow.WriteInt32(unitOrdersKey)
@@ -41,22 +41,22 @@ func (order Order) Write() {
 }
 
 // Get string representation of Order
-func (order Order) String() string {
-	stringResult := "{ "
-	stringResult += "UnitOrders: "
-	unitOrders := order.UnitOrders
-	stringResult += "map[ "
+func (sf Order) String() string {
+	strRes := "{ "
+	strRes += "UnitOrders: "
+	unitOrders := sf.UnitOrders
+	strRes += "map[ "
 	unitOrdersIndex := 0
 	for unitOrdersKey, unitOrdersValue := range unitOrders {
 		if unitOrdersIndex != 0 {
-			stringResult += ", "
+			strRes += ", "
 		}
-		stringResult += fmt.Sprint(unitOrdersKey)
-		stringResult += ": "
-		stringResult += unitOrdersValue.String()
+		strRes += fmt.Sprint(unitOrdersKey)
+		strRes += ": "
+		strRes += unitOrdersValue.String()
 		unitOrdersIndex++
 	}
-	stringResult += " ]"
-	stringResult += " }"
-	return stringResult
+	strRes += " ]"
+	strRes += " }"
+	return strRes
 }

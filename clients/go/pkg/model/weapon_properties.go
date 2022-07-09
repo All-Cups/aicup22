@@ -102,28 +102,28 @@ func ReadWeaponProperties() WeaponProperties {
 }
 
 // Write WeaponProperties to writer
-func (weaponProperties WeaponProperties) Write() {
-	name := weaponProperties.Name
+func (sf WeaponProperties) Write() {
+	name := sf.Name
 	flow.WriteString(name)
-	roundsPerSecond := weaponProperties.RoundsPerSecond
+	roundsPerSecond := sf.RoundsPerSecond
 	flow.WriteFloat64(roundsPerSecond)
-	spread := weaponProperties.Spread
+	spread := sf.Spread
 	flow.WriteFloat64(spread)
-	aimTime := weaponProperties.AimTime
+	aimTime := sf.AimTime
 	flow.WriteFloat64(aimTime)
-	aimFieldOfView := weaponProperties.AimFieldOfView
+	aimFieldOfView := sf.AimFieldOfView
 	flow.WriteFloat64(aimFieldOfView)
-	aimRotationSpeed := weaponProperties.AimRotationSpeed
+	aimRotationSpeed := sf.AimRotationSpeed
 	flow.WriteFloat64(aimRotationSpeed)
-	aimMovementSpeedModifier := weaponProperties.AimMovementSpeedModifier
+	aimMovementSpeedModifier := sf.AimMovementSpeedModifier
 	flow.WriteFloat64(aimMovementSpeedModifier)
-	projectileSpeed := weaponProperties.ProjectileSpeed
+	projectileSpeed := sf.ProjectileSpeed
 	flow.WriteFloat64(projectileSpeed)
-	projectileDamage := weaponProperties.ProjectileDamage
+	projectileDamage := sf.ProjectileDamage
 	flow.WriteFloat64(projectileDamage)
-	projectileLifeTime := weaponProperties.ProjectileLifeTime
+	projectileLifeTime := sf.ProjectileLifeTime
 	flow.WriteFloat64(projectileLifeTime)
-	shotSoundTypeIndex := weaponProperties.ShotSoundTypeIndex
+	shotSoundTypeIndex := sf.ShotSoundTypeIndex
 	if shotSoundTypeIndex == nil {
 		flow.WriteBool(false)
 	} else {
@@ -131,7 +131,7 @@ func (weaponProperties WeaponProperties) Write() {
 		shotSoundTypeIndexValue := *shotSoundTypeIndex
 		flow.WriteInt32(shotSoundTypeIndexValue)
 	}
-	projectileHitSoundTypeIndex := weaponProperties.ProjectileHitSoundTypeIndex
+	projectileHitSoundTypeIndex := sf.ProjectileHitSoundTypeIndex
 	if projectileHitSoundTypeIndex == nil {
 		flow.WriteBool(false)
 	} else {
@@ -139,74 +139,74 @@ func (weaponProperties WeaponProperties) Write() {
 		projectileHitSoundTypeIndexValue := *projectileHitSoundTypeIndex
 		flow.WriteInt32(projectileHitSoundTypeIndexValue)
 	}
-	maxInventoryAmmo := weaponProperties.MaxInventoryAmmo
+	maxInventoryAmmo := sf.MaxInventoryAmmo
 	flow.WriteInt32(maxInventoryAmmo)
 }
 
 // Get string representation of WeaponProperties
-func (weaponProperties WeaponProperties) String() string {
-	stringResult := "{ "
-	stringResult += "Name: "
-	name := weaponProperties.Name
-	stringResult += "\"" + name + "\""
-	stringResult += ", "
-	stringResult += "RoundsPerSecond: "
-	roundsPerSecond := weaponProperties.RoundsPerSecond
-	stringResult += fmt.Sprint(roundsPerSecond)
-	stringResult += ", "
-	stringResult += "Spread: "
-	spread := weaponProperties.Spread
-	stringResult += fmt.Sprint(spread)
-	stringResult += ", "
-	stringResult += "AimTime: "
-	aimTime := weaponProperties.AimTime
-	stringResult += fmt.Sprint(aimTime)
-	stringResult += ", "
-	stringResult += "AimFieldOfView: "
-	aimFieldOfView := weaponProperties.AimFieldOfView
-	stringResult += fmt.Sprint(aimFieldOfView)
-	stringResult += ", "
-	stringResult += "AimRotationSpeed: "
-	aimRotationSpeed := weaponProperties.AimRotationSpeed
-	stringResult += fmt.Sprint(aimRotationSpeed)
-	stringResult += ", "
-	stringResult += "AimMovementSpeedModifier: "
-	aimMovementSpeedModifier := weaponProperties.AimMovementSpeedModifier
-	stringResult += fmt.Sprint(aimMovementSpeedModifier)
-	stringResult += ", "
-	stringResult += "ProjectileSpeed: "
-	projectileSpeed := weaponProperties.ProjectileSpeed
-	stringResult += fmt.Sprint(projectileSpeed)
-	stringResult += ", "
-	stringResult += "ProjectileDamage: "
-	projectileDamage := weaponProperties.ProjectileDamage
-	stringResult += fmt.Sprint(projectileDamage)
-	stringResult += ", "
-	stringResult += "ProjectileLifeTime: "
-	projectileLifeTime := weaponProperties.ProjectileLifeTime
-	stringResult += fmt.Sprint(projectileLifeTime)
-	stringResult += ", "
-	stringResult += "ShotSoundTypeIndex: "
-	shotSoundTypeIndex := weaponProperties.ShotSoundTypeIndex
+func (sf WeaponProperties) String() string {
+	strRes := "{ "
+	strRes += "Name: "
+	name := sf.Name
+	strRes += "\"" + name + "\""
+	strRes += ", "
+	strRes += "RoundsPerSecond: "
+	roundsPerSecond := sf.RoundsPerSecond
+	strRes += fmt.Sprint(roundsPerSecond)
+	strRes += ", "
+	strRes += "Spread: "
+	spread := sf.Spread
+	strRes += fmt.Sprint(spread)
+	strRes += ", "
+	strRes += "AimTime: "
+	aimTime := sf.AimTime
+	strRes += fmt.Sprint(aimTime)
+	strRes += ", "
+	strRes += "AimFieldOfView: "
+	aimFieldOfView := sf.AimFieldOfView
+	strRes += fmt.Sprint(aimFieldOfView)
+	strRes += ", "
+	strRes += "AimRotationSpeed: "
+	aimRotationSpeed := sf.AimRotationSpeed
+	strRes += fmt.Sprint(aimRotationSpeed)
+	strRes += ", "
+	strRes += "AimMovementSpeedModifier: "
+	aimMovementSpeedModifier := sf.AimMovementSpeedModifier
+	strRes += fmt.Sprint(aimMovementSpeedModifier)
+	strRes += ", "
+	strRes += "ProjectileSpeed: "
+	projectileSpeed := sf.ProjectileSpeed
+	strRes += fmt.Sprint(projectileSpeed)
+	strRes += ", "
+	strRes += "ProjectileDamage: "
+	projectileDamage := sf.ProjectileDamage
+	strRes += fmt.Sprint(projectileDamage)
+	strRes += ", "
+	strRes += "ProjectileLifeTime: "
+	projectileLifeTime := sf.ProjectileLifeTime
+	strRes += fmt.Sprint(projectileLifeTime)
+	strRes += ", "
+	strRes += "ShotSoundTypeIndex: "
+	shotSoundTypeIndex := sf.ShotSoundTypeIndex
 	if shotSoundTypeIndex == nil {
-		stringResult += "nil"
+		strRes += "nil"
 	} else {
 		shotSoundTypeIndexValue := *shotSoundTypeIndex
-		stringResult += fmt.Sprint(shotSoundTypeIndexValue)
+		strRes += fmt.Sprint(shotSoundTypeIndexValue)
 	}
-	stringResult += ", "
-	stringResult += "ProjectileHitSoundTypeIndex: "
-	projectileHitSoundTypeIndex := weaponProperties.ProjectileHitSoundTypeIndex
+	strRes += ", "
+	strRes += "ProjectileHitSoundTypeIndex: "
+	projectileHitSoundTypeIndex := sf.ProjectileHitSoundTypeIndex
 	if projectileHitSoundTypeIndex == nil {
-		stringResult += "nil"
+		strRes += "nil"
 	} else {
 		projectileHitSoundTypeIndexValue := *projectileHitSoundTypeIndex
-		stringResult += fmt.Sprint(projectileHitSoundTypeIndexValue)
+		strRes += fmt.Sprint(projectileHitSoundTypeIndexValue)
 	}
-	stringResult += ", "
-	stringResult += "MaxInventoryAmmo: "
-	maxInventoryAmmo := weaponProperties.MaxInventoryAmmo
-	stringResult += fmt.Sprint(maxInventoryAmmo)
-	stringResult += " }"
-	return stringResult
+	strRes += ", "
+	strRes += "MaxInventoryAmmo: "
+	maxInventoryAmmo := sf.MaxInventoryAmmo
+	strRes += fmt.Sprint(maxInventoryAmmo)
+	strRes += " }"
+	return strRes
 }

@@ -80,34 +80,34 @@ func ReadGame() Game {
 }
 
 // Write Game to writer
-func (game Game) Write() {
-	myId := game.MyId
+func (sf Game) Write() {
+	myId := sf.MyId
 	flow.WriteInt32(myId)
-	players := game.Players
+	players := sf.Players
 	flow.WriteInt32(int32(len(players)))
 	for _, playersElement := range players {
 		playersElement.Write()
 	}
-	currentTick := game.CurrentTick
+	currentTick := sf.CurrentTick
 	flow.WriteInt32(currentTick)
-	units := game.Units
+	units := sf.Units
 	flow.WriteInt32(int32(len(units)))
 	for _, unitsElement := range units {
 		unitsElement.Write()
 	}
-	loot := game.Loot
+	loot := sf.Loot
 	flow.WriteInt32(int32(len(loot)))
 	for _, lootElement := range loot {
 		lootElement.Write()
 	}
-	projectiles := game.Projectiles
+	projectiles := sf.Projectiles
 	flow.WriteInt32(int32(len(projectiles)))
 	for _, projectilesElement := range projectiles {
 		projectilesElement.Write()
 	}
-	zone := game.Zone
+	zone := sf.Zone
 	zone.Write()
-	sounds := game.Sounds
+	sounds := sf.Sounds
 	flow.WriteInt32(int32(len(sounds)))
 	for _, soundsElement := range sounds {
 		soundsElement.Write()
@@ -115,14 +115,14 @@ func (game Game) Write() {
 }
 
 // Get string representation of Game
-func (game Game) String() string {
+func (sf Game) String() string {
 	stringResult := "{ "
 	stringResult += "MyId: "
-	myId := game.MyId
+	myId := sf.MyId
 	stringResult += fmt.Sprint(myId)
 	stringResult += ", "
 	stringResult += "Players: "
-	players := game.Players
+	players := sf.Players
 	stringResult += "[ "
 	for playersIndex, playersElement := range players {
 		if playersIndex != 0 {
@@ -133,11 +133,11 @@ func (game Game) String() string {
 	stringResult += " ]"
 	stringResult += ", "
 	stringResult += "CurrentTick: "
-	currentTick := game.CurrentTick
+	currentTick := sf.CurrentTick
 	stringResult += fmt.Sprint(currentTick)
 	stringResult += ", "
 	stringResult += "Units: "
-	units := game.Units
+	units := sf.Units
 	stringResult += "[ "
 	for unitsIndex, unitsElement := range units {
 		if unitsIndex != 0 {
@@ -148,7 +148,7 @@ func (game Game) String() string {
 	stringResult += " ]"
 	stringResult += ", "
 	stringResult += "Loot: "
-	loot := game.Loot
+	loot := sf.Loot
 	stringResult += "[ "
 	for lootIndex, lootElement := range loot {
 		if lootIndex != 0 {
@@ -159,7 +159,7 @@ func (game Game) String() string {
 	stringResult += " ]"
 	stringResult += ", "
 	stringResult += "Projectiles: "
-	projectiles := game.Projectiles
+	projectiles := sf.Projectiles
 	stringResult += "[ "
 	for projectilesIndex, projectilesElement := range projectiles {
 		if projectilesIndex != 0 {
@@ -170,11 +170,11 @@ func (game Game) String() string {
 	stringResult += " ]"
 	stringResult += ", "
 	stringResult += "Zone: "
-	zone := game.Zone
+	zone := sf.Zone
 	stringResult += zone.String()
 	stringResult += ", "
 	stringResult += "Sounds: "
-	sounds := game.Sounds
+	sounds := sf.Sounds
 	stringResult += "[ "
 	for soundsIndex, soundsElement := range sounds {
 		if soundsIndex != 0 {

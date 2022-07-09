@@ -2,7 +2,7 @@ package mystrategy
 
 import (
 	"aicup22/pkg/model"
-	"aicup22/pkg/types"
+	"aicup22/pkg/debugout"
 )
 
 type MyStrategy struct{}
@@ -11,12 +11,12 @@ func NewMyStrategy(constants model.Constants) *MyStrategy {
 	return &MyStrategy{}
 }
 
-func (strategy MyStrategy) GetOrder(game model.Game, debugInterface *types.DebugInterface) model.Order {
+func (strategy MyStrategy) GetOrder(game model.Game, debugInterface *debugout.DebugOut) model.Order {
 	return model.Order{
 		UnitOrders: make(map[int32]model.UnitOrder),
 	}
 }
 
-func (strategy MyStrategy) DebugUpdate(displayedTick int32, debugInterface types.DebugInterface) {}
+func (strategy MyStrategy) DebugUpdate(displayedTick int32, debugInterface debugout.DebugOut) {}
 
 func (strategy MyStrategy) Finish() {}

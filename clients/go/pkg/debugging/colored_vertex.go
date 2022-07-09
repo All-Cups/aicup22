@@ -30,23 +30,23 @@ func ReadColoredVertex() ColoredVertex {
 }
 
 // Write ColoredVertex to writer
-func (coloredVertex ColoredVertex) Write() {
-	position := coloredVertex.Position
+func (sf ColoredVertex) Write() {
+	position := sf.Position
 	position.Write()
-	color := coloredVertex.Color
+	color := sf.Color
 	color.Write()
 }
 
 // Get string representation of ColoredVertex
-func (coloredVertex ColoredVertex) String() string {
-	stringResult := "{ "
-	stringResult += "Position: "
-	position := coloredVertex.Position
-	stringResult += position.String()
-	stringResult += ", "
-	stringResult += "Color: "
-	color := coloredVertex.Color
-	stringResult += color.String()
-	stringResult += " }"
-	return stringResult
+func (sf ColoredVertex) String() string {
+	strRes := "{ "
+	strRes += "Position: "
+	position := sf.Position
+	strRes += position.String()
+	strRes += ", "
+	strRes += "Color: "
+	color := sf.Color
+	strRes += color.String()
+	strRes += " }"
+	return strRes
 }

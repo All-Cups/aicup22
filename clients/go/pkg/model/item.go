@@ -49,17 +49,17 @@ func ReadItemWeapon() ItemWeapon {
 }
 
 // Write Weapon to writer
-func (itemWeapon ItemWeapon) Write() {
+func (sf ItemWeapon) Write() {
 	flow.WriteInt32(0)
-	typeIndex := itemWeapon.TypeIndex
+	typeIndex := sf.TypeIndex
 	flow.WriteInt32(typeIndex)
 }
 
 // Get string representation of Weapon
-func (itemWeapon ItemWeapon) String() string {
+func (sf ItemWeapon) String() string {
 	stringResult := "{ "
 	stringResult += "TypeIndex: "
-	typeIndex := itemWeapon.TypeIndex
+	typeIndex := sf.TypeIndex
 	stringResult += fmt.Sprint(typeIndex)
 	stringResult += " }"
 	return stringResult
@@ -86,18 +86,18 @@ func ReadItemShieldPotions() ItemShieldPotions {
 }
 
 // Write ShieldPotions to writer
-func (itemShieldPotions ItemShieldPotions) Write() {
+func (sf ItemShieldPotions) Write() {
 	// FIXME: магическая константа
 	flow.WriteInt32(1)
-	amount := itemShieldPotions.Amount
+	amount := sf.Amount
 	flow.WriteInt32(amount)
 }
 
 // Get string representation of ShieldPotions
-func (itemShieldPotions ItemShieldPotions) String() string {
+func (sf ItemShieldPotions) String() string {
 	stringResult := "{ "
 	stringResult += "Amount: "
-	amount := itemShieldPotions.Amount
+	amount := sf.Amount
 	stringResult += fmt.Sprint(amount)
 	stringResult += " }"
 	return stringResult
@@ -129,24 +129,24 @@ func ReadItemAmmo() ItemAmmo {
 }
 
 // Write Ammo to writer
-func (itemAmmo ItemAmmo) Write() {
+func (sf ItemAmmo) Write() {
 	flow.WriteInt32(2)
-	weaponTypeIndex := itemAmmo.WeaponTypeIndex
+	weaponTypeIndex := sf.WeaponTypeIndex
 	flow.WriteInt32(weaponTypeIndex)
-	amount := itemAmmo.Amount
+	amount := sf.Amount
 	flow.WriteInt32(amount)
 }
 
 // Get string representation of Ammo
-func (itemAmmo ItemAmmo) String() string {
-	stringResult := "{ "
-	stringResult += "WeaponTypeIndex: "
-	weaponTypeIndex := itemAmmo.WeaponTypeIndex
-	stringResult += fmt.Sprint(weaponTypeIndex)
-	stringResult += ", "
-	stringResult += "Amount: "
-	amount := itemAmmo.Amount
-	stringResult += fmt.Sprint(amount)
-	stringResult += " }"
-	return stringResult
+func (sf ItemAmmo) String() string {
+	strRes := "{ "
+	strRes += "WeaponTypeIndex: "
+	weaponTypeIndex := sf.WeaponTypeIndex
+	strRes += fmt.Sprint(weaponTypeIndex)
+	strRes += ", "
+	strRes += "Amount: "
+	amount := sf.Amount
+	strRes += fmt.Sprint(amount)
+	strRes += " }"
+	return strRes
 }

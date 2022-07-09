@@ -46,41 +46,41 @@ func ReadObstacle() Obstacle {
 }
 
 // Write Obstacle to writer
-func (obstacle Obstacle) Write() {
-	id := obstacle.Id
+func (sf Obstacle) Write() {
+	id := sf.Id
 	flow.WriteInt32(id)
-	position := obstacle.Position
+	position := sf.Position
 	position.Write()
-	radius := obstacle.Radius
+	radius := sf.Radius
 	flow.WriteFloat64(radius)
-	canSeeThrough := obstacle.CanSeeThrough
+	canSeeThrough := sf.CanSeeThrough
 	flow.WriteBool(canSeeThrough)
-	canShootThrough := obstacle.CanShootThrough
+	canShootThrough := sf.CanShootThrough
 	flow.WriteBool(canShootThrough)
 }
 
 // Get string representation of Obstacle
-func (obstacle Obstacle) String() string {
-	stringResult := "{ "
-	stringResult += "Id: "
-	id := obstacle.Id
-	stringResult += fmt.Sprint(id)
-	stringResult += ", "
-	stringResult += "Position: "
-	position := obstacle.Position
-	stringResult += position.String()
-	stringResult += ", "
-	stringResult += "Radius: "
-	radius := obstacle.Radius
-	stringResult += fmt.Sprint(radius)
-	stringResult += ", "
-	stringResult += "CanSeeThrough: "
-	canSeeThrough := obstacle.CanSeeThrough
-	stringResult += fmt.Sprint(canSeeThrough)
-	stringResult += ", "
-	stringResult += "CanShootThrough: "
-	canShootThrough := obstacle.CanShootThrough
-	stringResult += fmt.Sprint(canShootThrough)
-	stringResult += " }"
-	return stringResult
+func (sf Obstacle) String() string {
+	strRes := "{ "
+	strRes += "Id: "
+	id := sf.Id
+	strRes += fmt.Sprint(id)
+	strRes += ", "
+	strRes += "Position: "
+	position := sf.Position
+	strRes += position.String()
+	strRes += ", "
+	strRes += "Radius: "
+	radius := sf.Radius
+	strRes += fmt.Sprint(radius)
+	strRes += ", "
+	strRes += "CanSeeThrough: "
+	canSeeThrough := sf.CanSeeThrough
+	strRes += fmt.Sprint(canSeeThrough)
+	strRes += ", "
+	strRes += "CanShootThrough: "
+	canShootThrough := sf.CanShootThrough
+	strRes += fmt.Sprint(canShootThrough)
+	strRes += " }"
+	return strRes
 }

@@ -92,7 +92,20 @@ var (
 	flow *stream.Stream
 )
 
-func NewConstants(ticksPerSecond float64, teamSize int32, initialZoneRadius float64, zoneSpeed float64, zoneDamagePerSecond float64, spawnTime float64, spawnCollisionDamagePerSecond float64, lootingTime float64, botPlayers int32, unitRadius float64, unitHealth float64, healthRegenerationPerSecond float64, healthRegenerationDelay float64, maxShield float64, spawnShield float64, extraLives int32, lastRespawnZoneRadius float64, fieldOfView float64, viewDistance float64, viewBlocking bool, rotationSpeed float64, spawnMovementSpeed float64, maxUnitForwardSpeed float64, maxUnitBackwardSpeed float64, unitAcceleration float64, friendlyFire bool, killScore float64, damageScoreMultiplier float64, scorePerPlace float64, weapons []WeaponProperties, startingWeapon *int32, startingWeaponAmmo int32, maxShieldPotionsInInventory int32, shieldPerPotion float64, shieldPotionUseTime float64, sounds []SoundProperties, stepsSoundTypeIndex *int32, stepsSoundTravelDistance float64, obstacles []Obstacle) Constants {
+func NewConstants(ticksPerSecond float64, teamSize int32,
+	initialZoneRadius, zoneSpeed, zoneDamagePerSecond, spawnTime, spawnCollisionDamagePerSecond, lootingTime float64,
+	botPlayers int32,
+	unitRadius, unitHealth, healthRegenerationPerSecond, healthRegenerationDelay, maxShield, spawnShield float64,
+	extraLives int32,
+	lastRespawnZoneRadius, fieldOfView, viewDistance float64,
+	viewBlocking bool,
+	rotationSpeed, spawnMovementSpeed, maxUnitForwardSpeed, maxUnitBackwardSpeed, unitAcceleration float64,
+	friendlyFire bool,
+	killScore, damageScoreMultiplier, scorePerPlace float64,
+	weapons []WeaponProperties, startingWeapon *int32,
+	startingWeaponAmmo, maxShieldPotionsInInventory int32,
+	shieldPerPotion, shieldPotionUseTime float64,
+	sounds []SoundProperties, stepsSoundTypeIndex *int32, stepsSoundTravelDistance float64, obstacles []Obstacle) Constants {
 	if flow == nil {
 		flow = stream.Flow()
 	}
@@ -248,71 +261,71 @@ func ReadConstants() Constants {
 }
 
 // Write Constants to writer
-func (constants Constants) Write() {
-	ticksPerSecond := constants.TicksPerSecond
+func (sf Constants) Write() {
+	ticksPerSecond := sf.TicksPerSecond
 	flow.WriteFloat64(ticksPerSecond)
-	teamSize := constants.TeamSize
+	teamSize := sf.TeamSize
 	flow.WriteInt32(teamSize)
-	initialZoneRadius := constants.InitialZoneRadius
+	initialZoneRadius := sf.InitialZoneRadius
 	flow.WriteFloat64(initialZoneRadius)
-	zoneSpeed := constants.ZoneSpeed
+	zoneSpeed := sf.ZoneSpeed
 	flow.WriteFloat64(zoneSpeed)
-	zoneDamagePerSecond := constants.ZoneDamagePerSecond
+	zoneDamagePerSecond := sf.ZoneDamagePerSecond
 	flow.WriteFloat64(zoneDamagePerSecond)
-	spawnTime := constants.SpawnTime
+	spawnTime := sf.SpawnTime
 	flow.WriteFloat64(spawnTime)
-	spawnCollisionDamagePerSecond := constants.SpawnCollisionDamagePerSecond
+	spawnCollisionDamagePerSecond := sf.SpawnCollisionDamagePerSecond
 	flow.WriteFloat64(spawnCollisionDamagePerSecond)
-	lootingTime := constants.LootingTime
+	lootingTime := sf.LootingTime
 	flow.WriteFloat64(lootingTime)
-	botPlayers := constants.BotPlayers
+	botPlayers := sf.BotPlayers
 	flow.WriteInt32(botPlayers)
-	unitRadius := constants.UnitRadius
+	unitRadius := sf.UnitRadius
 	flow.WriteFloat64(unitRadius)
-	unitHealth := constants.UnitHealth
+	unitHealth := sf.UnitHealth
 	flow.WriteFloat64(unitHealth)
-	healthRegenerationPerSecond := constants.HealthRegenerationPerSecond
+	healthRegenerationPerSecond := sf.HealthRegenerationPerSecond
 	flow.WriteFloat64(healthRegenerationPerSecond)
-	healthRegenerationDelay := constants.HealthRegenerationDelay
+	healthRegenerationDelay := sf.HealthRegenerationDelay
 	flow.WriteFloat64(healthRegenerationDelay)
-	maxShield := constants.MaxShield
+	maxShield := sf.MaxShield
 	flow.WriteFloat64(maxShield)
-	spawnShield := constants.SpawnShield
+	spawnShield := sf.SpawnShield
 	flow.WriteFloat64(spawnShield)
-	extraLives := constants.ExtraLives
+	extraLives := sf.ExtraLives
 	flow.WriteInt32(extraLives)
-	lastRespawnZoneRadius := constants.LastRespawnZoneRadius
+	lastRespawnZoneRadius := sf.LastRespawnZoneRadius
 	flow.WriteFloat64(lastRespawnZoneRadius)
-	fieldOfView := constants.FieldOfView
+	fieldOfView := sf.FieldOfView
 	flow.WriteFloat64(fieldOfView)
-	viewDistance := constants.ViewDistance
+	viewDistance := sf.ViewDistance
 	flow.WriteFloat64(viewDistance)
-	viewBlocking := constants.ViewBlocking
+	viewBlocking := sf.ViewBlocking
 	flow.WriteBool(viewBlocking)
-	rotationSpeed := constants.RotationSpeed
+	rotationSpeed := sf.RotationSpeed
 	flow.WriteFloat64(rotationSpeed)
-	spawnMovementSpeed := constants.SpawnMovementSpeed
+	spawnMovementSpeed := sf.SpawnMovementSpeed
 	flow.WriteFloat64(spawnMovementSpeed)
-	maxUnitForwardSpeed := constants.MaxUnitForwardSpeed
+	maxUnitForwardSpeed := sf.MaxUnitForwardSpeed
 	flow.WriteFloat64(maxUnitForwardSpeed)
-	maxUnitBackwardSpeed := constants.MaxUnitBackwardSpeed
+	maxUnitBackwardSpeed := sf.MaxUnitBackwardSpeed
 	flow.WriteFloat64(maxUnitBackwardSpeed)
-	unitAcceleration := constants.UnitAcceleration
+	unitAcceleration := sf.UnitAcceleration
 	flow.WriteFloat64(unitAcceleration)
-	friendlyFire := constants.FriendlyFire
+	friendlyFire := sf.FriendlyFire
 	flow.WriteBool(friendlyFire)
-	killScore := constants.KillScore
+	killScore := sf.KillScore
 	flow.WriteFloat64(killScore)
-	damageScoreMultiplier := constants.DamageScoreMultiplier
+	damageScoreMultiplier := sf.DamageScoreMultiplier
 	flow.WriteFloat64(damageScoreMultiplier)
-	scorePerPlace := constants.ScorePerPlace
+	scorePerPlace := sf.ScorePerPlace
 	flow.WriteFloat64(scorePerPlace)
-	weapons := constants.Weapons
+	weapons := sf.Weapons
 	flow.WriteInt32(int32(len(weapons)))
 	for _, weaponsElement := range weapons {
 		weaponsElement.Write()
 	}
-	startingWeapon := constants.StartingWeapon
+	startingWeapon := sf.StartingWeapon
 	if startingWeapon == nil {
 		flow.WriteBool(false)
 	} else {
@@ -320,20 +333,20 @@ func (constants Constants) Write() {
 		startingWeaponValue := *startingWeapon
 		flow.WriteInt32(startingWeaponValue)
 	}
-	startingWeaponAmmo := constants.StartingWeaponAmmo
+	startingWeaponAmmo := sf.StartingWeaponAmmo
 	flow.WriteInt32(startingWeaponAmmo)
-	maxShieldPotionsInInventory := constants.MaxShieldPotionsInInventory
+	maxShieldPotionsInInventory := sf.MaxShieldPotionsInInventory
 	flow.WriteInt32(maxShieldPotionsInInventory)
-	shieldPerPotion := constants.ShieldPerPotion
+	shieldPerPotion := sf.ShieldPerPotion
 	flow.WriteFloat64(shieldPerPotion)
-	shieldPotionUseTime := constants.ShieldPotionUseTime
+	shieldPotionUseTime := sf.ShieldPotionUseTime
 	flow.WriteFloat64(shieldPotionUseTime)
-	sounds := constants.Sounds
+	sounds := sf.Sounds
 	flow.WriteInt32(int32(len(sounds)))
 	for _, soundsElement := range sounds {
 		soundsElement.Write()
 	}
-	stepsSoundTypeIndex := constants.StepsSoundTypeIndex
+	stepsSoundTypeIndex := sf.StepsSoundTypeIndex
 	if stepsSoundTypeIndex == nil {
 		flow.WriteBool(false)
 	} else {
@@ -341,9 +354,9 @@ func (constants Constants) Write() {
 		stepsSoundTypeIndexValue := *stepsSoundTypeIndex
 		flow.WriteInt32(stepsSoundTypeIndexValue)
 	}
-	stepsSoundTravelDistance := constants.StepsSoundTravelDistance
+	stepsSoundTravelDistance := sf.StepsSoundTravelDistance
 	flow.WriteFloat64(stepsSoundTravelDistance)
-	obstacles := constants.Obstacles
+	obstacles := sf.Obstacles
 	flow.WriteInt32(int32(len(obstacles)))
 	for _, obstaclesElement := range obstacles {
 		obstaclesElement.Write()
@@ -351,194 +364,194 @@ func (constants Constants) Write() {
 }
 
 // Get string representation of Constants
-func (constants Constants) String() string {
-	stringResult := "{ "
-	stringResult += "TicksPerSecond: "
-	ticksPerSecond := constants.TicksPerSecond
-	stringResult += fmt.Sprint(ticksPerSecond)
-	stringResult += ", "
-	stringResult += "TeamSize: "
-	teamSize := constants.TeamSize
-	stringResult += fmt.Sprint(teamSize)
-	stringResult += ", "
-	stringResult += "InitialZoneRadius: "
-	initialZoneRadius := constants.InitialZoneRadius
-	stringResult += fmt.Sprint(initialZoneRadius)
-	stringResult += ", "
-	stringResult += "ZoneSpeed: "
-	zoneSpeed := constants.ZoneSpeed
-	stringResult += fmt.Sprint(zoneSpeed)
-	stringResult += ", "
-	stringResult += "ZoneDamagePerSecond: "
-	zoneDamagePerSecond := constants.ZoneDamagePerSecond
-	stringResult += fmt.Sprint(zoneDamagePerSecond)
-	stringResult += ", "
-	stringResult += "SpawnTime: "
-	spawnTime := constants.SpawnTime
-	stringResult += fmt.Sprint(spawnTime)
-	stringResult += ", "
-	stringResult += "SpawnCollisionDamagePerSecond: "
-	spawnCollisionDamagePerSecond := constants.SpawnCollisionDamagePerSecond
-	stringResult += fmt.Sprint(spawnCollisionDamagePerSecond)
-	stringResult += ", "
-	stringResult += "LootingTime: "
-	lootingTime := constants.LootingTime
-	stringResult += fmt.Sprint(lootingTime)
-	stringResult += ", "
-	stringResult += "BotPlayers: "
-	botPlayers := constants.BotPlayers
-	stringResult += fmt.Sprint(botPlayers)
-	stringResult += ", "
-	stringResult += "UnitRadius: "
-	unitRadius := constants.UnitRadius
-	stringResult += fmt.Sprint(unitRadius)
-	stringResult += ", "
-	stringResult += "UnitHealth: "
-	unitHealth := constants.UnitHealth
-	stringResult += fmt.Sprint(unitHealth)
-	stringResult += ", "
-	stringResult += "HealthRegenerationPerSecond: "
-	healthRegenerationPerSecond := constants.HealthRegenerationPerSecond
-	stringResult += fmt.Sprint(healthRegenerationPerSecond)
-	stringResult += ", "
-	stringResult += "HealthRegenerationDelay: "
-	healthRegenerationDelay := constants.HealthRegenerationDelay
-	stringResult += fmt.Sprint(healthRegenerationDelay)
-	stringResult += ", "
-	stringResult += "MaxShield: "
-	maxShield := constants.MaxShield
-	stringResult += fmt.Sprint(maxShield)
-	stringResult += ", "
-	stringResult += "SpawnShield: "
-	spawnShield := constants.SpawnShield
-	stringResult += fmt.Sprint(spawnShield)
-	stringResult += ", "
-	stringResult += "ExtraLives: "
-	extraLives := constants.ExtraLives
-	stringResult += fmt.Sprint(extraLives)
-	stringResult += ", "
-	stringResult += "LastRespawnZoneRadius: "
-	lastRespawnZoneRadius := constants.LastRespawnZoneRadius
-	stringResult += fmt.Sprint(lastRespawnZoneRadius)
-	stringResult += ", "
-	stringResult += "FieldOfView: "
-	fieldOfView := constants.FieldOfView
-	stringResult += fmt.Sprint(fieldOfView)
-	stringResult += ", "
-	stringResult += "ViewDistance: "
-	viewDistance := constants.ViewDistance
-	stringResult += fmt.Sprint(viewDistance)
-	stringResult += ", "
-	stringResult += "ViewBlocking: "
-	viewBlocking := constants.ViewBlocking
-	stringResult += fmt.Sprint(viewBlocking)
-	stringResult += ", "
-	stringResult += "RotationSpeed: "
-	rotationSpeed := constants.RotationSpeed
-	stringResult += fmt.Sprint(rotationSpeed)
-	stringResult += ", "
-	stringResult += "SpawnMovementSpeed: "
-	spawnMovementSpeed := constants.SpawnMovementSpeed
-	stringResult += fmt.Sprint(spawnMovementSpeed)
-	stringResult += ", "
-	stringResult += "MaxUnitForwardSpeed: "
-	maxUnitForwardSpeed := constants.MaxUnitForwardSpeed
-	stringResult += fmt.Sprint(maxUnitForwardSpeed)
-	stringResult += ", "
-	stringResult += "MaxUnitBackwardSpeed: "
-	maxUnitBackwardSpeed := constants.MaxUnitBackwardSpeed
-	stringResult += fmt.Sprint(maxUnitBackwardSpeed)
-	stringResult += ", "
-	stringResult += "UnitAcceleration: "
-	unitAcceleration := constants.UnitAcceleration
-	stringResult += fmt.Sprint(unitAcceleration)
-	stringResult += ", "
-	stringResult += "FriendlyFire: "
-	friendlyFire := constants.FriendlyFire
-	stringResult += fmt.Sprint(friendlyFire)
-	stringResult += ", "
-	stringResult += "KillScore: "
-	killScore := constants.KillScore
-	stringResult += fmt.Sprint(killScore)
-	stringResult += ", "
-	stringResult += "DamageScoreMultiplier: "
-	damageScoreMultiplier := constants.DamageScoreMultiplier
-	stringResult += fmt.Sprint(damageScoreMultiplier)
-	stringResult += ", "
-	stringResult += "ScorePerPlace: "
-	scorePerPlace := constants.ScorePerPlace
-	stringResult += fmt.Sprint(scorePerPlace)
-	stringResult += ", "
-	stringResult += "Weapons: "
-	weapons := constants.Weapons
-	stringResult += "[ "
+func (sf Constants) String() string {
+	strRes := "{ "
+	strRes += "TicksPerSecond: "
+	ticksPerSecond := sf.TicksPerSecond
+	strRes += fmt.Sprint(ticksPerSecond)
+	strRes += ", "
+	strRes += "TeamSize: "
+	teamSize := sf.TeamSize
+	strRes += fmt.Sprint(teamSize)
+	strRes += ", "
+	strRes += "InitialZoneRadius: "
+	initialZoneRadius := sf.InitialZoneRadius
+	strRes += fmt.Sprint(initialZoneRadius)
+	strRes += ", "
+	strRes += "ZoneSpeed: "
+	zoneSpeed := sf.ZoneSpeed
+	strRes += fmt.Sprint(zoneSpeed)
+	strRes += ", "
+	strRes += "ZoneDamagePerSecond: "
+	zoneDamagePerSecond := sf.ZoneDamagePerSecond
+	strRes += fmt.Sprint(zoneDamagePerSecond)
+	strRes += ", "
+	strRes += "SpawnTime: "
+	spawnTime := sf.SpawnTime
+	strRes += fmt.Sprint(spawnTime)
+	strRes += ", "
+	strRes += "SpawnCollisionDamagePerSecond: "
+	spawnCollisionDamagePerSecond := sf.SpawnCollisionDamagePerSecond
+	strRes += fmt.Sprint(spawnCollisionDamagePerSecond)
+	strRes += ", "
+	strRes += "LootingTime: "
+	lootingTime := sf.LootingTime
+	strRes += fmt.Sprint(lootingTime)
+	strRes += ", "
+	strRes += "BotPlayers: "
+	botPlayers := sf.BotPlayers
+	strRes += fmt.Sprint(botPlayers)
+	strRes += ", "
+	strRes += "UnitRadius: "
+	unitRadius := sf.UnitRadius
+	strRes += fmt.Sprint(unitRadius)
+	strRes += ", "
+	strRes += "UnitHealth: "
+	unitHealth := sf.UnitHealth
+	strRes += fmt.Sprint(unitHealth)
+	strRes += ", "
+	strRes += "HealthRegenerationPerSecond: "
+	healthRegenerationPerSecond := sf.HealthRegenerationPerSecond
+	strRes += fmt.Sprint(healthRegenerationPerSecond)
+	strRes += ", "
+	strRes += "HealthRegenerationDelay: "
+	healthRegenerationDelay := sf.HealthRegenerationDelay
+	strRes += fmt.Sprint(healthRegenerationDelay)
+	strRes += ", "
+	strRes += "MaxShield: "
+	maxShield := sf.MaxShield
+	strRes += fmt.Sprint(maxShield)
+	strRes += ", "
+	strRes += "SpawnShield: "
+	spawnShield := sf.SpawnShield
+	strRes += fmt.Sprint(spawnShield)
+	strRes += ", "
+	strRes += "ExtraLives: "
+	extraLives := sf.ExtraLives
+	strRes += fmt.Sprint(extraLives)
+	strRes += ", "
+	strRes += "LastRespawnZoneRadius: "
+	lastRespawnZoneRadius := sf.LastRespawnZoneRadius
+	strRes += fmt.Sprint(lastRespawnZoneRadius)
+	strRes += ", "
+	strRes += "FieldOfView: "
+	fieldOfView := sf.FieldOfView
+	strRes += fmt.Sprint(fieldOfView)
+	strRes += ", "
+	strRes += "ViewDistance: "
+	viewDistance := sf.ViewDistance
+	strRes += fmt.Sprint(viewDistance)
+	strRes += ", "
+	strRes += "ViewBlocking: "
+	viewBlocking := sf.ViewBlocking
+	strRes += fmt.Sprint(viewBlocking)
+	strRes += ", "
+	strRes += "RotationSpeed: "
+	rotationSpeed := sf.RotationSpeed
+	strRes += fmt.Sprint(rotationSpeed)
+	strRes += ", "
+	strRes += "SpawnMovementSpeed: "
+	spawnMovementSpeed := sf.SpawnMovementSpeed
+	strRes += fmt.Sprint(spawnMovementSpeed)
+	strRes += ", "
+	strRes += "MaxUnitForwardSpeed: "
+	maxUnitForwardSpeed := sf.MaxUnitForwardSpeed
+	strRes += fmt.Sprint(maxUnitForwardSpeed)
+	strRes += ", "
+	strRes += "MaxUnitBackwardSpeed: "
+	maxUnitBackwardSpeed := sf.MaxUnitBackwardSpeed
+	strRes += fmt.Sprint(maxUnitBackwardSpeed)
+	strRes += ", "
+	strRes += "UnitAcceleration: "
+	unitAcceleration := sf.UnitAcceleration
+	strRes += fmt.Sprint(unitAcceleration)
+	strRes += ", "
+	strRes += "FriendlyFire: "
+	friendlyFire := sf.FriendlyFire
+	strRes += fmt.Sprint(friendlyFire)
+	strRes += ", "
+	strRes += "KillScore: "
+	killScore := sf.KillScore
+	strRes += fmt.Sprint(killScore)
+	strRes += ", "
+	strRes += "DamageScoreMultiplier: "
+	damageScoreMultiplier := sf.DamageScoreMultiplier
+	strRes += fmt.Sprint(damageScoreMultiplier)
+	strRes += ", "
+	strRes += "ScorePerPlace: "
+	scorePerPlace := sf.ScorePerPlace
+	strRes += fmt.Sprint(scorePerPlace)
+	strRes += ", "
+	strRes += "Weapons: "
+	weapons := sf.Weapons
+	strRes += "[ "
 	for weaponsIndex, weaponsElement := range weapons {
 		if weaponsIndex != 0 {
-			stringResult += ", "
+			strRes += ", "
 		}
-		stringResult += weaponsElement.String()
+		strRes += weaponsElement.String()
 	}
-	stringResult += " ]"
-	stringResult += ", "
-	stringResult += "StartingWeapon: "
-	startingWeapon := constants.StartingWeapon
+	strRes += " ]"
+	strRes += ", "
+	strRes += "StartingWeapon: "
+	startingWeapon := sf.StartingWeapon
 	if startingWeapon == nil {
-		stringResult += "nil"
+		strRes += "nil"
 	} else {
 		startingWeaponValue := *startingWeapon
-		stringResult += fmt.Sprint(startingWeaponValue)
+		strRes += fmt.Sprint(startingWeaponValue)
 	}
-	stringResult += ", "
-	stringResult += "StartingWeaponAmmo: "
-	startingWeaponAmmo := constants.StartingWeaponAmmo
-	stringResult += fmt.Sprint(startingWeaponAmmo)
-	stringResult += ", "
-	stringResult += "MaxShieldPotionsInInventory: "
-	maxShieldPotionsInInventory := constants.MaxShieldPotionsInInventory
-	stringResult += fmt.Sprint(maxShieldPotionsInInventory)
-	stringResult += ", "
-	stringResult += "ShieldPerPotion: "
-	shieldPerPotion := constants.ShieldPerPotion
-	stringResult += fmt.Sprint(shieldPerPotion)
-	stringResult += ", "
-	stringResult += "ShieldPotionUseTime: "
-	shieldPotionUseTime := constants.ShieldPotionUseTime
-	stringResult += fmt.Sprint(shieldPotionUseTime)
-	stringResult += ", "
-	stringResult += "Sounds: "
-	sounds := constants.Sounds
-	stringResult += "[ "
+	strRes += ", "
+	strRes += "StartingWeaponAmmo: "
+	startingWeaponAmmo := sf.StartingWeaponAmmo
+	strRes += fmt.Sprint(startingWeaponAmmo)
+	strRes += ", "
+	strRes += "MaxShieldPotionsInInventory: "
+	maxShieldPotionsInInventory := sf.MaxShieldPotionsInInventory
+	strRes += fmt.Sprint(maxShieldPotionsInInventory)
+	strRes += ", "
+	strRes += "ShieldPerPotion: "
+	shieldPerPotion := sf.ShieldPerPotion
+	strRes += fmt.Sprint(shieldPerPotion)
+	strRes += ", "
+	strRes += "ShieldPotionUseTime: "
+	shieldPotionUseTime := sf.ShieldPotionUseTime
+	strRes += fmt.Sprint(shieldPotionUseTime)
+	strRes += ", "
+	strRes += "Sounds: "
+	sounds := sf.Sounds
+	strRes += "[ "
 	for soundsIndex, soundsElement := range sounds {
 		if soundsIndex != 0 {
-			stringResult += ", "
+			strRes += ", "
 		}
-		stringResult += soundsElement.String()
+		strRes += soundsElement.String()
 	}
-	stringResult += " ]"
-	stringResult += ", "
-	stringResult += "StepsSoundTypeIndex: "
-	stepsSoundTypeIndex := constants.StepsSoundTypeIndex
+	strRes += " ]"
+	strRes += ", "
+	strRes += "StepsSoundTypeIndex: "
+	stepsSoundTypeIndex := sf.StepsSoundTypeIndex
 	if stepsSoundTypeIndex == nil {
-		stringResult += "nil"
+		strRes += "nil"
 	} else {
 		stepsSoundTypeIndexValue := *stepsSoundTypeIndex
-		stringResult += fmt.Sprint(stepsSoundTypeIndexValue)
+		strRes += fmt.Sprint(stepsSoundTypeIndexValue)
 	}
-	stringResult += ", "
-	stringResult += "StepsSoundTravelDistance: "
-	stepsSoundTravelDistance := constants.StepsSoundTravelDistance
-	stringResult += fmt.Sprint(stepsSoundTravelDistance)
-	stringResult += ", "
-	stringResult += "Obstacles: "
-	obstacles := constants.Obstacles
-	stringResult += "[ "
+	strRes += ", "
+	strRes += "StepsSoundTravelDistance: "
+	stepsSoundTravelDistance := sf.StepsSoundTravelDistance
+	strRes += fmt.Sprint(stepsSoundTravelDistance)
+	strRes += ", "
+	strRes += "Obstacles: "
+	obstacles := sf.Obstacles
+	strRes += "[ "
 	for obstaclesIndex, obstaclesElement := range obstacles {
 		if obstaclesIndex != 0 {
-			stringResult += ", "
+			strRes += ", "
 		}
-		stringResult += obstaclesElement.String()
+		strRes += obstaclesElement.String()
 	}
-	stringResult += " ]"
-	stringResult += " }"
-	return stringResult
+	strRes += " ]"
+	strRes += " }"
+	return strRes
 }

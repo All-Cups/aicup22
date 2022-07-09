@@ -53,15 +53,15 @@ func ReadDebugState() DebugState {
 }
 
 // Write DebugState to writer
-func (debugState DebugState) Write() {
-	pressedKeys := debugState.PressedKeys
+func (sf DebugState) Write() {
+	pressedKeys := sf.PressedKeys
 	flow.WriteInt32(int32(len(pressedKeys)))
 	for _, pressedKeysElement := range pressedKeys {
 		flow.WriteString(pressedKeysElement)
 	}
-	cursorWorldPosition := debugState.CursorWorldPosition
+	cursorWorldPosition := sf.CursorWorldPosition
 	cursorWorldPosition.Write()
-	lockedUnit := debugState.LockedUnit
+	lockedUnit := sf.LockedUnit
 	if lockedUnit == nil {
 		flow.WriteBool(false)
 	} else {
@@ -69,40 +69,40 @@ func (debugState DebugState) Write() {
 		lockedUnitValue := *lockedUnit
 		flow.WriteInt32(lockedUnitValue)
 	}
-	camera := debugState.Camera
+	camera := sf.Camera
 	camera.Write()
 }
 
 // Get string representation of DebugState
-func (debugState DebugState) String() string {
-	stringResult := "{ "
-	stringResult += "PressedKeys: "
-	pressedKeys := debugState.PressedKeys
-	stringResult += "[ "
+func (sf DebugState) String() string {
+	strRes := "{ "
+	strRes += "PressedKeys: "
+	pressedKeys := sf.PressedKeys
+	strRes += "[ "
 	for pressedKeysIndex, pressedKeysElement := range pressedKeys {
 		if pressedKeysIndex != 0 {
-			stringResult += ", "
+			strRes += ", "
 		}
-		stringResult += "\"" + pressedKeysElement + "\""
+		strRes += "\"" + pressedKeysElement + "\""
 	}
-	stringResult += " ]"
-	stringResult += ", "
-	stringResult += "CursorWorldPosition: "
-	cursorWorldPosition := debugState.CursorWorldPosition
-	stringResult += cursorWorldPosition.String()
-	stringResult += ", "
-	stringResult += "LockedUnit: "
-	lockedUnit := debugState.LockedUnit
+	strRes += " ]"
+	strRes += ", "
+	strRes += "CursorWorldPosition: "
+	cursorWorldPosition := sf.CursorWorldPosition
+	strRes += cursorWorldPosition.String()
+	strRes += ", "
+	strRes += "LockedUnit: "
+	lockedUnit := sf.LockedUnit
 	if lockedUnit == nil {
-		stringResult += "nil"
+		strRes += "nil"
 	} else {
 		lockedUnitValue := *lockedUnit
-		stringResult += fmt.Sprint(lockedUnitValue)
+		strRes += fmt.Sprint(lockedUnitValue)
 	}
-	stringResult += ", "
-	stringResult += "Camera: "
-	camera := debugState.Camera
-	stringResult += camera.String()
-	stringResult += " }"
-	return stringResult
+	strRes += ", "
+	strRes += "Camera: "
+	camera := sf.Camera
+	strRes += camera.String()
+	strRes += " }"
+	return strRes
 }

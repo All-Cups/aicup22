@@ -37,29 +37,29 @@ func ReadLoot() Loot {
 }
 
 // Write Loot to writer
-func (loot Loot) Write() {
-	id := loot.Id
+func (sf Loot) Write() {
+	id := sf.Id
 	flow.WriteInt32(id)
-	position := loot.Position
+	position := sf.Position
 	position.Write()
-	item := loot.Item
+	item := sf.Item
 	item.Write()
 }
 
 // Get string representation of Loot
-func (loot Loot) String() string {
-	stringResult := "{ "
-	stringResult += "Id: "
-	id := loot.Id
-	stringResult += fmt.Sprint(id)
-	stringResult += ", "
-	stringResult += "Position: "
-	position := loot.Position
-	stringResult += position.String()
-	stringResult += ", "
-	stringResult += "Item: "
-	item := loot.Item
-	stringResult += item.String()
-	stringResult += " }"
-	return stringResult
+func (sf Loot) String() string {
+	strRes := "{ "
+	strRes += "Id: "
+	id := sf.Id
+	strRes += fmt.Sprint(id)
+	strRes += ", "
+	strRes += "Position: "
+	position := sf.Position
+	strRes += position.String()
+	strRes += ", "
+	strRes += "Item: "
+	item := sf.Item
+	strRes += item.String()
+	strRes += " }"
+	return strRes
 }
