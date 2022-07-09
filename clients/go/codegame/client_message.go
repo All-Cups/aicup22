@@ -5,7 +5,7 @@ import (
 	"aicup22/model"
 	"io"
 
-	. "aicup22/stream"
+	"aicup22/stream"
 )
 
 // Message sent from client
@@ -19,7 +19,7 @@ type ClientMessage interface {
 
 // Read ClientMessage from reader
 func ReadClientMessage(reader io.Reader) ClientMessage {
-	switch ReadInt32(reader) {
+	switch stream.ReadInt32(reader) {
 	case 0:
 		return ReadClientMessageDebugMessage(reader)
 	case 1:
@@ -54,7 +54,7 @@ func ReadClientMessageDebugMessage(reader io.Reader) ClientMessageDebugMessage {
 
 // Write DebugMessage to writer
 func (clientMessageDebugMessage ClientMessageDebugMessage) Write(writer io.Writer) {
-	WriteInt32(writer, 0)
+	stream.WriteInt32(writer, 0)
 	command := clientMessageDebugMessage.Command
 	command.Write(writer)
 }
@@ -91,7 +91,7 @@ func ReadClientMessageOrderMessage(reader io.Reader) ClientMessageOrderMessage {
 
 // Write OrderMessage to writer
 func (clientMessageOrderMessage ClientMessageOrderMessage) Write(writer io.Writer) {
-	WriteInt32(writer, 1)
+	stream.WriteInt32(writer, 1)
 	order := clientMessageOrderMessage.Order
 	order.Write(writer)
 }
@@ -121,7 +121,7 @@ func ReadClientMessageDebugUpdateDone(reader io.Reader) ClientMessageDebugUpdate
 
 // Write DebugUpdateDone to writer
 func (clientMessageDebugUpdateDone ClientMessageDebugUpdateDone) Write(writer io.Writer) {
-	WriteInt32(writer, 2)
+	stream.WriteInt32(writer, 2)
 }
 
 // Get string representation of DebugUpdateDone
@@ -146,7 +146,7 @@ func ReadClientMessageRequestDebugState(reader io.Reader) ClientMessageRequestDe
 
 // Write RequestDebugState to writer
 func (clientMessageRequestDebugState ClientMessageRequestDebugState) Write(writer io.Writer) {
-	WriteInt32(writer, 3)
+	stream.WriteInt32(writer, 3)
 }
 
 // Get string representation of RequestDebugState
