@@ -6,6 +6,7 @@ import (
 	"os"
 	"strconv"
 
+	"aicup22/internal/mystrategy"
 	"aicup22/pkg/codegame"
 	"aicup22/pkg/model"
 	"aicup22/pkg/stream"
@@ -40,7 +41,7 @@ func NewRunner(host string, port uint16, token string) Runner {
 }
 
 func (runner Runner) Run() {
-	var myStrategy *MyStrategy = nil
+	var myStrategy *mystrategy.MyStrategy = nil
 	debugInterface := types.DebugInterface{
 		Reader: runner.reader,
 		Writer: runner.writer,
@@ -49,13 +50,13 @@ loop:
 	for {
 		switch message := codegame.ReadServerMessage(runner.reader).(type) {
 		case codegame.ServerMessageUpdateConstants:
-			myStrategy = NewMyStrategy(message.Constants)
+			myStrategy = mystrategy.NewMyStrategy(message.Constants)
 		case codegame.ServerMessageGetOrder:
 			var order model.Order
 			if message.DebugAvailable {
-				order = myStrategy.getOrder(message.PlayerView, &debugInterface)
+				order = myStrategy.GetOrder(message.PlayerView, &debugInterface)
 			} else {
-				order = myStrategy.getOrder(message.PlayerView, nil)
+				order = myStrategy.GetOrder(message.PlayerView, nil)
 			}
 			codegame.ClientMessageOrderMessage{
 				Order: order,
@@ -65,10 +66,10 @@ loop:
 				panic(err)
 			}
 		case codegame.ServerMessageFinish:
-			myStrategy.finish()
+			myStrategy.Finish()
 			break loop
 		case codegame.ServerMessageDebugUpdate:
-			myStrategy.debugUpdate(message.DisplayedTick, debugInterface)
+			myStrategy.DebugUpdate(message.DisplayedTick, debugInterface)
 			codegame.ClientMessageDebugUpdateDone{}.Write(runner.writer)
 			err := runner.writer.Flush()
 			if err != nil {

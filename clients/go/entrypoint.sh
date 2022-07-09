@@ -4,7 +4,7 @@ PROJECT_NAME="aicup22"
 SOLUTION_CODE_ENTRYPOINT="my_strategy.go"
 function compile() (
     set -e
-    go build -o $PROJECT_NAME
+    go build -o ./bin/$PROJECT_NAME ./cmd/$PROJECT_NAME/main.go
 )
 COMPILED_FILE_PATH="$SOLUTION_CODE_PATH/$PROJECT_NAME"
 function run() (
