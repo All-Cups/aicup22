@@ -29,6 +29,7 @@ func ReadClientMessage(reader io.Reader) ClientMessage {
 	case 3:
 		return ReadClientMessageRequestDebugState(reader)
 	}
+	// FIXME: НИКОГДА не используйте панику в инфраструктурном коде
 	panic("Unexpected tag value")
 }
 
