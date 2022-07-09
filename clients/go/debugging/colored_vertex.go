@@ -3,18 +3,18 @@ package debugging
 import (
 	"io"
 
-	. "aicup22/model"
+	"aicup22/model"
 )
 
 // Point + color
 type ColoredVertex struct {
 	// Position
-	Position Vec2
+	Position model.Vec2
 	// Color
 	Color Color
 }
 
-func NewColoredVertex(position Vec2, color Color) ColoredVertex {
+func NewColoredVertex(position model.Vec2, color Color) ColoredVertex {
 	return ColoredVertex{
 		Position: position,
 		Color:    color,
@@ -23,7 +23,7 @@ func NewColoredVertex(position Vec2, color Color) ColoredVertex {
 
 // Read ColoredVertex from reader
 func ReadColoredVertex(reader io.Reader) ColoredVertex {
-	position := ReadVec2(reader)
+	position := model.ReadVec2(reader)
 	color := ReadColor(reader)
 	return ColoredVertex{
 		Position: position,
