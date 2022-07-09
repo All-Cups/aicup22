@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"io"
 
-	. "aicup22/stream"
+	"aicup22/stream"
 )
 
 // A unit
@@ -43,7 +43,7 @@ type Unit struct {
 	ShieldPotions int32
 }
 
-func NewUnit(id int32, playerId int32, health float64, shield float64, extraLives int32, position Vec2, remainingSpawnTime *float64, velocity Vec2, direction Vec2, aim float64, action *Action, healthRegenerationStartTick int32, weapon *int32, nextShotTick int32, ammo []int32, shieldPotions int32) Unit {
+func NewUnit(id, playerId int32, health, shield float64, extraLives int32, position Vec2, remainingSpawnTime *float64, velocity, direction Vec2, aim float64, action *Action, healthRegenerationStartTick int32, weapon *int32, nextShotTick int32, ammo []int32, shieldPotions int32) Unit {
 	return Unit{
 		Id:                          id,
 		PlayerId:                    playerId,
@@ -66,61 +66,45 @@ func NewUnit(id int32, playerId int32, health float64, shield float64, extraLive
 
 // Read Unit from reader
 func ReadUnit(reader io.Reader) Unit {
-	var id int32
-	id = ReadInt32(reader)
-	var playerId int32
-	playerId = ReadInt32(reader)
-	var health float64
-	health = ReadFloat64(reader)
-	var shield float64
-	shield = ReadFloat64(reader)
-	var extraLives int32
-	extraLives = ReadInt32(reader)
-	var position Vec2
-	position = ReadVec2(reader)
+	id := stream.ReadInt32(reader)
+	playerId := stream.ReadInt32(reader)
+	health := stream.ReadFloat64(reader)
+	shield := stream.ReadFloat64(reader)
+	extraLives := stream.ReadInt32(reader)
+	position := ReadVec2(reader)
 	var remainingSpawnTime *float64
-	if ReadBool(reader) {
-		var remainingSpawnTimeValue float64
-		remainingSpawnTimeValue = ReadFloat64(reader)
+	if stream.ReadBool(reader) {
+		remainingSpawnTimeValue := stream.ReadFloat64(reader)
 		remainingSpawnTime = &remainingSpawnTimeValue
 	} else {
 		remainingSpawnTime = nil
 	}
-	var velocity Vec2
-	velocity = ReadVec2(reader)
-	var direction Vec2
-	direction = ReadVec2(reader)
-	var aim float64
-	aim = ReadFloat64(reader)
+	velocity := ReadVec2(reader)
+	direction := ReadVec2(reader)
+	aim := stream.ReadFloat64(reader)
 	var action *Action
-	if ReadBool(reader) {
+	if stream.ReadBool(reader) {
 		var actionValue Action
 		actionValue = ReadAction(reader)
 		action = &actionValue
 	} else {
 		action = nil
 	}
-	var healthRegenerationStartTick int32
-	healthRegenerationStartTick = ReadInt32(reader)
+	healthRegenerationStartTick := stream.ReadInt32(reader)
 	var weapon *int32
-	if ReadBool(reader) {
-		var weaponValue int32
-		weaponValue = ReadInt32(reader)
+	if stream.ReadBool(reader) {
+		weaponValue := stream.ReadInt32(reader)
 		weapon = &weaponValue
 	} else {
 		weapon = nil
 	}
-	var nextShotTick int32
-	nextShotTick = ReadInt32(reader)
-	var ammo []int32
-	ammo = make([]int32, ReadInt32(reader))
+	nextShotTick := stream.ReadInt32(reader)
+	ammo := make([]int32, stream.ReadInt32(reader))
 	for ammoIndex := range ammo {
-		var ammoElement int32
-		ammoElement = ReadInt32(reader)
+		ammoElement := stream.ReadInt32(reader)
 		ammo[ammoIndex] = ammoElement
 	}
-	var shieldPotions int32
-	shieldPotions = ReadInt32(reader)
+	shieldPotions := stream.ReadInt32(reader)
 	return Unit{
 		Id:                          id,
 		PlayerId:                    playerId,
@@ -144,58 +128,58 @@ func ReadUnit(reader io.Reader) Unit {
 // Write Unit to writer
 func (unit Unit) Write(writer io.Writer) {
 	id := unit.Id
-	WriteInt32(writer, id)
+	stream.WriteInt32(writer, id)
 	playerId := unit.PlayerId
-	WriteInt32(writer, playerId)
+	stream.WriteInt32(writer, playerId)
 	health := unit.Health
-	WriteFloat64(writer, health)
+	stream.WriteFloat64(writer, health)
 	shield := unit.Shield
-	WriteFloat64(writer, shield)
+	stream.WriteFloat64(writer, shield)
 	extraLives := unit.ExtraLives
-	WriteInt32(writer, extraLives)
+	stream.WriteInt32(writer, extraLives)
 	position := unit.Position
 	position.Write(writer)
 	remainingSpawnTime := unit.RemainingSpawnTime
 	if remainingSpawnTime == nil {
-		WriteBool(writer, false)
+		stream.WriteBool(writer, false)
 	} else {
-		WriteBool(writer, true)
+		stream.WriteBool(writer, true)
 		remainingSpawnTimeValue := *remainingSpawnTime
-		WriteFloat64(writer, remainingSpawnTimeValue)
+		stream.WriteFloat64(writer, remainingSpawnTimeValue)
 	}
 	velocity := unit.Velocity
 	velocity.Write(writer)
 	direction := unit.Direction
 	direction.Write(writer)
 	aim := unit.Aim
-	WriteFloat64(writer, aim)
+	stream.WriteFloat64(writer, aim)
 	action := unit.Action
 	if action == nil {
-		WriteBool(writer, false)
+		stream.WriteBool(writer, false)
 	} else {
-		WriteBool(writer, true)
+		stream.WriteBool(writer, true)
 		actionValue := *action
 		actionValue.Write(writer)
 	}
 	healthRegenerationStartTick := unit.HealthRegenerationStartTick
-	WriteInt32(writer, healthRegenerationStartTick)
+	stream.WriteInt32(writer, healthRegenerationStartTick)
 	weapon := unit.Weapon
 	if weapon == nil {
-		WriteBool(writer, false)
+		stream.WriteBool(writer, false)
 	} else {
-		WriteBool(writer, true)
+		stream.WriteBool(writer, true)
 		weaponValue := *weapon
-		WriteInt32(writer, weaponValue)
+		stream.WriteInt32(writer, weaponValue)
 	}
 	nextShotTick := unit.NextShotTick
-	WriteInt32(writer, nextShotTick)
+	stream.WriteInt32(writer, nextShotTick)
 	ammo := unit.Ammo
-	WriteInt32(writer, int32(len(ammo)))
+	stream.WriteInt32(writer, int32(len(ammo)))
 	for _, ammoElement := range ammo {
-		WriteInt32(writer, ammoElement)
+		stream.WriteInt32(writer, ammoElement)
 	}
 	shieldPotions := unit.ShieldPotions
-	WriteInt32(writer, shieldPotions)
+	stream.WriteInt32(writer, shieldPotions)
 }
 
 // Get string representation of Unit
