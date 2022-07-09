@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"io"
 
-	. "aicup22/stream"
+	"aicup22/stream"
 )
 
 // An obstacle on the map
@@ -21,7 +21,7 @@ type Obstacle struct {
 	CanShootThrough bool
 }
 
-func NewObstacle(id int32, position Vec2, radius float64, canSeeThrough bool, canShootThrough bool) Obstacle {
+func NewObstacle(id int32, position Vec2, radius float64, canSeeThrough, canShootThrough bool) Obstacle {
 	return Obstacle{
 		Id:              id,
 		Position:        position,
@@ -33,16 +33,11 @@ func NewObstacle(id int32, position Vec2, radius float64, canSeeThrough bool, ca
 
 // Read Obstacle from reader
 func ReadObstacle(reader io.Reader) Obstacle {
-	var id int32
-	id = ReadInt32(reader)
-	var position Vec2
-	position = ReadVec2(reader)
-	var radius float64
-	radius = ReadFloat64(reader)
-	var canSeeThrough bool
-	canSeeThrough = ReadBool(reader)
-	var canShootThrough bool
-	canShootThrough = ReadBool(reader)
+	id := stream.ReadInt32(reader)
+	position := ReadVec2(reader)
+	radius := stream.ReadFloat64(reader)
+	canSeeThrough := stream.ReadBool(reader)
+	canShootThrough := stream.ReadBool(reader)
 	return Obstacle{
 		Id:              id,
 		Position:        position,
@@ -55,15 +50,15 @@ func ReadObstacle(reader io.Reader) Obstacle {
 // Write Obstacle to writer
 func (obstacle Obstacle) Write(writer io.Writer) {
 	id := obstacle.Id
-	WriteInt32(writer, id)
+	stream.WriteInt32(writer, id)
 	position := obstacle.Position
 	position.Write(writer)
 	radius := obstacle.Radius
-	WriteFloat64(writer, radius)
+	stream.WriteFloat64(writer, radius)
 	canSeeThrough := obstacle.CanSeeThrough
-	WriteBool(writer, canSeeThrough)
+	stream.WriteBool(writer, canSeeThrough)
 	canShootThrough := obstacle.CanShootThrough
-	WriteBool(writer, canShootThrough)
+	stream.WriteBool(writer, canShootThrough)
 }
 
 // Get string representation of Obstacle
