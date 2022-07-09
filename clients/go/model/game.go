@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"io"
 
-	. "aicup22/stream"
+	"aicup22/stream"
 )
 
 // Current game's state
@@ -42,45 +42,32 @@ func NewGame(myId int32, players []Player, currentTick int32, units []Unit, loot
 
 // Read Game from reader
 func ReadGame(reader io.Reader) Game {
-	var myId int32
-	myId = ReadInt32(reader)
-	var players []Player
-	players = make([]Player, ReadInt32(reader))
+	myId := stream.ReadInt32(reader)
+	players := make([]Player, stream.ReadInt32(reader))
 	for playersIndex := range players {
-		var playersElement Player
-		playersElement = ReadPlayer(reader)
+		playersElement := ReadPlayer(reader)
 		players[playersIndex] = playersElement
 	}
-	var currentTick int32
-	currentTick = ReadInt32(reader)
-	var units []Unit
-	units = make([]Unit, ReadInt32(reader))
+	currentTick := stream.ReadInt32(reader)
+	units := make([]Unit, stream.ReadInt32(reader))
 	for unitsIndex := range units {
-		var unitsElement Unit
-		unitsElement = ReadUnit(reader)
+		unitsElement := ReadUnit(reader)
 		units[unitsIndex] = unitsElement
 	}
-	var loot []Loot
-	loot = make([]Loot, ReadInt32(reader))
+	loot := make([]Loot, stream.ReadInt32(reader))
 	for lootIndex := range loot {
-		var lootElement Loot
-		lootElement = ReadLoot(reader)
+		lootElement := ReadLoot(reader)
 		loot[lootIndex] = lootElement
 	}
-	var projectiles []Projectile
-	projectiles = make([]Projectile, ReadInt32(reader))
+	projectiles := make([]Projectile, stream.ReadInt32(reader))
 	for projectilesIndex := range projectiles {
-		var projectilesElement Projectile
-		projectilesElement = ReadProjectile(reader)
+		projectilesElement := ReadProjectile(reader)
 		projectiles[projectilesIndex] = projectilesElement
 	}
-	var zone Zone
-	zone = ReadZone(reader)
-	var sounds []Sound
-	sounds = make([]Sound, ReadInt32(reader))
+	zone := ReadZone(reader)
+	sounds := make([]Sound, stream.ReadInt32(reader))
 	for soundsIndex := range sounds {
-		var soundsElement Sound
-		soundsElement = ReadSound(reader)
+		soundsElement := ReadSound(reader)
 		sounds[soundsIndex] = soundsElement
 	}
 	return Game{
@@ -98,33 +85,33 @@ func ReadGame(reader io.Reader) Game {
 // Write Game to writer
 func (game Game) Write(writer io.Writer) {
 	myId := game.MyId
-	WriteInt32(writer, myId)
+	stream.WriteInt32(writer, myId)
 	players := game.Players
-	WriteInt32(writer, int32(len(players)))
+	stream.WriteInt32(writer, int32(len(players)))
 	for _, playersElement := range players {
 		playersElement.Write(writer)
 	}
 	currentTick := game.CurrentTick
-	WriteInt32(writer, currentTick)
+	stream.WriteInt32(writer, currentTick)
 	units := game.Units
-	WriteInt32(writer, int32(len(units)))
+	stream.WriteInt32(writer, int32(len(units)))
 	for _, unitsElement := range units {
 		unitsElement.Write(writer)
 	}
 	loot := game.Loot
-	WriteInt32(writer, int32(len(loot)))
+	stream.WriteInt32(writer, int32(len(loot)))
 	for _, lootElement := range loot {
 		lootElement.Write(writer)
 	}
 	projectiles := game.Projectiles
-	WriteInt32(writer, int32(len(projectiles)))
+	stream.WriteInt32(writer, int32(len(projectiles)))
 	for _, projectilesElement := range projectiles {
 		projectilesElement.Write(writer)
 	}
 	zone := game.Zone
 	zone.Write(writer)
 	sounds := game.Sounds
-	WriteInt32(writer, int32(len(sounds)))
+	stream.WriteInt32(writer, int32(len(sounds)))
 	for _, soundsElement := range sounds {
 		soundsElement.Write(writer)
 	}
