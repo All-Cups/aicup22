@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## v1.1.1
+
+- camera now centers at unit's position without considering its direction when following
+- allow max zoom to full map
+- fixed `--repeat` mode of the app
+
 ## v1.1.0
 
 - antialias is now turned off by default (app was crashing with it for some users)

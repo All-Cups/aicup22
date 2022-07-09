@@ -11,7 +11,7 @@
 В этом репозитории можно скачать всё необходимое для участия в чемпионате.
 При необходимости, можно ознакомиться с историей изменений на странице [релизов](https://github.com/All-Cups/aicup22/releases).
 
-Текущая версия: **1.1.0** ([Changelog](CHANGELOG.md))
+Текущая версия: **1.1.1** ([Changelog](CHANGELOG.md))
 
 [**Документация**](docs-ru/doc.md)
 
@@ -25,31 +25,31 @@
 
 ### Актуальные версии приложения под различные ОС
 
-- [Windows](https://github.com/All-Cups/aicup22/releases/download/v1.1.0/app-windows.zip)
-- [MacOS](https://github.com/All-Cups/aicup22/releases/download/v1.1.0/app-macos.tar.gz)
-- [Linux](https://github.com/All-Cups/aicup22/releases/download/v1.1.0/app-linux.tar.gz)
-- [Linux ARMv7](https://github.com/All-Cups/aicup22/releases/download/v1.1.0/app-linux-armv7.tar.gz)
+- [Windows](https://github.com/All-Cups/aicup22/releases/download/v1.1.1/app-windows.zip)
+- [MacOS](https://github.com/All-Cups/aicup22/releases/download/v1.1.1/app-macos.tar.gz)
+- [Linux](https://github.com/All-Cups/aicup22/releases/download/v1.1.1/app-linux.tar.gz)
+- [Linux ARMv7](https://github.com/All-Cups/aicup22/releases/download/v1.1.1/app-linux-armv7.tar.gz)
 
 ### Языковые пакеты
 
-- [С++](https://github.com/All-Cups/aicup22/releases/download/v1.1.0/client-cpp.zip)
-- [C#](https://github.com/All-Cups/aicup22/releases/download/v1.1.0/client-csharp.zip)
-- [D](https://github.com/All-Cups/aicup22/releases/download/v1.1.0/client-dlang.zip)
-- [F#](https://github.com/All-Cups/aicup22/releases/download/v1.1.0/client-fsharp.zip)
-- [Go](https://github.com/All-Cups/aicup22/releases/download/v1.1.0/client-go.zip)
-- [Haskell](https://github.com/All-Cups/aicup22/releases/download/v1.1.0/client-haskell.zip)
-- [Java](https://github.com/All-Cups/aicup22/releases/download/v1.1.0/client-java.zip)
-- [Java (Graal)](https://github.com/All-Cups/aicup22/releases/download/v1.1.0/client-java_graal.zip)
-- [JavaScript](https://github.com/All-Cups/aicup22/releases/download/v1.1.0/client-javascript.zip)
-- [Kotlin](https://github.com/All-Cups/aicup22/releases/download/v1.1.0/client-kotlin.zip)
-- [Kotlin (Graal)](https://github.com/All-Cups/aicup22/releases/download/v1.1.0/client-kotlin.zip)
-- [Python](https://github.com/All-Cups/aicup22/releases/download/v1.1.0/client-python.zip)
-- [Python (PyPy)](https://github.com/All-Cups/aicup22/releases/download/v1.1.0/client-python_pypy.zip)
-- [Ruby](https://github.com/All-Cups/aicup22/releases/download/v1.1.0/client-ruby.zip)
-- [Rust](https://github.com/All-Cups/aicup22/releases/download/v1.1.0/client-rust.zip)
-- [Scala](https://github.com/All-Cups/aicup22/releases/download/v1.1.0/client-scala.zip)
-- [Swift](https://github.com/All-Cups/aicup22/releases/download/v1.1.0/client-swift.zip)
-- [TypeScript](https://github.com/All-Cups/aicup22/releases/download/v1.1.0/client-typescript.zip)
+- [С++](https://github.com/All-Cups/aicup22/releases/download/v1.1.1/client-cpp.zip)
+- [C#](https://github.com/All-Cups/aicup22/releases/download/v1.1.1/client-csharp.zip)
+- [D](https://github.com/All-Cups/aicup22/releases/download/v1.1.1/client-dlang.zip)
+- [F#](https://github.com/All-Cups/aicup22/releases/download/v1.1.1/client-fsharp.zip)
+- [Go](https://github.com/All-Cups/aicup22/releases/download/v1.1.1/client-go.zip)
+- [Haskell](https://github.com/All-Cups/aicup22/releases/download/v1.1.1/client-haskell.zip)
+- [Java](https://github.com/All-Cups/aicup22/releases/download/v1.1.1/client-java.zip)
+- [Java (Graal)](https://github.com/All-Cups/aicup22/releases/download/v1.1.1/client-java_graal.zip)
+- [JavaScript](https://github.com/All-Cups/aicup22/releases/download/v1.1.1/client-javascript.zip)
+- [Kotlin](https://github.com/All-Cups/aicup22/releases/download/v1.1.1/client-kotlin.zip)
+- [Kotlin (Graal)](https://github.com/All-Cups/aicup22/releases/download/v1.1.1/client-kotlin.zip)
+- [Python](https://github.com/All-Cups/aicup22/releases/download/v1.1.1/client-python.zip)
+- [Python (PyPy)](https://github.com/All-Cups/aicup22/releases/download/v1.1.1/client-python_pypy.zip)
+- [Ruby](https://github.com/All-Cups/aicup22/releases/download/v1.1.1/client-ruby.zip)
+- [Rust](https://github.com/All-Cups/aicup22/releases/download/v1.1.1/client-rust.zip)
+- [Scala](https://github.com/All-Cups/aicup22/releases/download/v1.1.1/client-scala.zip)
+- [Swift](https://github.com/All-Cups/aicup22/releases/download/v1.1.1/client-swift.zip)
+- [TypeScript](https://github.com/All-Cups/aicup22/releases/download/v1.1.1/client-typescript.zip)
 
 ## Докерфайлы
 
