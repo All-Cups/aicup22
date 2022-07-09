@@ -5,8 +5,7 @@ import (
 	"io"
 
 	"aicup22/model"
-
-	. "aicup22/stream"
+	"aicup22/stream"
 )
 
 // Camera state
@@ -33,9 +32,9 @@ func NewCamera(center model.Vec2, rotation, attack, fov float64) Camera {
 // Read Camera from reader
 func ReadCamera(reader io.Reader) Camera {
 	center := model.ReadVec2(reader)
-	rotation := ReadFloat64(reader)
-	attack := ReadFloat64(reader)
-	fov := ReadFloat64(reader)
+	rotation := stream.ReadFloat64(reader)
+	attack := stream.ReadFloat64(reader)
+	fov := stream.ReadFloat64(reader)
 	return Camera{
 		Center:   center,
 		Rotation: rotation,
@@ -49,11 +48,11 @@ func (camera Camera) Write(writer io.Writer) {
 	center := camera.Center
 	center.Write(writer)
 	rotation := camera.Rotation
-	WriteFloat64(writer, rotation)
+	stream.WriteFloat64(writer, rotation)
 	attack := camera.Attack
-	WriteFloat64(writer, attack)
+	stream.WriteFloat64(writer, attack)
 	fov := camera.Fov
-	WriteFloat64(writer, fov)
+	stream.WriteFloat64(writer, fov)
 }
 
 // Get string representation of Camera
