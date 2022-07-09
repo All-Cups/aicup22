@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"io"
 
-	. "aicup22/stream"
+	"aicup22/stream"
 )
 
 // Loot lying on the ground
@@ -27,12 +27,9 @@ func NewLoot(id int32, position Vec2, item Item) Loot {
 
 // Read Loot from reader
 func ReadLoot(reader io.Reader) Loot {
-	var id int32
-	id = ReadInt32(reader)
-	var position Vec2
-	position = ReadVec2(reader)
-	var item Item
-	item = ReadItem(reader)
+	id := stream.ReadInt32(reader)
+	position := ReadVec2(reader)
+	item := ReadItem(reader)
 	return Loot{
 		Id:       id,
 		Position: position,
@@ -43,7 +40,7 @@ func ReadLoot(reader io.Reader) Loot {
 // Write Loot to writer
 func (loot Loot) Write(writer io.Writer) {
 	id := loot.Id
-	WriteInt32(writer, id)
+	stream.WriteInt32(writer, id)
 	position := loot.Position
 	position.Write(writer)
 	item := loot.Item
