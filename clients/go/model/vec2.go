@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"io"
 
-	. "aicup22/stream"
+	"aicup22/stream"
 )
 
 // 2 dimensional vector.
@@ -15,7 +15,7 @@ type Vec2 struct {
 	Y float64
 }
 
-func NewVec2(x float64, y float64) Vec2 {
+func NewVec2(x, y float64) Vec2 {
 	return Vec2{
 		X: x,
 		Y: y,
@@ -24,10 +24,8 @@ func NewVec2(x float64, y float64) Vec2 {
 
 // Read Vec2 from reader
 func ReadVec2(reader io.Reader) Vec2 {
-	var x float64
-	x = ReadFloat64(reader)
-	var y float64
-	y = ReadFloat64(reader)
+	x := stream.ReadFloat64(reader)
+	y := stream.ReadFloat64(reader)
 	return Vec2{
 		X: x,
 		Y: y,
@@ -37,9 +35,9 @@ func ReadVec2(reader io.Reader) Vec2 {
 // Write Vec2 to writer
 func (vec2 Vec2) Write(writer io.Writer) {
 	x := vec2.X
-	WriteFloat64(writer, x)
+	stream.WriteFloat64(writer, x)
 	y := vec2.Y
-	WriteFloat64(writer, y)
+	stream.WriteFloat64(writer, y)
 }
 
 // Get string representation of Vec2
