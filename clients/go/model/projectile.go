@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"io"
 
-	. "aicup22/stream"
+	"aicup22/stream"
 )
 
 // Weapon projectile
@@ -25,7 +25,7 @@ type Projectile struct {
 	LifeTime float64
 }
 
-func NewProjectile(id int32, weaponTypeIndex int32, shooterId int32, shooterPlayerId int32, position Vec2, velocity Vec2, lifeTime float64) Projectile {
+func NewProjectile(id, weaponTypeIndex, shooterId, shooterPlayerId int32, position, velocity Vec2, lifeTime float64) Projectile {
 	return Projectile{
 		Id:              id,
 		WeaponTypeIndex: weaponTypeIndex,
@@ -39,20 +39,13 @@ func NewProjectile(id int32, weaponTypeIndex int32, shooterId int32, shooterPlay
 
 // Read Projectile from reader
 func ReadProjectile(reader io.Reader) Projectile {
-	var id int32
-	id = ReadInt32(reader)
-	var weaponTypeIndex int32
-	weaponTypeIndex = ReadInt32(reader)
-	var shooterId int32
-	shooterId = ReadInt32(reader)
-	var shooterPlayerId int32
-	shooterPlayerId = ReadInt32(reader)
-	var position Vec2
-	position = ReadVec2(reader)
-	var velocity Vec2
-	velocity = ReadVec2(reader)
-	var lifeTime float64
-	lifeTime = ReadFloat64(reader)
+	id := stream.ReadInt32(reader)
+	weaponTypeIndex := stream.ReadInt32(reader)
+	shooterId := stream.ReadInt32(reader)
+	shooterPlayerId := stream.ReadInt32(reader)
+	position := ReadVec2(reader)
+	velocity := ReadVec2(reader)
+	lifeTime := stream.ReadFloat64(reader)
 	return Projectile{
 		Id:              id,
 		WeaponTypeIndex: weaponTypeIndex,
@@ -67,19 +60,19 @@ func ReadProjectile(reader io.Reader) Projectile {
 // Write Projectile to writer
 func (projectile Projectile) Write(writer io.Writer) {
 	id := projectile.Id
-	WriteInt32(writer, id)
+	stream.WriteInt32(writer, id)
 	weaponTypeIndex := projectile.WeaponTypeIndex
-	WriteInt32(writer, weaponTypeIndex)
+	stream.WriteInt32(writer, weaponTypeIndex)
 	shooterId := projectile.ShooterId
-	WriteInt32(writer, shooterId)
+	stream.WriteInt32(writer, shooterId)
 	shooterPlayerId := projectile.ShooterPlayerId
-	WriteInt32(writer, shooterPlayerId)
+	stream.WriteInt32(writer, shooterPlayerId)
 	position := projectile.Position
 	position.Write(writer)
 	velocity := projectile.Velocity
 	velocity.Write(writer)
 	lifeTime := projectile.LifeTime
-	WriteFloat64(writer, lifeTime)
+	stream.WriteFloat64(writer, lifeTime)
 }
 
 // Get string representation of Projectile
