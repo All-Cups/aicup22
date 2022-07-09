@@ -45,8 +45,7 @@ func NewDebugCommandAdd(debugData DebugData) DebugCommandAdd {
 
 // Read Add from reader
 func ReadDebugCommandAdd(reader io.Reader) DebugCommandAdd {
-	var debugData DebugData
-	debugData = ReadDebugData(reader)
+	debugData := ReadDebugData(reader)
 	return DebugCommandAdd{
 		DebugData: debugData,
 	}
@@ -108,8 +107,7 @@ func NewDebugCommandSetAutoFlush(enable bool) DebugCommandSetAutoFlush {
 
 // Read SetAutoFlush from reader
 func ReadDebugCommandSetAutoFlush(reader io.Reader) DebugCommandSetAutoFlush {
-	var enable bool
-	enable = ReadBool(reader)
+	enable := ReadBool(reader)
 	return DebugCommandSetAutoFlush{
 		Enable: enable,
 	}

@@ -32,25 +32,20 @@ func NewDebugState(pressedKeys []string, cursorWorldPosition Vec2, lockedUnit *i
 
 // Read DebugState from reader
 func ReadDebugState(reader io.Reader) DebugState {
-	var pressedKeys []string
-	pressedKeys = make([]string, ReadInt32(reader))
+	pressedKeys := make([]string, ReadInt32(reader))
 	for pressedKeysIndex := range pressedKeys {
-		var pressedKeysElement string
-		pressedKeysElement = ReadString(reader)
+		pressedKeysElement := ReadString(reader)
 		pressedKeys[pressedKeysIndex] = pressedKeysElement
 	}
-	var cursorWorldPosition Vec2
-	cursorWorldPosition = ReadVec2(reader)
+	cursorWorldPosition := ReadVec2(reader)
 	var lockedUnit *int32
 	if ReadBool(reader) {
-		var lockedUnitValue int32
-		lockedUnitValue = ReadInt32(reader)
+		lockedUnitValue := ReadInt32(reader)
 		lockedUnit = &lockedUnitValue
 	} else {
 		lockedUnit = nil
 	}
-	var camera Camera
-	camera = ReadCamera(reader)
+	camera := ReadCamera(reader)
 	return DebugState{
 		PressedKeys:         pressedKeys,
 		CursorWorldPosition: cursorWorldPosition,

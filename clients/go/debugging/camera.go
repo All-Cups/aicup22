@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"io"
 
-	. "aicup22/model"
+	"aicup22/model"
 
 	. "aicup22/stream"
 )
@@ -12,7 +12,7 @@ import (
 // Camera state
 type Camera struct {
 	// Center
-	Center Vec2
+	Center model.Vec2
 	// Rotation
 	Rotation float64
 	// Attack angle
@@ -21,7 +21,7 @@ type Camera struct {
 	Fov float64
 }
 
-func NewCamera(center Vec2, rotation float64, attack float64, fov float64) Camera {
+func NewCamera(center model.Vec2, rotation, attack, fov float64) Camera {
 	return Camera{
 		Center:   center,
 		Rotation: rotation,
@@ -32,14 +32,10 @@ func NewCamera(center Vec2, rotation float64, attack float64, fov float64) Camer
 
 // Read Camera from reader
 func ReadCamera(reader io.Reader) Camera {
-	var center Vec2
-	center = ReadVec2(reader)
-	var rotation float64
-	rotation = ReadFloat64(reader)
-	var attack float64
-	attack = ReadFloat64(reader)
-	var fov float64
-	fov = ReadFloat64(reader)
+	center := model.ReadVec2(reader)
+	rotation := ReadFloat64(reader)
+	attack := ReadFloat64(reader)
+	fov := ReadFloat64(reader)
 	return Camera{
 		Center:   center,
 		Rotation: rotation,

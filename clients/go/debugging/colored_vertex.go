@@ -22,10 +22,8 @@ func NewColoredVertex(position Vec2, color Color) ColoredVertex {
 
 // Read ColoredVertex from reader
 func ReadColoredVertex(reader io.Reader) ColoredVertex {
-	var position Vec2
-	position = ReadVec2(reader)
-	var color Color
-	color = ReadColor(reader)
+	position := ReadVec2(reader)
+	color := ReadColor(reader)
 	return ColoredVertex{
 		Position: position,
 		Color:    color,

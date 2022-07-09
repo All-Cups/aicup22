@@ -30,14 +30,10 @@ func NewColor(r float64, g float64, b float64, a float64) Color {
 
 // Read Color from reader
 func ReadColor(reader io.Reader) Color {
-	var r float64
-	r = ReadFloat64(reader)
-	var g float64
-	g = ReadFloat64(reader)
-	var b float64
-	b = ReadFloat64(reader)
-	var a float64
-	a = ReadFloat64(reader)
+	r := ReadFloat64(reader)
+	g := ReadFloat64(reader)
+	b := ReadFloat64(reader)
+	a := ReadFloat64(reader)
 	return Color{
 		R: r,
 		G: g,
