@@ -5,7 +5,7 @@ import (
 	"io"
 
 	"aicup22/model"
-	. "aicup22/stream"
+	"aicup22/stream"
 )
 
 // Data for debug rendering
@@ -19,7 +19,7 @@ type DebugData interface {
 
 // Read DebugData from reader
 func ReadDebugData(reader io.Reader) DebugData {
-	switch ReadInt32(reader) {
+	switch stream.ReadInt32(reader) {
 	case 0:
 		return ReadDebugDataPlacedText(reader)
 	case 1:
@@ -77,9 +77,9 @@ func NewDebugDataPlacedText(position model.Vec2, text string, alignment model.Ve
 // Read PlacedText from reader
 func ReadDebugDataPlacedText(reader io.Reader) DebugDataPlacedText {
 	position := model.ReadVec2(reader)
-	text := ReadString(reader)
+	text := stream.ReadString(reader)
 	alignment := model.ReadVec2(reader)
-	size := ReadFloat64(reader)
+	size := stream.ReadFloat64(reader)
 	color := ReadColor(reader)
 	return DebugDataPlacedText{
 		Position:  position,
@@ -92,15 +92,15 @@ func ReadDebugDataPlacedText(reader io.Reader) DebugDataPlacedText {
 
 // Write PlacedText to writer
 func (debugDataPlacedText DebugDataPlacedText) Write(writer io.Writer) {
-	WriteInt32(writer, 0)
+	stream.WriteInt32(writer, 0)
 	position := debugDataPlacedText.Position
 	position.Write(writer)
 	text := debugDataPlacedText.Text
-	WriteString(writer, text)
+	stream.WriteString(writer, text)
 	alignment := debugDataPlacedText.Alignment
 	alignment.Write(writer)
 	size := debugDataPlacedText.Size
-	WriteFloat64(writer, size)
+	stream.WriteFloat64(writer, size)
 	color := debugDataPlacedText.Color
 	color.Write(writer)
 }
@@ -152,7 +152,7 @@ func NewDebugDataCircle(position model.Vec2, radius float64, color Color) DebugD
 // Read Circle from reader
 func ReadDebugDataCircle(reader io.Reader) DebugDataCircle {
 	position := model.ReadVec2(reader)
-	radius := ReadFloat64(reader)
+	radius := stream.ReadFloat64(reader)
 	color := ReadColor(reader)
 	return DebugDataCircle{
 		Position: position,
@@ -163,11 +163,11 @@ func ReadDebugDataCircle(reader io.Reader) DebugDataCircle {
 
 // Write Circle to writer
 func (debugDataCircle DebugDataCircle) Write(writer io.Writer) {
-	WriteInt32(writer, 1)
+	stream.WriteInt32(writer, 1)
 	position := debugDataCircle.Position
 	position.Write(writer)
 	radius := debugDataCircle.Radius
-	WriteFloat64(writer, radius)
+	stream.WriteFloat64(writer, radius)
 	color := debugDataCircle.Color
 	color.Write(writer)
 }
@@ -214,7 +214,7 @@ func NewDebugDataGradientCircle(position model.Vec2, radius float64, innerColor 
 // Read GradientCircle from reader
 func ReadDebugDataGradientCircle(reader io.Reader) DebugDataGradientCircle {
 	position := model.ReadVec2(reader)
-	radius := ReadFloat64(reader)
+	radius := stream.ReadFloat64(reader)
 	innerColor := ReadColor(reader)
 	outerColor := ReadColor(reader)
 	return DebugDataGradientCircle{
@@ -227,11 +227,11 @@ func ReadDebugDataGradientCircle(reader io.Reader) DebugDataGradientCircle {
 
 // Write GradientCircle to writer
 func (debugDataGradientCircle DebugDataGradientCircle) Write(writer io.Writer) {
-	WriteInt32(writer, 2)
+	stream.WriteInt32(writer, 2)
 	position := debugDataGradientCircle.Position
 	position.Write(writer)
 	radius := debugDataGradientCircle.Radius
-	WriteFloat64(writer, radius)
+	stream.WriteFloat64(writer, radius)
 	innerColor := debugDataGradientCircle.InnerColor
 	innerColor.Write(writer)
 	outerColor := debugDataGradientCircle.OuterColor
@@ -284,8 +284,8 @@ func NewDebugDataRing(position model.Vec2, radius, width float64, color Color) D
 // Read Ring from reader
 func ReadDebugDataRing(reader io.Reader) DebugDataRing {
 	position := model.ReadVec2(reader)
-	radius := ReadFloat64(reader)
-	width := ReadFloat64(reader)
+	radius := stream.ReadFloat64(reader)
+	width := stream.ReadFloat64(reader)
 	color := ReadColor(reader)
 	return DebugDataRing{
 		Position: position,
@@ -297,13 +297,13 @@ func ReadDebugDataRing(reader io.Reader) DebugDataRing {
 
 // Write Ring to writer
 func (debugDataRing DebugDataRing) Write(writer io.Writer) {
-	WriteInt32(writer, 3)
+	stream.WriteInt32(writer, 3)
 	position := debugDataRing.Position
 	position.Write(writer)
 	radius := debugDataRing.Radius
-	WriteFloat64(writer, radius)
+	stream.WriteFloat64(writer, radius)
 	width := debugDataRing.Width
-	WriteFloat64(writer, width)
+	stream.WriteFloat64(writer, width)
 	color := debugDataRing.Color
 	color.Write(writer)
 }
@@ -357,9 +357,9 @@ func NewDebugDataPie(position model.Vec2, radius, startAngle, endAngle float64, 
 // Read Pie from reader
 func ReadDebugDataPie(reader io.Reader) DebugDataPie {
 	position := model.ReadVec2(reader)
-	radius := ReadFloat64(reader)
-	startAngle := ReadFloat64(reader)
-	endAngle := ReadFloat64(reader)
+	radius := stream.ReadFloat64(reader)
+	startAngle := stream.ReadFloat64(reader)
+	endAngle := stream.ReadFloat64(reader)
 	color := ReadColor(reader)
 	return DebugDataPie{
 		Position:   position,
@@ -372,15 +372,15 @@ func ReadDebugDataPie(reader io.Reader) DebugDataPie {
 
 // Write Pie to writer
 func (debugDataPie DebugDataPie) Write(writer io.Writer) {
-	WriteInt32(writer, 4)
+	stream.WriteInt32(writer, 4)
 	position := debugDataPie.Position
 	position.Write(writer)
 	radius := debugDataPie.Radius
-	WriteFloat64(writer, radius)
+	stream.WriteFloat64(writer, radius)
 	startAngle := debugDataPie.StartAngle
-	WriteFloat64(writer, startAngle)
+	stream.WriteFloat64(writer, startAngle)
 	endAngle := debugDataPie.EndAngle
-	WriteFloat64(writer, endAngle)
+	stream.WriteFloat64(writer, endAngle)
 	color := debugDataPie.Color
 	color.Write(writer)
 }
@@ -441,10 +441,10 @@ func NewDebugDataArc(position model.Vec2, radius, width, startAngle, endAngle fl
 // Read Arc from reader
 func ReadDebugDataArc(reader io.Reader) DebugDataArc {
 	position := model.ReadVec2(reader)
-	radius := ReadFloat64(reader)
-	width := ReadFloat64(reader)
-	startAngle := ReadFloat64(reader)
-	endAngle := ReadFloat64(reader)
+	radius := stream.ReadFloat64(reader)
+	width := stream.ReadFloat64(reader)
+	startAngle := stream.ReadFloat64(reader)
+	endAngle := stream.ReadFloat64(reader)
 	color := ReadColor(reader)
 	return DebugDataArc{
 		Position:   position,
@@ -458,17 +458,17 @@ func ReadDebugDataArc(reader io.Reader) DebugDataArc {
 
 // Write Arc to writer
 func (debugDataArc DebugDataArc) Write(writer io.Writer) {
-	WriteInt32(writer, 5)
+	stream.WriteInt32(writer, 5)
 	position := debugDataArc.Position
 	position.Write(writer)
 	radius := debugDataArc.Radius
-	WriteFloat64(writer, radius)
+	stream.WriteFloat64(writer, radius)
 	width := debugDataArc.Width
-	WriteFloat64(writer, width)
+	stream.WriteFloat64(writer, width)
 	startAngle := debugDataArc.StartAngle
-	WriteFloat64(writer, startAngle)
+	stream.WriteFloat64(writer, startAngle)
 	endAngle := debugDataArc.EndAngle
-	WriteFloat64(writer, endAngle)
+	stream.WriteFloat64(writer, endAngle)
 	color := debugDataArc.Color
 	color.Write(writer)
 }
@@ -535,7 +535,7 @@ func ReadDebugDataRect(reader io.Reader) DebugDataRect {
 
 // Write Rect to writer
 func (debugDataRect DebugDataRect) Write(writer io.Writer) {
-	WriteInt32(writer, 6)
+	stream.WriteInt32(writer, 6)
 	bottomLeft := debugDataRect.BottomLeft
 	bottomLeft.Write(writer)
 	size := debugDataRect.Size
@@ -579,7 +579,7 @@ func NewDebugDataPolygon(vertices []model.Vec2, color Color) DebugDataPolygon {
 
 // Read Polygon from reader
 func ReadDebugDataPolygon(reader io.Reader) DebugDataPolygon {
-	vertices := make([]model.Vec2, ReadInt32(reader))
+	vertices := make([]model.Vec2, stream.ReadInt32(reader))
 	for verticesIndex := range vertices {
 		verticesElement := model.ReadVec2(reader)
 		vertices[verticesIndex] = verticesElement
@@ -593,9 +593,9 @@ func ReadDebugDataPolygon(reader io.Reader) DebugDataPolygon {
 
 // Write Polygon to writer
 func (debugDataPolygon DebugDataPolygon) Write(writer io.Writer) {
-	WriteInt32(writer, 7)
+	stream.WriteInt32(writer, 7)
 	vertices := debugDataPolygon.Vertices
-	WriteInt32(writer, int32(len(vertices)))
+	stream.WriteInt32(writer, int32(len(vertices)))
 	for _, verticesElement := range vertices {
 		verticesElement.Write(writer)
 	}
@@ -638,7 +638,7 @@ func NewDebugDataGradientPolygon(vertices []ColoredVertex) DebugDataGradientPoly
 
 // Read GradientPolygon from reader
 func ReadDebugDataGradientPolygon(reader io.Reader) DebugDataGradientPolygon {
-	vertices := make([]ColoredVertex, ReadInt32(reader))
+	vertices := make([]ColoredVertex, stream.ReadInt32(reader))
 	for verticesIndex := range vertices {
 		verticesElement := ReadColoredVertex(reader)
 		vertices[verticesIndex] = verticesElement
@@ -650,9 +650,9 @@ func ReadDebugDataGradientPolygon(reader io.Reader) DebugDataGradientPolygon {
 
 // Write GradientPolygon to writer
 func (debugDataGradientPolygon DebugDataGradientPolygon) Write(writer io.Writer) {
-	WriteInt32(writer, 8)
+	stream.WriteInt32(writer, 8)
 	vertices := debugDataGradientPolygon.Vertices
-	WriteInt32(writer, int32(len(vertices)))
+	stream.WriteInt32(writer, int32(len(vertices)))
 	for _, verticesElement := range vertices {
 		verticesElement.Write(writer)
 	}
@@ -700,7 +700,7 @@ func NewDebugDataSegment(firstEnd, secondEnd model.Vec2, width float64, color Co
 func ReadDebugDataSegment(reader io.Reader) DebugDataSegment {
 	firstEnd := model.ReadVec2(reader)
 	secondEnd := model.ReadVec2(reader)
-	width := ReadFloat64(reader)
+	width := stream.ReadFloat64(reader)
 	color := ReadColor(reader)
 	return DebugDataSegment{
 		FirstEnd:  firstEnd,
@@ -712,13 +712,13 @@ func ReadDebugDataSegment(reader io.Reader) DebugDataSegment {
 
 // Write Segment to writer
 func (debugDataSegment DebugDataSegment) Write(writer io.Writer) {
-	WriteInt32(writer, 9)
+	stream.WriteInt32(writer, 9)
 	firstEnd := debugDataSegment.FirstEnd
 	firstEnd.Write(writer)
 	secondEnd := debugDataSegment.SecondEnd
 	secondEnd.Write(writer)
 	width := debugDataSegment.Width
-	WriteFloat64(writer, width)
+	stream.WriteFloat64(writer, width)
 	color := debugDataSegment.Color
 	color.Write(writer)
 }
@@ -775,7 +775,7 @@ func ReadDebugDataGradientSegment(reader io.Reader) DebugDataGradientSegment {
 	firstColor := ReadColor(reader)
 	secondEnd := model.ReadVec2(reader)
 	secondColor := ReadColor(reader)
-	width := ReadFloat64(reader)
+	width := stream.ReadFloat64(reader)
 	return DebugDataGradientSegment{
 		FirstEnd:    firstEnd,
 		FirstColor:  firstColor,
@@ -787,7 +787,7 @@ func ReadDebugDataGradientSegment(reader io.Reader) DebugDataGradientSegment {
 
 // Write GradientSegment to writer
 func (debugDataGradientSegment DebugDataGradientSegment) Write(writer io.Writer) {
-	WriteInt32(writer, 10)
+	stream.WriteInt32(writer, 10)
 	firstEnd := debugDataGradientSegment.FirstEnd
 	firstEnd.Write(writer)
 	firstColor := debugDataGradientSegment.FirstColor
@@ -797,7 +797,7 @@ func (debugDataGradientSegment DebugDataGradientSegment) Write(writer io.Writer)
 	secondColor := debugDataGradientSegment.SecondColor
 	secondColor.Write(writer)
 	width := debugDataGradientSegment.Width
-	WriteFloat64(writer, width)
+	stream.WriteFloat64(writer, width)
 }
 
 // Get string representation of GradientSegment
@@ -846,12 +846,12 @@ func NewDebugDataPolyLine(vertices []model.Vec2, width float64, color Color) Deb
 
 // Read PolyLine from reader
 func ReadDebugDataPolyLine(reader io.Reader) DebugDataPolyLine {
-	vertices := make([]model.Vec2, ReadInt32(reader))
+	vertices := make([]model.Vec2, stream.ReadInt32(reader))
 	for verticesIndex := range vertices {
 		verticesElement := model.ReadVec2(reader)
 		vertices[verticesIndex] = verticesElement
 	}
-	width := ReadFloat64(reader)
+	width := stream.ReadFloat64(reader)
 	color := ReadColor(reader)
 	return DebugDataPolyLine{
 		Vertices: vertices,
@@ -862,14 +862,14 @@ func ReadDebugDataPolyLine(reader io.Reader) DebugDataPolyLine {
 
 // Write PolyLine to writer
 func (debugDataPolyLine DebugDataPolyLine) Write(writer io.Writer) {
-	WriteInt32(writer, 11)
+	stream.WriteInt32(writer, 11)
 	vertices := debugDataPolyLine.Vertices
-	WriteInt32(writer, int32(len(vertices)))
+	stream.WriteInt32(writer, int32(len(vertices)))
 	for _, verticesElement := range vertices {
 		verticesElement.Write(writer)
 	}
 	width := debugDataPolyLine.Width
-	WriteFloat64(writer, width)
+	stream.WriteFloat64(writer, width)
 	color := debugDataPolyLine.Color
 	color.Write(writer)
 }
@@ -916,12 +916,12 @@ func NewDebugDataGradientPolyLine(vertices []ColoredVertex, width float64) Debug
 
 // Read GradientPolyLine from reader
 func ReadDebugDataGradientPolyLine(reader io.Reader) DebugDataGradientPolyLine {
-	vertices := make([]ColoredVertex, ReadInt32(reader))
+	vertices := make([]ColoredVertex, stream.ReadInt32(reader))
 	for verticesIndex := range vertices {
 		verticesElement := ReadColoredVertex(reader)
 		vertices[verticesIndex] = verticesElement
 	}
-	width := ReadFloat64(reader)
+	width := stream.ReadFloat64(reader)
 	return DebugDataGradientPolyLine{
 		Vertices: vertices,
 		Width:    width,
@@ -930,14 +930,14 @@ func ReadDebugDataGradientPolyLine(reader io.Reader) DebugDataGradientPolyLine {
 
 // Write GradientPolyLine to writer
 func (debugDataGradientPolyLine DebugDataGradientPolyLine) Write(writer io.Writer) {
-	WriteInt32(writer, 12)
+	stream.WriteInt32(writer, 12)
 	vertices := debugDataGradientPolyLine.Vertices
-	WriteInt32(writer, int32(len(vertices)))
+	stream.WriteInt32(writer, int32(len(vertices)))
 	for _, verticesElement := range vertices {
 		verticesElement.Write(writer)
 	}
 	width := debugDataGradientPolyLine.Width
-	WriteFloat64(writer, width)
+	stream.WriteFloat64(writer, width)
 }
 
 // Get string representation of GradientPolyLine
