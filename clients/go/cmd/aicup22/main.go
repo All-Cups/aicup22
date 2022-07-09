@@ -24,26 +24,27 @@ type Runner struct {
 func NewRunner(host string, port uint16, token string) Runner {
 	conn, err := net.Dial("tcp", host+":"+strconv.Itoa(int(port)))
 	if err != nil {
+		// FIXME: так делать нельзя
 		panic(err)
 	}
-	writer := bufio.NewWriter(conn)
-	stream.WriteString(writer, token)
-	stream.WriteInt32(writer, 1)
-	stream.WriteInt32(writer, 1)
-	stream.WriteInt32(writer, 0)
-	err = writer.Flush()
-	if err != nil {
-		panic(err)
-	}
-	reader := bufio.NewReader(conn)
-	flow, err := stream.NewStream(reader, writer)
+	flow, err := stream.NewStream(conn)
 	if err != nil {
 		panic(fmt.Errorf("NewRunner(): in create flow, err=\n\t%w", err))
 	}
+	// FIXME: магичесие константы
+	stream.WriteString(flow.Writer(), token)
+	stream.WriteInt32(flow.Writer(), 1)
+	stream.WriteInt32(flow.Writer(), 1)
+	stream.WriteInt32(flow.Writer(), 0)
+	err = flow.Writer().Flush()
+	if err != nil {
+		panic(err)
+	}
+
 	return Runner{
 		conn:   conn,
-		reader: reader,
-		writer: writer,
+		reader: flow.Reader(),
+		writer: flow.Writer(),
 		flow:   flow,
 	}
 }

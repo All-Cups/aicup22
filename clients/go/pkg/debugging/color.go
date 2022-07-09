@@ -30,10 +30,10 @@ func NewColor(r, g, b, a float64) Color {
 
 // Read Color from reader
 func ReadColor(reader io.Reader) Color {
-	r := stream.ReadFloat64(reader)
-	g := stream.ReadFloat64(reader)
-	b := stream.ReadFloat64(reader)
-	a := stream.ReadFloat64(reader)
+	r := flow.ReadFloat64()
+	g := flow.ReadFloat64()
+	b := flow.ReadFloat64()
+	a := flow.ReadFloat64()
 	return Color{
 		R: r,
 		G: g,

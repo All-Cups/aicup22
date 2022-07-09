@@ -79,7 +79,7 @@ func ReadDebugDataPlacedText(reader io.Reader) DebugDataPlacedText {
 	position := model.ReadVec2(reader)
 	text := stream.Flow().ReadString()
 	alignment := model.ReadVec2(reader)
-	size := stream.ReadFloat64(reader)
+	size := flow.ReadFloat64()
 	color := ReadColor(reader)
 	return DebugDataPlacedText{
 		Position:  position,
@@ -152,7 +152,7 @@ func NewDebugDataCircle(position model.Vec2, radius float64, color Color) DebugD
 // Read Circle from reader
 func ReadDebugDataCircle(reader io.Reader) DebugDataCircle {
 	position := model.ReadVec2(reader)
-	radius := stream.ReadFloat64(reader)
+	radius := flow.ReadFloat64()
 	color := ReadColor(reader)
 	return DebugDataCircle{
 		Position: position,
@@ -214,7 +214,7 @@ func NewDebugDataGradientCircle(position model.Vec2, radius float64, innerColor 
 // Read GradientCircle from reader
 func ReadDebugDataGradientCircle(reader io.Reader) DebugDataGradientCircle {
 	position := model.ReadVec2(reader)
-	radius := stream.ReadFloat64(reader)
+	radius := flow.ReadFloat64()
 	innerColor := ReadColor(reader)
 	outerColor := ReadColor(reader)
 	return DebugDataGradientCircle{
@@ -284,8 +284,8 @@ func NewDebugDataRing(position model.Vec2, radius, width float64, color Color) D
 // Read Ring from reader
 func ReadDebugDataRing(reader io.Reader) DebugDataRing {
 	position := model.ReadVec2(reader)
-	radius := stream.ReadFloat64(reader)
-	width := stream.ReadFloat64(reader)
+	radius := flow.ReadFloat64()
+	width := flow.ReadFloat64()
 	color := ReadColor(reader)
 	return DebugDataRing{
 		Position: position,
@@ -357,9 +357,9 @@ func NewDebugDataPie(position model.Vec2, radius, startAngle, endAngle float64, 
 // Read Pie from reader
 func ReadDebugDataPie(reader io.Reader) DebugDataPie {
 	position := model.ReadVec2(reader)
-	radius := stream.ReadFloat64(reader)
-	startAngle := stream.ReadFloat64(reader)
-	endAngle := stream.ReadFloat64(reader)
+	radius := flow.ReadFloat64()
+	startAngle := flow.ReadFloat64()
+	endAngle := flow.ReadFloat64()
 	color := ReadColor(reader)
 	return DebugDataPie{
 		Position:   position,
@@ -441,10 +441,10 @@ func NewDebugDataArc(position model.Vec2, radius, width, startAngle, endAngle fl
 // Read Arc from reader
 func ReadDebugDataArc(reader io.Reader) DebugDataArc {
 	position := model.ReadVec2(reader)
-	radius := stream.ReadFloat64(reader)
-	width := stream.ReadFloat64(reader)
-	startAngle := stream.ReadFloat64(reader)
-	endAngle := stream.ReadFloat64(reader)
+	radius := flow.ReadFloat64()
+	width := flow.ReadFloat64()
+	startAngle := flow.ReadFloat64()
+	endAngle := flow.ReadFloat64()
 	color := ReadColor(reader)
 	return DebugDataArc{
 		Position:   position,
@@ -700,7 +700,7 @@ func NewDebugDataSegment(firstEnd, secondEnd model.Vec2, width float64, color Co
 func ReadDebugDataSegment(reader io.Reader) DebugDataSegment {
 	firstEnd := model.ReadVec2(reader)
 	secondEnd := model.ReadVec2(reader)
-	width := stream.ReadFloat64(reader)
+	width := flow.ReadFloat64()
 	color := ReadColor(reader)
 	return DebugDataSegment{
 		FirstEnd:  firstEnd,
@@ -775,7 +775,7 @@ func ReadDebugDataGradientSegment(reader io.Reader) DebugDataGradientSegment {
 	firstColor := ReadColor(reader)
 	secondEnd := model.ReadVec2(reader)
 	secondColor := ReadColor(reader)
-	width := stream.ReadFloat64(reader)
+	width := flow.ReadFloat64()
 	return DebugDataGradientSegment{
 		FirstEnd:    firstEnd,
 		FirstColor:  firstColor,
@@ -851,7 +851,7 @@ func ReadDebugDataPolyLine(reader io.Reader) DebugDataPolyLine {
 		verticesElement := model.ReadVec2(reader)
 		vertices[verticesIndex] = verticesElement
 	}
-	width := stream.ReadFloat64(reader)
+	width := flow.ReadFloat64()
 	color := ReadColor(reader)
 	return DebugDataPolyLine{
 		Vertices: vertices,
@@ -921,7 +921,7 @@ func ReadDebugDataGradientPolyLine(reader io.Reader) DebugDataGradientPolyLine {
 		verticesElement := ReadColoredVertex(reader)
 		vertices[verticesIndex] = verticesElement
 	}
-	width := stream.ReadFloat64(reader)
+	width := flow.ReadFloat64()
 	return DebugDataGradientPolyLine{
 		Vertices: vertices,
 		Width:    width,

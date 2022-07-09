@@ -66,26 +66,25 @@ func NewUnit(id, playerId int32, health, shield float64, extraLives int32, posit
 
 // Read Unit from reader
 func ReadUnit(reader io.Reader) Unit {
-	id := stream.Flow().ReadInt32()
-	playerId := stream.Flow().ReadInt32()
-	health := stream.ReadFloat64(reader)
-	shield := stream.ReadFloat64(reader)
-	extraLives := stream.Flow().ReadInt32()
+	id := flow.ReadInt32()
+	playerId := flow.ReadInt32()
+	health := flow.ReadFloat64()
+	shield := flow.ReadFloat64()
+	extraLives := flow.ReadInt32()
 	position := ReadVec2(reader)
 	var remainingSpawnTime *float64
 	if stream.Flow().ReadBool() {
-		remainingSpawnTimeValue := stream.ReadFloat64(reader)
+		remainingSpawnTimeValue := flow.ReadFloat64()
 		remainingSpawnTime = &remainingSpawnTimeValue
 	} else {
 		remainingSpawnTime = nil
 	}
 	velocity := ReadVec2(reader)
 	direction := ReadVec2(reader)
-	aim := stream.ReadFloat64(reader)
+	aim := flow.ReadFloat64()
 	var action *Action
-	if stream.Flow().ReadBool() {
-		var actionValue Action
-		actionValue = ReadAction(reader)
+	if flow.ReadBool() {
+		actionValue := ReadAction(reader)
 		action = &actionValue
 	} else {
 		action = nil

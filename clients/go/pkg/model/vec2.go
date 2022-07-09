@@ -24,8 +24,8 @@ func NewVec2(x, y float64) Vec2 {
 
 // Read Vec2 from reader
 func ReadVec2(reader io.Reader) Vec2 {
-	x := stream.ReadFloat64(reader)
-	y := stream.ReadFloat64(reader)
+	x := flow.ReadFloat64()
+	y := flow.ReadFloat64()
 	return Vec2{
 		X: x,
 		Y: y,

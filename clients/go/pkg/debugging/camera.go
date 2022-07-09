@@ -20,7 +20,12 @@ type Camera struct {
 	Fov float64
 }
 
+var (
+	flow *stream.Stream
+)
+
 func NewCamera(center model.Vec2, rotation, attack, fov float64) Camera {
+	flow = stream.Flow()
 	return Camera{
 		Center:   center,
 		Rotation: rotation,
@@ -32,9 +37,9 @@ func NewCamera(center model.Vec2, rotation, attack, fov float64) Camera {
 // Read Camera from reader
 func ReadCamera(reader io.Reader) Camera {
 	center := model.ReadVec2(reader)
-	rotation := stream.ReadFloat64(reader)
-	attack := stream.ReadFloat64(reader)
-	fov := stream.ReadFloat64(reader)
+	rotation := flow.ReadFloat64()
+	attack := flow.ReadFloat64()
+	fov := flow.ReadFloat64()
 	return Camera{
 		Center:   center,
 		Rotation: rotation,

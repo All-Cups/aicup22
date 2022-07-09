@@ -27,9 +27,9 @@ func NewSoundProperties(name string, distance, offset float64) SoundProperties {
 
 // Read SoundProperties from reader
 func ReadSoundProperties(reader io.Reader) SoundProperties {
-	name := stream.Flow().ReadString()
-	distance := stream.ReadFloat64(reader)
-	offset := stream.ReadFloat64(reader)
+	name := flow.ReadString()
+	distance := flow.ReadFloat64()
+	offset := flow.ReadFloat64()
 	return SoundProperties{
 		Name:     name,
 		Distance: distance,

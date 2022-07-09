@@ -89,7 +89,14 @@ type Constants struct {
 	Obstacles []Obstacle
 }
 
+var (
+	flow *stream.Stream
+)
+
 func NewConstants(ticksPerSecond float64, teamSize int32, initialZoneRadius float64, zoneSpeed float64, zoneDamagePerSecond float64, spawnTime float64, spawnCollisionDamagePerSecond float64, lootingTime float64, botPlayers int32, unitRadius float64, unitHealth float64, healthRegenerationPerSecond float64, healthRegenerationDelay float64, maxShield float64, spawnShield float64, extraLives int32, lastRespawnZoneRadius float64, fieldOfView float64, viewDistance float64, viewBlocking bool, rotationSpeed float64, spawnMovementSpeed float64, maxUnitForwardSpeed float64, maxUnitBackwardSpeed float64, unitAcceleration float64, friendlyFire bool, killScore float64, damageScoreMultiplier float64, scorePerPlace float64, weapons []WeaponProperties, startingWeapon *int32, startingWeaponAmmo int32, maxShieldPotionsInInventory int32, shieldPerPotion float64, shieldPotionUseTime float64, sounds []SoundProperties, stepsSoundTypeIndex *int32, stepsSoundTravelDistance float64, obstacles []Obstacle) Constants {
+	if flow == nil {
+		flow = stream.Flow()
+	}
 	return Constants{
 		TicksPerSecond:                ticksPerSecond,
 		TeamSize:                      teamSize,
@@ -135,65 +142,65 @@ func NewConstants(ticksPerSecond float64, teamSize int32, initialZoneRadius floa
 
 // Read Constants from reader
 func ReadConstants(reader io.Reader) Constants {
-	ticksPerSecond := stream.ReadFloat64(reader)
-	teamSize := stream.Flow().ReadInt32()
-	initialZoneRadius := stream.ReadFloat64(reader)
-	zoneSpeed := stream.ReadFloat64(reader)
-	zoneDamagePerSecond := stream.ReadFloat64(reader)
-	spawnTime := stream.ReadFloat64(reader)
-	spawnCollisionDamagePerSecond := stream.ReadFloat64(reader)
-	lootingTime := stream.ReadFloat64(reader)
-	botPlayers := stream.Flow().ReadInt32()
-	unitRadius := stream.ReadFloat64(reader)
-	unitHealth := stream.ReadFloat64(reader)
-	healthRegenerationPerSecond := stream.ReadFloat64(reader)
-	healthRegenerationDelay := stream.ReadFloat64(reader)
-	maxShield := stream.ReadFloat64(reader)
-	spawnShield := stream.ReadFloat64(reader)
-	extraLives := stream.Flow().ReadInt32()
-	lastRespawnZoneRadius := stream.ReadFloat64(reader)
-	fieldOfView := stream.ReadFloat64(reader)
-	viewDistance := stream.ReadFloat64(reader)
-	viewBlocking := stream.Flow().ReadBool()
-	rotationSpeed := stream.ReadFloat64(reader)
-	spawnMovementSpeed := stream.ReadFloat64(reader)
-	maxUnitForwardSpeed := stream.ReadFloat64(reader)
-	maxUnitBackwardSpeed := stream.ReadFloat64(reader)
-	unitAcceleration := stream.ReadFloat64(reader)
-	friendlyFire := stream.Flow().ReadBool()
-	killScore := stream.ReadFloat64(reader)
-	damageScoreMultiplier := stream.ReadFloat64(reader)
-	scorePerPlace := stream.ReadFloat64(reader)
-	weapons := make([]WeaponProperties, stream.Flow().ReadInt32())
+	ticksPerSecond := flow.ReadFloat64()
+	teamSize := flow.ReadInt32()
+	initialZoneRadius := flow.ReadFloat64()
+	zoneSpeed := flow.ReadFloat64()
+	zoneDamagePerSecond := flow.ReadFloat64()
+	spawnTime := flow.ReadFloat64()
+	spawnCollisionDamagePerSecond := flow.ReadFloat64()
+	lootingTime := flow.ReadFloat64()
+	botPlayers := flow.ReadInt32()
+	unitRadius := flow.ReadFloat64()
+	unitHealth := flow.ReadFloat64()
+	healthRegenerationPerSecond := flow.ReadFloat64()
+	healthRegenerationDelay := flow.ReadFloat64()
+	maxShield := flow.ReadFloat64()
+	spawnShield := flow.ReadFloat64()
+	extraLives := flow.ReadInt32()
+	lastRespawnZoneRadius := flow.ReadFloat64()
+	fieldOfView := flow.ReadFloat64()
+	viewDistance := flow.ReadFloat64()
+	viewBlocking := flow.ReadBool()
+	rotationSpeed := flow.ReadFloat64()
+	spawnMovementSpeed := flow.ReadFloat64()
+	maxUnitForwardSpeed := flow.ReadFloat64()
+	maxUnitBackwardSpeed := flow.ReadFloat64()
+	unitAcceleration := flow.ReadFloat64()
+	friendlyFire := flow.ReadBool()
+	killScore := flow.ReadFloat64()
+	damageScoreMultiplier := flow.ReadFloat64()
+	scorePerPlace := flow.ReadFloat64()
+	weapons := make([]WeaponProperties, flow.ReadInt32())
 	for weaponsIndex := range weapons {
 		weaponsElement := ReadWeaponProperties(reader)
 		weapons[weaponsIndex] = weaponsElement
 	}
 	var startingWeapon *int32
-	if stream.Flow().ReadBool() {
-		startingWeaponValue := stream.Flow().ReadInt32()
+	if flow.ReadBool() {
+		startingWeaponValue := flow.ReadInt32()
 		startingWeapon = &startingWeaponValue
 	} else {
 		startingWeapon = nil
 	}
-	startingWeaponAmmo := stream.Flow().ReadInt32()
-	maxShieldPotionsInInventory := stream.Flow().ReadInt32()
-	shieldPerPotion := stream.ReadFloat64(reader)
-	shieldPotionUseTime := stream.ReadFloat64(reader)
-	sounds := make([]SoundProperties, stream.Flow().ReadInt32())
+	startingWeaponAmmo := flow.ReadInt32()
+	maxShieldPotionsInInventory := flow.ReadInt32()
+	shieldPerPotion := flow.ReadFloat64()
+	shieldPotionUseTime := flow.ReadFloat64()
+	sounds := make([]SoundProperties, flow.ReadInt32())
 	for soundsIndex := range sounds {
 		soundsElement := ReadSoundProperties(reader)
 		sounds[soundsIndex] = soundsElement
 	}
 	var stepsSoundTypeIndex *int32
-	if stream.Flow().ReadBool() {
-		stepsSoundTypeIndexValue := stream.Flow().ReadInt32()
+	if flow.ReadBool() {
+		stepsSoundTypeIndexValue := flow.ReadInt32()
 		stepsSoundTypeIndex = &stepsSoundTypeIndexValue
 	} else {
 		stepsSoundTypeIndex = nil
 	}
-	stepsSoundTravelDistance := stream.ReadFloat64(reader)
-	obstacles := make([]Obstacle, stream.Flow().ReadInt32())
+	stepsSoundTravelDistance := flow.ReadFloat64()
+	obstacles := make([]Obstacle, flow.ReadInt32())
 	for obstaclesIndex := range obstacles {
 		obstaclesElement := ReadObstacle(reader)
 		obstacles[obstaclesIndex] = obstaclesElement

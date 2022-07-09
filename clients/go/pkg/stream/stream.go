@@ -1,15 +1,17 @@
 package stream
 
 import (
+	"bufio"
 	"encoding/binary"
 	"fmt"
 	"io"
+	"net"
 )
 
 // Stream -- абстракция входящег ои исходящего потока
 type Stream struct {
-	reader io.Reader
-	writer io.Writer
+	reader *bufio.Reader
+	writer *bufio.Writer
 }
 
 var (
@@ -22,23 +24,28 @@ func Flow() *Stream {
 }
 
 // NewStream -- возвращает новый поток
-func NewStream(reader io.Reader, writer io.Writer) (*Stream, error) {
+func NewStream(conn net.Conn) (*Stream, error) {
 	if flow != nil {
 		return flow, nil
 	}
-	{ // Предусловия
-		if reader == nil {
-			return nil, fmt.Errorf("NewStream(): reader is nil")
-		}
-		if writer == nil {
-			return nil, fmt.Errorf("NewStream(): writer is nil")
-		}
+	if conn == nil {
+		return nil, fmt.Errorf("NewStream(): conn is nil")
 	}
 	flow = &Stream{
-		reader: reader,
-		writer: writer,
+		reader: bufio.NewReader(conn),
+		writer: bufio.NewWriter(conn),
 	}
 	return flow, nil
+}
+
+// Writer -- возвращает хранимый объект врайтера
+func (sf *Stream) Writer() *bufio.Writer {
+	return sf.writer
+}
+
+// Reader -- возвращает хранимый объект ридера
+func (sf *Stream) Reader() *bufio.Reader {
+	return sf.reader
 }
 
 func (sf *Stream) ReadBool() bool {
@@ -61,9 +68,9 @@ func (sf *Stream) ReadInt32() int32 {
 	return *value
 }
 
-func ReadInt64(reader io.Reader) int64 {
+func (sf *Stream) ReadInt64() int64 {
 	var value *int64
-	err := binary.Read(reader, binary.LittleEndian, value)
+	err := binary.Read(sf.reader, binary.LittleEndian, value)
 	if err != nil {
 		// FIXME: так делать нельзя
 		panic(err)
@@ -71,9 +78,9 @@ func ReadInt64(reader io.Reader) int64 {
 	return *value
 }
 
-func ReadFloat32(reader io.Reader) float32 {
+func (sf *Stream) ReadFloat32() float32 {
 	var value *float32
-	err := binary.Read(reader, binary.LittleEndian, value)
+	err := binary.Read(sf.reader, binary.LittleEndian, value)
 	if err != nil {
 		// FIXME: так делать нельзя
 		panic(err)
@@ -81,9 +88,9 @@ func ReadFloat32(reader io.Reader) float32 {
 	return *value
 }
 
-func ReadFloat64(reader io.Reader) float64 {
+func (sf *Stream) ReadFloat64() float64 {
 	var value *float64
-	err := binary.Read(reader, binary.LittleEndian, value)
+	err := binary.Read(sf.reader, binary.LittleEndian, value)
 	if err != nil {
 		// FIXME: так делать нельзя
 		panic(err)

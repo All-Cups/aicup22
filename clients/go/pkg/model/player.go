@@ -33,11 +33,11 @@ func NewPlayer(id, kills int32, damage float64, place int32, score float64) Play
 
 // Read Player from reader
 func ReadPlayer(reader io.Reader) Player {
-	id := stream.Flow().ReadInt32()
-	kills := stream.Flow().ReadInt32()
-	damage := stream.ReadFloat64(reader)
-	place := stream.Flow().ReadInt32()
-	score := stream.ReadFloat64(reader)
+	id := flow.ReadInt32()
+	kills := flow.ReadInt32()
+	damage := flow.ReadFloat64()
+	place := flow.ReadInt32()
+	score := flow.ReadFloat64()
 	return Player{
 		Id:     id,
 		Kills:  kills,

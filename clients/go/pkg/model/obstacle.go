@@ -35,8 +35,8 @@ func NewObstacle(id int32, position Vec2, radius float64, canSeeThrough, canShoo
 func ReadObstacle(reader io.Reader) Obstacle {
 	id := stream.Flow().ReadInt32()
 	position := ReadVec2(reader)
-	radius := stream.ReadFloat64(reader)
-	canSeeThrough := stream.Flow().ReadBool()
+	radius := flow.ReadFloat64()
+	canSeeThrough := flow.ReadBool()
 	canShootThrough := stream.Flow().ReadBool()
 	return Obstacle{
 		Id:              id,

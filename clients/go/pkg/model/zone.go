@@ -31,9 +31,9 @@ func NewZone(currentCenter Vec2, currentRadius float64, nextCenter Vec2, nextRad
 // Read Zone from reader
 func ReadZone(reader io.Reader) Zone {
 	currentCenter := ReadVec2(reader)
-	currentRadius := stream.ReadFloat64(reader)
+	currentRadius := flow.ReadFloat64()
 	nextCenter := ReadVec2(reader)
-	nextRadius := stream.ReadFloat64(reader)
+	nextRadius := flow.ReadFloat64()
 	return Zone{
 		CurrentCenter: currentCenter,
 		CurrentRadius: currentRadius,
