@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"io"
 
-	. "aicup22/stream"
+	"aicup22/stream"
 )
 
 // RGBA Color
@@ -30,10 +30,10 @@ func NewColor(r float64, g float64, b float64, a float64) Color {
 
 // Read Color from reader
 func ReadColor(reader io.Reader) Color {
-	r := ReadFloat64(reader)
-	g := ReadFloat64(reader)
-	b := ReadFloat64(reader)
-	a := ReadFloat64(reader)
+	r := stream.ReadFloat64(reader)
+	g := stream.ReadFloat64(reader)
+	b := stream.ReadFloat64(reader)
+	a := stream.ReadFloat64(reader)
 	return Color{
 		R: r,
 		G: g,
@@ -45,13 +45,13 @@ func ReadColor(reader io.Reader) Color {
 // Write Color to writer
 func (color Color) Write(writer io.Writer) {
 	r := color.R
-	WriteFloat64(writer, r)
+	stream.WriteFloat64(writer, r)
 	g := color.G
-	WriteFloat64(writer, g)
+	stream.WriteFloat64(writer, g)
 	b := color.B
-	WriteFloat64(writer, b)
+	stream.WriteFloat64(writer, b)
 	a := color.A
-	WriteFloat64(writer, a)
+	stream.WriteFloat64(writer, a)
 }
 
 // Get string representation of Color
