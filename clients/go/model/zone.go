@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"io"
 
-	. "aicup22/stream"
+	"aicup22/stream"
 )
 
 // Current state of the game zone
@@ -30,14 +30,10 @@ func NewZone(currentCenter Vec2, currentRadius float64, nextCenter Vec2, nextRad
 
 // Read Zone from reader
 func ReadZone(reader io.Reader) Zone {
-	var currentCenter Vec2
-	currentCenter = ReadVec2(reader)
-	var currentRadius float64
-	currentRadius = ReadFloat64(reader)
-	var nextCenter Vec2
-	nextCenter = ReadVec2(reader)
-	var nextRadius float64
-	nextRadius = ReadFloat64(reader)
+	currentCenter := ReadVec2(reader)
+	currentRadius := stream.ReadFloat64(reader)
+	nextCenter := ReadVec2(reader)
+	nextRadius := stream.ReadFloat64(reader)
 	return Zone{
 		CurrentCenter: currentCenter,
 		CurrentRadius: currentRadius,
@@ -51,11 +47,11 @@ func (zone Zone) Write(writer io.Writer) {
 	currentCenter := zone.CurrentCenter
 	currentCenter.Write(writer)
 	currentRadius := zone.CurrentRadius
-	WriteFloat64(writer, currentRadius)
+	stream.WriteFloat64(writer, currentRadius)
 	nextCenter := zone.NextCenter
 	nextCenter.Write(writer)
 	nextRadius := zone.NextRadius
-	WriteFloat64(writer, nextRadius)
+	stream.WriteFloat64(writer, nextRadius)
 }
 
 // Get string representation of Zone
