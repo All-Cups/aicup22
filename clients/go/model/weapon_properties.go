@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"io"
 
-	. "aicup22/stream"
+	"aicup22/stream"
 )
 
 // Weapon properties
@@ -37,7 +37,10 @@ type WeaponProperties struct {
 	MaxInventoryAmmo int32
 }
 
-func NewWeaponProperties(name string, roundsPerSecond float64, spread float64, aimTime float64, aimFieldOfView float64, aimRotationSpeed float64, aimMovementSpeedModifier float64, projectileSpeed float64, projectileDamage float64, projectileLifeTime float64, shotSoundTypeIndex *int32, projectileHitSoundTypeIndex *int32, maxInventoryAmmo int32) WeaponProperties {
+func NewWeaponProperties(name string,
+	roundsPerSecond, spread, aimTime, aimFieldOfView, aimRotationSpeed, aimMovementSpeedModifier, projectileSpeed, projectileDamage, projectileLifeTime float64,
+	shotSoundTypeIndex, projectileHitSoundTypeIndex *int32,
+	maxInventoryAmmo int32) WeaponProperties {
 	return WeaponProperties{
 		Name:                        name,
 		RoundsPerSecond:             roundsPerSecond,
@@ -57,44 +60,31 @@ func NewWeaponProperties(name string, roundsPerSecond float64, spread float64, a
 
 // Read WeaponProperties from reader
 func ReadWeaponProperties(reader io.Reader) WeaponProperties {
-	var name string
-	name = ReadString(reader)
-	var roundsPerSecond float64
-	roundsPerSecond = ReadFloat64(reader)
-	var spread float64
-	spread = ReadFloat64(reader)
-	var aimTime float64
-	aimTime = ReadFloat64(reader)
-	var aimFieldOfView float64
-	aimFieldOfView = ReadFloat64(reader)
-	var aimRotationSpeed float64
-	aimRotationSpeed = ReadFloat64(reader)
-	var aimMovementSpeedModifier float64
-	aimMovementSpeedModifier = ReadFloat64(reader)
-	var projectileSpeed float64
-	projectileSpeed = ReadFloat64(reader)
-	var projectileDamage float64
-	projectileDamage = ReadFloat64(reader)
-	var projectileLifeTime float64
-	projectileLifeTime = ReadFloat64(reader)
+	name := stream.ReadString(reader)
+	roundsPerSecond := stream.ReadFloat64(reader)
+	spread := stream.ReadFloat64(reader)
+	aimTime := stream.ReadFloat64(reader)
+	aimFieldOfView := stream.ReadFloat64(reader)
+	aimRotationSpeed := stream.ReadFloat64(reader)
+	aimMovementSpeedModifier := stream.ReadFloat64(reader)
+	projectileSpeed := stream.ReadFloat64(reader)
+	projectileDamage := stream.ReadFloat64(reader)
+	projectileLifeTime := stream.ReadFloat64(reader)
 	var shotSoundTypeIndex *int32
-	if ReadBool(reader) {
-		var shotSoundTypeIndexValue int32
-		shotSoundTypeIndexValue = ReadInt32(reader)
+	if stream.ReadBool(reader) {
+		shotSoundTypeIndexValue := stream.ReadInt32(reader)
 		shotSoundTypeIndex = &shotSoundTypeIndexValue
 	} else {
 		shotSoundTypeIndex = nil
 	}
 	var projectileHitSoundTypeIndex *int32
-	if ReadBool(reader) {
-		var projectileHitSoundTypeIndexValue int32
-		projectileHitSoundTypeIndexValue = ReadInt32(reader)
+	if stream.ReadBool(reader) {
+		projectileHitSoundTypeIndexValue := stream.ReadInt32(reader)
 		projectileHitSoundTypeIndex = &projectileHitSoundTypeIndexValue
 	} else {
 		projectileHitSoundTypeIndex = nil
 	}
-	var maxInventoryAmmo int32
-	maxInventoryAmmo = ReadInt32(reader)
+	maxInventoryAmmo := stream.ReadInt32(reader)
 	return WeaponProperties{
 		Name:                        name,
 		RoundsPerSecond:             roundsPerSecond,
@@ -115,43 +105,43 @@ func ReadWeaponProperties(reader io.Reader) WeaponProperties {
 // Write WeaponProperties to writer
 func (weaponProperties WeaponProperties) Write(writer io.Writer) {
 	name := weaponProperties.Name
-	WriteString(writer, name)
+	stream.WriteString(writer, name)
 	roundsPerSecond := weaponProperties.RoundsPerSecond
-	WriteFloat64(writer, roundsPerSecond)
+	stream.WriteFloat64(writer, roundsPerSecond)
 	spread := weaponProperties.Spread
-	WriteFloat64(writer, spread)
+	stream.WriteFloat64(writer, spread)
 	aimTime := weaponProperties.AimTime
-	WriteFloat64(writer, aimTime)
+	stream.WriteFloat64(writer, aimTime)
 	aimFieldOfView := weaponProperties.AimFieldOfView
-	WriteFloat64(writer, aimFieldOfView)
+	stream.WriteFloat64(writer, aimFieldOfView)
 	aimRotationSpeed := weaponProperties.AimRotationSpeed
-	WriteFloat64(writer, aimRotationSpeed)
+	stream.WriteFloat64(writer, aimRotationSpeed)
 	aimMovementSpeedModifier := weaponProperties.AimMovementSpeedModifier
-	WriteFloat64(writer, aimMovementSpeedModifier)
+	stream.WriteFloat64(writer, aimMovementSpeedModifier)
 	projectileSpeed := weaponProperties.ProjectileSpeed
-	WriteFloat64(writer, projectileSpeed)
+	stream.WriteFloat64(writer, projectileSpeed)
 	projectileDamage := weaponProperties.ProjectileDamage
-	WriteFloat64(writer, projectileDamage)
+	stream.WriteFloat64(writer, projectileDamage)
 	projectileLifeTime := weaponProperties.ProjectileLifeTime
-	WriteFloat64(writer, projectileLifeTime)
+	stream.WriteFloat64(writer, projectileLifeTime)
 	shotSoundTypeIndex := weaponProperties.ShotSoundTypeIndex
 	if shotSoundTypeIndex == nil {
-		WriteBool(writer, false)
+		stream.WriteBool(writer, false)
 	} else {
-		WriteBool(writer, true)
+		stream.WriteBool(writer, true)
 		shotSoundTypeIndexValue := *shotSoundTypeIndex
-		WriteInt32(writer, shotSoundTypeIndexValue)
+		stream.WriteInt32(writer, shotSoundTypeIndexValue)
 	}
 	projectileHitSoundTypeIndex := weaponProperties.ProjectileHitSoundTypeIndex
 	if projectileHitSoundTypeIndex == nil {
-		WriteBool(writer, false)
+		stream.WriteBool(writer, false)
 	} else {
-		WriteBool(writer, true)
+		stream.WriteBool(writer, true)
 		projectileHitSoundTypeIndexValue := *projectileHitSoundTypeIndex
-		WriteInt32(writer, projectileHitSoundTypeIndexValue)
+		stream.WriteInt32(writer, projectileHitSoundTypeIndexValue)
 	}
 	maxInventoryAmmo := weaponProperties.MaxInventoryAmmo
-	WriteInt32(writer, maxInventoryAmmo)
+	stream.WriteInt32(writer, maxInventoryAmmo)
 }
 
 // Get string representation of WeaponProperties
