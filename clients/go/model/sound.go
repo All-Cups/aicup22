@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"io"
 
-	. "aicup22/stream"
+	"aicup22/stream"
 )
 
 // Sound heard by one of your units
@@ -17,7 +17,7 @@ type Sound struct {
 	Position Vec2
 }
 
-func NewSound(typeIndex int32, unitId int32, position Vec2) Sound {
+func NewSound(typeIndex, unitId int32, position Vec2) Sound {
 	return Sound{
 		TypeIndex: typeIndex,
 		UnitId:    unitId,
@@ -27,12 +27,9 @@ func NewSound(typeIndex int32, unitId int32, position Vec2) Sound {
 
 // Read Sound from reader
 func ReadSound(reader io.Reader) Sound {
-	var typeIndex int32
-	typeIndex = ReadInt32(reader)
-	var unitId int32
-	unitId = ReadInt32(reader)
-	var position Vec2
-	position = ReadVec2(reader)
+	typeIndex := stream.ReadInt32(reader)
+	unitId := stream.ReadInt32(reader)
+	position := ReadVec2(reader)
 	return Sound{
 		TypeIndex: typeIndex,
 		UnitId:    unitId,
@@ -43,9 +40,9 @@ func ReadSound(reader io.Reader) Sound {
 // Write Sound to writer
 func (sound Sound) Write(writer io.Writer) {
 	typeIndex := sound.TypeIndex
-	WriteInt32(writer, typeIndex)
+	stream.WriteInt32(writer, typeIndex)
 	unitId := sound.UnitId
-	WriteInt32(writer, unitId)
+	stream.WriteInt32(writer, unitId)
 	position := sound.Position
 	position.Write(writer)
 }
