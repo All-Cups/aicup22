@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"io"
 
-	. "aicup22/stream"
+	"aicup22/stream"
 )
 
 // Game's participant (team of units)
@@ -21,7 +21,7 @@ type Player struct {
 	Score float64
 }
 
-func NewPlayer(id int32, kills int32, damage float64, place int32, score float64) Player {
+func NewPlayer(id, kills int32, damage float64, place int32, score float64) Player {
 	return Player{
 		Id:     id,
 		Kills:  kills,
@@ -33,16 +33,11 @@ func NewPlayer(id int32, kills int32, damage float64, place int32, score float64
 
 // Read Player from reader
 func ReadPlayer(reader io.Reader) Player {
-	var id int32
-	id = ReadInt32(reader)
-	var kills int32
-	kills = ReadInt32(reader)
-	var damage float64
-	damage = ReadFloat64(reader)
-	var place int32
-	place = ReadInt32(reader)
-	var score float64
-	score = ReadFloat64(reader)
+	id := stream.ReadInt32(reader)
+	kills := stream.ReadInt32(reader)
+	damage := stream.ReadFloat64(reader)
+	place := stream.ReadInt32(reader)
+	score := stream.ReadFloat64(reader)
 	return Player{
 		Id:     id,
 		Kills:  kills,
@@ -55,15 +50,15 @@ func ReadPlayer(reader io.Reader) Player {
 // Write Player to writer
 func (player Player) Write(writer io.Writer) {
 	id := player.Id
-	WriteInt32(writer, id)
+	stream.WriteInt32(writer, id)
 	kills := player.Kills
-	WriteInt32(writer, kills)
+	stream.WriteInt32(writer, kills)
 	damage := player.Damage
-	WriteFloat64(writer, damage)
+	stream.WriteFloat64(writer, damage)
 	place := player.Place
-	WriteInt32(writer, place)
+	stream.WriteInt32(writer, place)
 	score := player.Score
-	WriteFloat64(writer, score)
+	stream.WriteFloat64(writer, score)
 }
 
 // Get string representation of Player
