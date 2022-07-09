@@ -3,7 +3,7 @@ package model
 import (
 	"io"
 
-	. "aicup22/stream"
+	"aicup22/stream"
 )
 
 // Order for specific unit
@@ -16,7 +16,7 @@ type UnitOrder struct {
 	Action *ActionOrder
 }
 
-func NewUnitOrder(targetVelocity Vec2, targetDirection Vec2, action *ActionOrder) UnitOrder {
+func NewUnitOrder(targetVelocity, targetDirection Vec2, action *ActionOrder) UnitOrder {
 	return UnitOrder{
 		TargetVelocity:  targetVelocity,
 		TargetDirection: targetDirection,
@@ -26,12 +26,10 @@ func NewUnitOrder(targetVelocity Vec2, targetDirection Vec2, action *ActionOrder
 
 // Read UnitOrder from reader
 func ReadUnitOrder(reader io.Reader) UnitOrder {
-	var targetVelocity Vec2
-	targetVelocity = ReadVec2(reader)
-	var targetDirection Vec2
-	targetDirection = ReadVec2(reader)
+	targetVelocity := ReadVec2(reader)
+	targetDirection := ReadVec2(reader)
 	var action *ActionOrder
-	if ReadBool(reader) {
+	if stream.ReadBool(reader) {
 		var actionValue ActionOrder
 		actionValue = ReadActionOrder(reader)
 		action = &actionValue
@@ -53,9 +51,9 @@ func (unitOrder UnitOrder) Write(writer io.Writer) {
 	targetDirection.Write(writer)
 	action := unitOrder.Action
 	if action == nil {
-		WriteBool(writer, false)
+		stream.WriteBool(writer, false)
 	} else {
-		WriteBool(writer, true)
+		stream.WriteBool(writer, true)
 		actionValue := *action
 		actionValue.Write(writer)
 	}
