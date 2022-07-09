@@ -5,8 +5,8 @@ import (
     "net"
     "os"
     "ai_cup_22/codegame"
-    . "ai_cup_22/model"
-    . "ai_cup_22/stream"
+    "ai_cup_22/model"
+    "ai_cup_22/stream"
     . "ai_cup_22/debugging_interface"
     "strconv"
 )
@@ -23,10 +23,10 @@ func NewRunner(host string, port uint16, token string) Runner {
         panic(err)
     }
     writer := bufio.NewWriter(conn)
-    WriteString(writer, token)
-    WriteInt32(writer, 1)
-    WriteInt32(writer, 1)
-    WriteInt32(writer, 0)
+    stream.WriteString(writer, token)
+    stream.WriteInt32(writer, 1)
+    stream.WriteInt32(writer, 1)
+    stream.WriteInt32(writer, 0)
     err = writer.Flush()
     if err != nil {
         panic(err)
@@ -50,7 +50,7 @@ loop:
         case codegame.ServerMessageUpdateConstants:
             myStrategy = NewMyStrategy(message.Constants)
         case codegame.ServerMessageGetOrder:
-            var order Order
+            var order model.Order
             if message.DebugAvailable {
                 order = myStrategy.getOrder(message.PlayerView, &debugInterface)
             } else {
