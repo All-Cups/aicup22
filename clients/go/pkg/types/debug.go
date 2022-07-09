@@ -3,7 +3,7 @@ package types
 import (
 	"bufio"
 
-	. "aicup22/pkg/codegame"
+	"aicup22/pkg/codegame"
 	. "aicup22/pkg/debugging"
 	. "aicup22/pkg/model"
 )
@@ -82,7 +82,7 @@ func (debugInterface DebugInterface) Flush() {
 }
 
 func (debugInterface DebugInterface) Send(command DebugCommand) {
-	ClientMessageDebugMessage{
+	codegame.ClientMessageDebugMessage{
 		Command: command,
 	}.Write(debugInterface.Writer)
 	err := debugInterface.Writer.Flush()
@@ -92,7 +92,7 @@ func (debugInterface DebugInterface) Send(command DebugCommand) {
 }
 
 func (debugInterface DebugInterface) GetState() DebugState {
-	ClientMessageRequestDebugState{}.Write(debugInterface.Writer)
+	codegame.ClientMessageRequestDebugState{}.Write(debugInterface.Writer)
 	err := debugInterface.Writer.Flush()
 	if err != nil {
 		panic(err)
