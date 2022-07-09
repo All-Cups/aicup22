@@ -4,7 +4,7 @@ import (
     "bufio"
     "net"
     "os"
-    . "ai_cup_22/codegame"
+    "ai_cup_22/codegame"
     . "ai_cup_22/model"
     . "ai_cup_22/stream"
     . "ai_cup_22/debugging_interface"
@@ -46,29 +46,29 @@ func (runner Runner) Run() {
     }
 loop:
     for {
-        switch message := ReadServerMessage(runner.reader).(type) {
-        case ServerMessageUpdateConstants:
+        switch message := codegame.ReadServerMessage(runner.reader).(type) {
+        case codegame.ServerMessageUpdateConstants:
             myStrategy = NewMyStrategy(message.Constants)
-        case ServerMessageGetOrder:
+        case codegame.ServerMessageGetOrder:
             var order Order
             if message.DebugAvailable {
                 order = myStrategy.getOrder(message.PlayerView, &debugInterface)
             } else {
                 order = myStrategy.getOrder(message.PlayerView, nil)
             }
-            ClientMessageOrderMessage{
+            codegame.ClientMessageOrderMessage{
                 Order: order,
             }.Write(runner.writer)
             err := runner.writer.Flush()
             if err != nil {
                 panic(err)
             }
-        case ServerMessageFinish:
+        case codegame.ServerMessageFinish:
             myStrategy.finish()
             break loop
-        case ServerMessageDebugUpdate:
+        case codegame.ServerMessageDebugUpdate:
             myStrategy.debugUpdate(message.DisplayedTick, debugInterface)
-            ClientMessageDebugUpdateDone{}.Write(runner.writer)
+            codegame.ClientMessageDebugUpdateDone{}.Write(runner.writer)
             err := runner.writer.Flush()
             if err != nil {
                 panic(err)
