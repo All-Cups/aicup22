@@ -91,7 +91,7 @@ func (debugInterface DebugInterface) Flush() {
 func (debugInterface DebugInterface) Send(command debugging.DebugCommand) {
 	codegame.ClientMessageDebugMessage{
 		Command: command,
-	}.Write(debugInterface.Writer)
+	}.Write()
 	err := debugInterface.Writer.Flush()
 	if err != nil {
 		// FIXME: так делать нельзя!!
@@ -100,11 +100,11 @@ func (debugInterface DebugInterface) Send(command debugging.DebugCommand) {
 }
 
 func (debugInterface DebugInterface) GetState() debugging.DebugState {
-	codegame.ClientMessageRequestDebugState{}.Write(debugInterface.Writer)
+	codegame.ClientMessageRequestDebugState{}.Write()
 	err := debugInterface.Writer.Flush()
 	if err != nil {
 		// FIXME: так делать нельзя!!
 		panic(err)
 	}
-	return debugging.ReadDebugState(debugInterface.Reader)
+	return debugging.ReadDebugState()
 }

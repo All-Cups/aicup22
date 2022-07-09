@@ -1,8 +1,6 @@
 package model
 
 import (
-	"io"
-
 	"aicup22/pkg/stream"
 )
 
@@ -25,12 +23,12 @@ func NewUnitOrder(targetVelocity, targetDirection Vec2, action *ActionOrder) Uni
 }
 
 // Read UnitOrder from reader
-func ReadUnitOrder(reader io.Reader) UnitOrder {
-	targetVelocity := ReadVec2(reader)
-	targetDirection := ReadVec2(reader)
+func ReadUnitOrder() UnitOrder {
+	targetVelocity := ReadVec2()
+	targetDirection := ReadVec2()
 	var action *ActionOrder
 	if stream.Flow().ReadBool() {
-		actionValue := ReadActionOrder(reader)
+		actionValue := ReadActionOrder()
 		action = &actionValue
 	} else {
 		action = nil
@@ -43,18 +41,18 @@ func ReadUnitOrder(reader io.Reader) UnitOrder {
 }
 
 // Write UnitOrder to writer
-func (unitOrder UnitOrder) Write(writer io.Writer) {
+func (unitOrder UnitOrder) Write() {
 	targetVelocity := unitOrder.TargetVelocity
-	targetVelocity.Write(writer)
+	targetVelocity.Write()
 	targetDirection := unitOrder.TargetDirection
-	targetDirection.Write(writer)
+	targetDirection.Write()
 	action := unitOrder.Action
 	if action == nil {
 		flow.WriteBool(false)
 	} else {
 		flow.WriteBool(true)
 		actionValue := *action
-		actionValue.Write(writer)
+		actionValue.Write()
 	}
 }
 

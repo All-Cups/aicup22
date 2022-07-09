@@ -2,30 +2,27 @@ package model
 
 import (
 	"fmt"
-	"io"
-
-	"aicup22/pkg/stream"
 )
 
 // Lootable item
 type Item interface {
 	// Write Item to writer
-	Write(writer io.Writer)
+	Write()
 
 	// Get string representation of Item
 	String() string
 }
 
 // Read Item from reader
-func ReadItem(reader io.Reader) Item {
+func ReadItem() Item {
 	// FIXME: магические константы
-	switch stream.Flow().ReadInt32() {
+	switch flow.ReadInt32() {
 	case 0:
-		return ReadItemWeapon(reader)
+		return ReadItemWeapon()
 	case 1:
-		return ReadItemShieldPotions(reader)
+		return ReadItemShieldPotions()
 	case 2:
-		return ReadItemAmmo(reader)
+		return ReadItemAmmo()
 	}
 	// FIXME: панику убрать из кода!!
 	panic("Unexpected tag value")
@@ -44,18 +41,18 @@ func NewItemWeapon(typeIndex int32) ItemWeapon {
 }
 
 // Read Weapon from reader
-func ReadItemWeapon(reader io.Reader) ItemWeapon {
-	typeIndex := stream.Flow().ReadInt32()
+func ReadItemWeapon() ItemWeapon {
+	typeIndex := flow.ReadInt32()
 	return ItemWeapon{
 		TypeIndex: typeIndex,
 	}
 }
 
 // Write Weapon to writer
-func (itemWeapon ItemWeapon) Write(writer io.Writer) {
-	stream.WriteInt32(writer, 0)
+func (itemWeapon ItemWeapon) Write() {
+	flow.WriteInt32(0)
 	typeIndex := itemWeapon.TypeIndex
-	stream.WriteInt32(writer, typeIndex)
+	flow.WriteInt32(typeIndex)
 }
 
 // Get string representation of Weapon
@@ -81,19 +78,19 @@ func NewItemShieldPotions(amount int32) ItemShieldPotions {
 }
 
 // Read ShieldPotions from reader
-func ReadItemShieldPotions(reader io.Reader) ItemShieldPotions {
-	amount := stream.Flow().ReadInt32()
+func ReadItemShieldPotions() ItemShieldPotions {
+	amount := flow.ReadInt32()
 	return ItemShieldPotions{
 		Amount: amount,
 	}
 }
 
 // Write ShieldPotions to writer
-func (itemShieldPotions ItemShieldPotions) Write(writer io.Writer) {
+func (itemShieldPotions ItemShieldPotions) Write() {
 	// FIXME: магическая константа
-	stream.WriteInt32(writer, 1)
+	flow.WriteInt32(1)
 	amount := itemShieldPotions.Amount
-	stream.WriteInt32(writer, amount)
+	flow.WriteInt32(amount)
 }
 
 // Get string representation of ShieldPotions
@@ -122,9 +119,9 @@ func NewItemAmmo(weaponTypeIndex int32, amount int32) ItemAmmo {
 }
 
 // Read Ammo from reader
-func ReadItemAmmo(reader io.Reader) ItemAmmo {
-	weaponTypeIndex := stream.Flow().ReadInt32()
-	amount := stream.Flow().ReadInt32()
+func ReadItemAmmo() ItemAmmo {
+	weaponTypeIndex := flow.ReadInt32()
+	amount := flow.ReadInt32()
 	return ItemAmmo{
 		WeaponTypeIndex: weaponTypeIndex,
 		Amount:          amount,
@@ -132,12 +129,12 @@ func ReadItemAmmo(reader io.Reader) ItemAmmo {
 }
 
 // Write Ammo to writer
-func (itemAmmo ItemAmmo) Write(writer io.Writer) {
-	stream.WriteInt32(writer, 2)
+func (itemAmmo ItemAmmo) Write() {
+	flow.WriteInt32(2)
 	weaponTypeIndex := itemAmmo.WeaponTypeIndex
-	stream.WriteInt32(writer, weaponTypeIndex)
+	flow.WriteInt32(weaponTypeIndex)
 	amount := itemAmmo.Amount
-	stream.WriteInt32(writer, amount)
+	flow.WriteInt32(amount)
 }
 
 // Get string representation of Ammo

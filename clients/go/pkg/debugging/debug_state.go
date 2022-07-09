@@ -2,7 +2,6 @@ package debugging
 
 import (
 	"fmt"
-	"io"
 
 	"aicup22/pkg/model"
 	"aicup22/pkg/stream"
@@ -30,13 +29,13 @@ func NewDebugState(pressedKeys []string, cursorWorldPosition model.Vec2, lockedU
 }
 
 // Read DebugState from reader
-func ReadDebugState(reader io.Reader) DebugState {
+func ReadDebugState() DebugState {
 	pressedKeys := make([]string, stream.Flow().ReadInt32())
 	for pressedKeysIndex := range pressedKeys {
 		pressedKeysElement := stream.Flow().ReadString()
 		pressedKeys[pressedKeysIndex] = pressedKeysElement
 	}
-	cursorWorldPosition := model.ReadVec2(reader)
+	cursorWorldPosition := model.ReadVec2()
 	var lockedUnit *int32
 	if stream.Flow().ReadBool() {
 		lockedUnitValue := stream.Flow().ReadInt32()
@@ -44,7 +43,7 @@ func ReadDebugState(reader io.Reader) DebugState {
 	} else {
 		lockedUnit = nil
 	}
-	camera := ReadCamera(reader)
+	camera := ReadCamera()
 	return DebugState{
 		PressedKeys:         pressedKeys,
 		CursorWorldPosition: cursorWorldPosition,
@@ -54,24 +53,24 @@ func ReadDebugState(reader io.Reader) DebugState {
 }
 
 // Write DebugState to writer
-func (debugState DebugState) Write(writer io.Writer) {
+func (debugState DebugState) Write() {
 	pressedKeys := debugState.PressedKeys
-	stream.WriteInt32(writer, int32(len(pressedKeys)))
+	flow.WriteInt32(int32(len(pressedKeys)))
 	for _, pressedKeysElement := range pressedKeys {
-		stream.WriteString(writer, pressedKeysElement)
+		flow.WriteString(pressedKeysElement)
 	}
 	cursorWorldPosition := debugState.CursorWorldPosition
-	cursorWorldPosition.Write(writer)
+	cursorWorldPosition.Write()
 	lockedUnit := debugState.LockedUnit
 	if lockedUnit == nil {
 		flow.WriteBool(false)
 	} else {
 		flow.WriteBool(true)
 		lockedUnitValue := *lockedUnit
-		stream.WriteInt32(writer, lockedUnitValue)
+		flow.WriteInt32(lockedUnitValue)
 	}
 	camera := debugState.Camera
-	camera.Write(writer)
+	camera.Write()
 }
 
 // Get string representation of DebugState

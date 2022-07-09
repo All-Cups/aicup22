@@ -31,11 +31,11 @@ func NewRunner(host string, port uint16, token string) Runner {
 	if err != nil {
 		panic(fmt.Errorf("NewRunner(): in create flow, err=\n\t%w", err))
 	}
-	// FIXME: магичесие константы
-	stream.WriteString(flow.Writer(), token)
-	stream.WriteInt32(flow.Writer(), 1)
-	stream.WriteInt32(flow.Writer(), 1)
-	stream.WriteInt32(flow.Writer(), 0)
+	// FIXME: магические константы
+	flow.WriteString(token)
+	flow.WriteInt32(1)
+	flow.WriteInt32(1)
+	flow.WriteInt32(0)
 	err = flow.Writer().Flush()
 	if err != nil {
 		panic(err)
@@ -57,7 +57,7 @@ func (runner Runner) Run() {
 	}
 loop:
 	for {
-		switch message := codegame.ReadServerMessage(runner.reader).(type) {
+		switch message := codegame.ReadServerMessage().(type) {
 		case codegame.ServerMessageUpdateConstants:
 			myStrategy = mystrategy.NewMyStrategy(message.Constants)
 		case codegame.ServerMessageGetOrder:
@@ -69,7 +69,7 @@ loop:
 			}
 			codegame.ClientMessageOrderMessage{
 				Order: order,
-			}.Write(runner.writer)
+			}.Write()
 			err := runner.writer.Flush()
 			if err != nil {
 				panic(err)
@@ -79,7 +79,7 @@ loop:
 			break loop
 		case codegame.ServerMessageDebugUpdate:
 			myStrategy.DebugUpdate(message.DisplayedTick, debugInterface)
-			codegame.ClientMessageDebugUpdateDone{}.Write(runner.writer)
+			codegame.ClientMessageDebugUpdateDone{}.Write()
 			err := runner.writer.Flush()
 			if err != nil {
 				// FIXME: так делать нельзя

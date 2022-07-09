@@ -2,7 +2,6 @@ package model
 
 import (
 	"fmt"
-	"io"
 
 	"aicup22/pkg/stream"
 )
@@ -65,13 +64,13 @@ func NewUnit(id, playerId int32, health, shield float64, extraLives int32, posit
 }
 
 // Read Unit from reader
-func ReadUnit(reader io.Reader) Unit {
+func ReadUnit() Unit {
 	id := flow.ReadInt32()
 	playerId := flow.ReadInt32()
 	health := flow.ReadFloat64()
 	shield := flow.ReadFloat64()
 	extraLives := flow.ReadInt32()
-	position := ReadVec2(reader)
+	position := ReadVec2()
 	var remainingSpawnTime *float64
 	if stream.Flow().ReadBool() {
 		remainingSpawnTimeValue := flow.ReadFloat64()
@@ -79,12 +78,12 @@ func ReadUnit(reader io.Reader) Unit {
 	} else {
 		remainingSpawnTime = nil
 	}
-	velocity := ReadVec2(reader)
-	direction := ReadVec2(reader)
+	velocity := ReadVec2()
+	direction := ReadVec2()
 	aim := flow.ReadFloat64()
 	var action *Action
 	if flow.ReadBool() {
-		actionValue := ReadAction(reader)
+		actionValue := ReadAction()
 		action = &actionValue
 	} else {
 		action = nil
@@ -125,60 +124,60 @@ func ReadUnit(reader io.Reader) Unit {
 }
 
 // Write Unit to writer
-func (unit Unit) Write(writer io.Writer) {
+func (unit Unit) Write() {
 	id := unit.Id
-	stream.WriteInt32(writer, id)
+	flow.WriteInt32(id)
 	playerId := unit.PlayerId
-	stream.WriteInt32(writer, playerId)
+	flow.WriteInt32(playerId)
 	health := unit.Health
-	stream.WriteFloat64(writer, health)
+	flow.WriteFloat64(health)
 	shield := unit.Shield
-	stream.WriteFloat64(writer, shield)
+	flow.WriteFloat64(shield)
 	extraLives := unit.ExtraLives
-	stream.WriteInt32(writer, extraLives)
+	flow.WriteInt32(extraLives)
 	position := unit.Position
-	position.Write(writer)
+	position.Write()
 	remainingSpawnTime := unit.RemainingSpawnTime
 	if remainingSpawnTime == nil {
 		flow.WriteBool(false)
 	} else {
 		flow.WriteBool(true)
 		remainingSpawnTimeValue := *remainingSpawnTime
-		stream.WriteFloat64(writer, remainingSpawnTimeValue)
+		flow.WriteFloat64(remainingSpawnTimeValue)
 	}
 	velocity := unit.Velocity
-	velocity.Write(writer)
+	velocity.Write()
 	direction := unit.Direction
-	direction.Write(writer)
+	direction.Write()
 	aim := unit.Aim
-	stream.WriteFloat64(writer, aim)
+	flow.WriteFloat64(aim)
 	action := unit.Action
 	if action == nil {
 		flow.WriteBool(false)
 	} else {
 		flow.WriteBool(true)
 		actionValue := *action
-		actionValue.Write(writer)
+		actionValue.Write()
 	}
 	healthRegenerationStartTick := unit.HealthRegenerationStartTick
-	stream.WriteInt32(writer, healthRegenerationStartTick)
+	flow.WriteInt32(healthRegenerationStartTick)
 	weapon := unit.Weapon
 	if weapon == nil {
 		flow.WriteBool(false)
 	} else {
 		flow.WriteBool(true)
 		weaponValue := *weapon
-		stream.WriteInt32(writer, weaponValue)
+		flow.WriteInt32(weaponValue)
 	}
 	nextShotTick := unit.NextShotTick
-	stream.WriteInt32(writer, nextShotTick)
+	flow.WriteInt32(nextShotTick)
 	ammo := unit.Ammo
-	stream.WriteInt32(writer, int32(len(ammo)))
+	flow.WriteInt32(int32(len(ammo)))
 	for _, ammoElement := range ammo {
-		stream.WriteInt32(writer, ammoElement)
+		flow.WriteInt32(ammoElement)
 	}
 	shieldPotions := unit.ShieldPotions
-	stream.WriteInt32(writer, shieldPotions)
+	flow.WriteInt32(shieldPotions)
 }
 
 // Get string representation of Unit

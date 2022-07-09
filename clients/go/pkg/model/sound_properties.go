@@ -2,9 +2,7 @@ package model
 
 import (
 	"fmt"
-	"io"
-
-	"aicup22/pkg/stream"
+	// "aicup22/pkg/stream"
 )
 
 // Sound properties
@@ -26,7 +24,7 @@ func NewSoundProperties(name string, distance, offset float64) SoundProperties {
 }
 
 // Read SoundProperties from reader
-func ReadSoundProperties(reader io.Reader) SoundProperties {
+func ReadSoundProperties() SoundProperties {
 	name := flow.ReadString()
 	distance := flow.ReadFloat64()
 	offset := flow.ReadFloat64()
@@ -38,13 +36,13 @@ func ReadSoundProperties(reader io.Reader) SoundProperties {
 }
 
 // Write SoundProperties to writer
-func (soundProperties SoundProperties) Write(writer io.Writer) {
+func (soundProperties SoundProperties) Write() {
 	name := soundProperties.Name
-	stream.WriteString(writer, name)
+	flow.WriteString(name)
 	distance := soundProperties.Distance
-	stream.WriteFloat64(writer, distance)
+	flow.WriteFloat64(distance)
 	offset := soundProperties.Offset
-	stream.WriteFloat64(writer, offset)
+	flow.WriteFloat64(offset)
 }
 
 // Get string representation of SoundProperties

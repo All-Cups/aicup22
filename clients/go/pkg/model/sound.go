@@ -2,7 +2,6 @@ package model
 
 import (
 	"fmt"
-	"io"
 
 	"aicup22/pkg/stream"
 )
@@ -26,10 +25,10 @@ func NewSound(typeIndex, unitId int32, position Vec2) Sound {
 }
 
 // Read Sound from reader
-func ReadSound(reader io.Reader) Sound {
-	typeIndex := stream.Flow().ReadInt32()
+func ReadSound() Sound {
+	typeIndex := flow.ReadInt32()
 	unitId := stream.Flow().ReadInt32()
-	position := ReadVec2(reader)
+	position := ReadVec2()
 	return Sound{
 		TypeIndex: typeIndex,
 		UnitId:    unitId,
@@ -38,13 +37,13 @@ func ReadSound(reader io.Reader) Sound {
 }
 
 // Write Sound to writer
-func (sound Sound) Write(writer io.Writer) {
+func (sound Sound) Write() {
 	typeIndex := sound.TypeIndex
-	stream.WriteInt32(writer, typeIndex)
+	flow.WriteInt32(typeIndex)
 	unitId := sound.UnitId
-	stream.WriteInt32(writer, unitId)
+	flow.WriteInt32(unitId)
 	position := sound.Position
-	position.Write(writer)
+	position.Write()
 }
 
 // Get string representation of Sound

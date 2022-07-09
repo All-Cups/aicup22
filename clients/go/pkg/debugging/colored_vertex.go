@@ -1,8 +1,6 @@
 package debugging
 
 import (
-	"io"
-
 	"aicup22/pkg/model"
 )
 
@@ -22,9 +20,9 @@ func NewColoredVertex(position model.Vec2, color Color) ColoredVertex {
 }
 
 // Read ColoredVertex from reader
-func ReadColoredVertex(reader io.Reader) ColoredVertex {
-	position := model.ReadVec2(reader)
-	color := ReadColor(reader)
+func ReadColoredVertex() ColoredVertex {
+	position := model.ReadVec2()
+	color := ReadColor()
 	return ColoredVertex{
 		Position: position,
 		Color:    color,
@@ -32,11 +30,11 @@ func ReadColoredVertex(reader io.Reader) ColoredVertex {
 }
 
 // Write ColoredVertex to writer
-func (coloredVertex ColoredVertex) Write(writer io.Writer) {
+func (coloredVertex ColoredVertex) Write() {
 	position := coloredVertex.Position
-	position.Write(writer)
+	position.Write()
 	color := coloredVertex.Color
-	color.Write(writer)
+	color.Write()
 }
 
 // Get string representation of ColoredVertex

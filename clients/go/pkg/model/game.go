@@ -2,9 +2,6 @@ package model
 
 import (
 	"fmt"
-	"io"
-
-	"aicup22/pkg/stream"
 )
 
 // Current game's state
@@ -41,33 +38,33 @@ func NewGame(myId int32, players []Player, currentTick int32, units []Unit, loot
 }
 
 // Read Game from reader
-func ReadGame(reader io.Reader) Game {
-	myId := stream.Flow().ReadInt32()
-	players := make([]Player, stream.Flow().ReadInt32())
+func ReadGame() Game {
+	myId := flow.ReadInt32()
+	players := make([]Player, flow.ReadInt32())
 	for playersIndex := range players {
-		playersElement := ReadPlayer(reader)
+		playersElement := ReadPlayer()
 		players[playersIndex] = playersElement
 	}
-	currentTick := stream.Flow().ReadInt32()
-	units := make([]Unit, stream.Flow().ReadInt32())
+	currentTick := flow.ReadInt32()
+	units := make([]Unit, flow.ReadInt32())
 	for unitsIndex := range units {
-		unitsElement := ReadUnit(reader)
+		unitsElement := ReadUnit()
 		units[unitsIndex] = unitsElement
 	}
-	loot := make([]Loot, stream.Flow().ReadInt32())
+	loot := make([]Loot, flow.ReadInt32())
 	for lootIndex := range loot {
-		lootElement := ReadLoot(reader)
+		lootElement := ReadLoot()
 		loot[lootIndex] = lootElement
 	}
-	projectiles := make([]Projectile, stream.Flow().ReadInt32())
+	projectiles := make([]Projectile, flow.ReadInt32())
 	for projectilesIndex := range projectiles {
-		projectilesElement := ReadProjectile(reader)
+		projectilesElement := ReadProjectile()
 		projectiles[projectilesIndex] = projectilesElement
 	}
-	zone := ReadZone(reader)
-	sounds := make([]Sound, stream.Flow().ReadInt32())
+	zone := ReadZone()
+	sounds := make([]Sound, flow.ReadInt32())
 	for soundsIndex := range sounds {
-		soundsElement := ReadSound(reader)
+		soundsElement := ReadSound()
 		sounds[soundsIndex] = soundsElement
 	}
 	return Game{
@@ -83,37 +80,37 @@ func ReadGame(reader io.Reader) Game {
 }
 
 // Write Game to writer
-func (game Game) Write(writer io.Writer) {
+func (game Game) Write() {
 	myId := game.MyId
-	stream.WriteInt32(writer, myId)
+	flow.WriteInt32(myId)
 	players := game.Players
-	stream.WriteInt32(writer, int32(len(players)))
+	flow.WriteInt32(int32(len(players)))
 	for _, playersElement := range players {
-		playersElement.Write(writer)
+		playersElement.Write()
 	}
 	currentTick := game.CurrentTick
-	stream.WriteInt32(writer, currentTick)
+	flow.WriteInt32(currentTick)
 	units := game.Units
-	stream.WriteInt32(writer, int32(len(units)))
+	flow.WriteInt32(int32(len(units)))
 	for _, unitsElement := range units {
-		unitsElement.Write(writer)
+		unitsElement.Write()
 	}
 	loot := game.Loot
-	stream.WriteInt32(writer, int32(len(loot)))
+	flow.WriteInt32(int32(len(loot)))
 	for _, lootElement := range loot {
-		lootElement.Write(writer)
+		lootElement.Write()
 	}
 	projectiles := game.Projectiles
-	stream.WriteInt32(writer, int32(len(projectiles)))
+	flow.WriteInt32(int32(len(projectiles)))
 	for _, projectilesElement := range projectiles {
-		projectilesElement.Write(writer)
+		projectilesElement.Write()
 	}
 	zone := game.Zone
-	zone.Write(writer)
+	zone.Write()
 	sounds := game.Sounds
-	stream.WriteInt32(writer, int32(len(sounds)))
+	flow.WriteInt32(int32(len(sounds)))
 	for _, soundsElement := range sounds {
-		soundsElement.Write(writer)
+		soundsElement.Write()
 	}
 }
 

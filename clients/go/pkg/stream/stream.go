@@ -116,42 +116,42 @@ func (sf *Stream) WriteBool(value bool) {
 	}
 }
 
-func WriteInt32(writer io.Writer, value int32) {
-	err := binary.Write(writer, binary.LittleEndian, value)
+func (sf *Stream) WriteInt32(value int32) {
+	err := binary.Write(sf.writer, binary.LittleEndian, value)
 	if err != nil {
 		// FIXME: так делать нельзя
 		panic(err)
 	}
 }
 
-func WriteInt64(writer io.Writer, value int64) {
-	err := binary.Write(writer, binary.LittleEndian, value)
+func (sf *Stream) WriteInt64(value int64) {
+	err := binary.Write(sf.writer, binary.LittleEndian, value)
 	if err != nil {
 		// FIXME: так делать нельзя
 		panic(err)
 	}
 }
 
-func WriteFloat32(writer io.Writer, value float32) {
-	err := binary.Write(writer, binary.LittleEndian, value)
+func (sf *Stream) WriteFloat32(value float32) {
+	err := binary.Write(sf.writer, binary.LittleEndian, value)
 	if err != nil {
 		// FIXME: так делать нельзя
 		panic(err)
 	}
 }
 
-func WriteFloat64(writer io.Writer, value float64) {
-	err := binary.Write(writer, binary.LittleEndian, value)
+func (sf *Stream) WriteFloat64(value float64) {
+	err := binary.Write(sf.writer, binary.LittleEndian, value)
 	if err != nil {
 		// FIXME: так делать нельзя
 		panic(err)
 	}
 }
 
-func WriteString(writer io.Writer, value string) {
+func (sf *Stream) WriteString(value string) {
 	bytes := []byte(value)
-	WriteInt32(writer, int32(len(bytes)))
-	_, err := writer.Write(bytes)
+	sf.WriteInt32(int32(len(bytes)))
+	_, err := sf.writer.Write(bytes)
 	if err != nil {
 		// FIXME: так делать нельзя
 		panic(err)

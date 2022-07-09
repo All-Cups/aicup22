@@ -2,7 +2,6 @@ package debugging
 
 import (
 	"fmt"
-	"io"
 
 	"aicup22/pkg/model"
 	"aicup22/pkg/stream"
@@ -35,8 +34,8 @@ func NewCamera(center model.Vec2, rotation, attack, fov float64) Camera {
 }
 
 // Read Camera from reader
-func ReadCamera(reader io.Reader) Camera {
-	center := model.ReadVec2(reader)
+func ReadCamera() Camera {
+	center := model.ReadVec2()
 	rotation := flow.ReadFloat64()
 	attack := flow.ReadFloat64()
 	fov := flow.ReadFloat64()
@@ -49,15 +48,15 @@ func ReadCamera(reader io.Reader) Camera {
 }
 
 // Write Camera to writer
-func (camera Camera) Write(writer io.Writer) {
+func (camera Camera) Write() {
 	center := camera.Center
-	center.Write(writer)
+	center.Write()
 	rotation := camera.Rotation
-	stream.WriteFloat64(writer, rotation)
+	flow.WriteFloat64(rotation)
 	attack := camera.Attack
-	stream.WriteFloat64(writer, attack)
+	flow.WriteFloat64(attack)
 	fov := camera.Fov
-	stream.WriteFloat64(writer, fov)
+	flow.WriteFloat64(fov)
 }
 
 // Get string representation of Camera

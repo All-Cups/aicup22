@@ -2,9 +2,7 @@ package model
 
 import (
 	"fmt"
-	"io"
-
-	"aicup22/pkg/stream"
+	// "aicup22/pkg/stream"
 )
 
 // Weapon projectile
@@ -38,13 +36,13 @@ func NewProjectile(id, weaponTypeIndex, shooterId, shooterPlayerId int32, positi
 }
 
 // Read Projectile from reader
-func ReadProjectile(reader io.Reader) Projectile {
+func ReadProjectile() Projectile {
 	id := flow.ReadInt32()
 	weaponTypeIndex := flow.ReadInt32()
 	shooterId := flow.ReadInt32()
 	shooterPlayerId := flow.ReadInt32()
-	position := ReadVec2(reader)
-	velocity := ReadVec2(reader)
+	position := ReadVec2()
+	velocity := ReadVec2()
 	lifeTime := flow.ReadFloat64()
 	return Projectile{
 		Id:              id,
@@ -58,21 +56,21 @@ func ReadProjectile(reader io.Reader) Projectile {
 }
 
 // Write Projectile to writer
-func (projectile Projectile) Write(writer io.Writer) {
+func (projectile Projectile) Write() {
 	id := projectile.Id
-	stream.WriteInt32(writer, id)
+	flow.WriteInt32(id)
 	weaponTypeIndex := projectile.WeaponTypeIndex
-	stream.WriteInt32(writer, weaponTypeIndex)
+	flow.WriteInt32(weaponTypeIndex)
 	shooterId := projectile.ShooterId
-	stream.WriteInt32(writer, shooterId)
+	flow.WriteInt32(shooterId)
 	shooterPlayerId := projectile.ShooterPlayerId
-	stream.WriteInt32(writer, shooterPlayerId)
+	flow.WriteInt32(shooterPlayerId)
 	position := projectile.Position
-	position.Write(writer)
+	position.Write()
 	velocity := projectile.Velocity
-	velocity.Write(writer)
+	velocity.Write()
 	lifeTime := projectile.LifeTime
-	stream.WriteFloat64(writer, lifeTime)
+	flow.WriteFloat64(lifeTime)
 }
 
 // Get string representation of Projectile

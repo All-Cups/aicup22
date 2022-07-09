@@ -2,40 +2,39 @@ package codegame
 
 import (
 	"fmt"
-	"io"
 
 	"aicup22/pkg/model"
 	"aicup22/pkg/stream"
 )
 
-var(
+var (
 	flow *stream.Stream
 )
 
-func init(){
-	flow=stream.Flow()
+func init() {
+	flow = stream.Flow()
 }
 
 // Message sent from server
 type ServerMessage interface {
 	// Write ServerMessage to writer
-	Write(writer io.Writer)
+	Write()
 
 	// Get string representation of ServerMessage
 	String() string
 }
 
 // Read ServerMessage from reader
-func ReadServerMessage(reader io.Reader) ServerMessage {
+func ReadServerMessage() ServerMessage {
 	switch stream.Flow().ReadInt32() {
 	case 0:
-		return ReadServerMessageUpdateConstants(reader)
+		return ReadServerMessageUpdateConstants()
 	case 1:
-		return ReadServerMessageGetOrder(reader)
+		return ReadServerMessageGetOrder()
 	case 2:
-		return ReadServerMessageFinish(reader)
+		return ReadServerMessageFinish()
 	case 3:
-		return ReadServerMessageDebugUpdate(reader)
+		return ReadServerMessageDebugUpdate()
 	}
 	panic("Unexpected tag value")
 }
@@ -53,18 +52,18 @@ func NewServerMessageUpdateConstants(constants model.Constants) ServerMessageUpd
 }
 
 // Read UpdateConstants from reader
-func ReadServerMessageUpdateConstants(reader io.Reader) ServerMessageUpdateConstants {
-	constants := model.ReadConstants(reader)
+func ReadServerMessageUpdateConstants() ServerMessageUpdateConstants {
+	constants := model.ReadConstants()
 	return ServerMessageUpdateConstants{
 		Constants: constants,
 	}
 }
 
 // Write UpdateConstants to writer
-func (serverMessageUpdateConstants ServerMessageUpdateConstants) Write(writer io.Writer) {
-	stream.WriteInt32(writer, 0)
+func (serverMessageUpdateConstants ServerMessageUpdateConstants) Write() {
+	flow.WriteInt32(0)
 	constants := serverMessageUpdateConstants.Constants
-	constants.Write(writer)
+	constants.Write()
 }
 
 // Get string representation of UpdateConstants
@@ -93,9 +92,9 @@ func NewServerMessageGetOrder(playerView model.Game, debugAvailable bool) Server
 }
 
 // Read GetOrder from reader
-func ReadServerMessageGetOrder(reader io.Reader) ServerMessageGetOrder {
-	playerView := model.ReadGame(reader)
-	debugAvailable := stream.Flow().ReadBool()
+func ReadServerMessageGetOrder() ServerMessageGetOrder {
+	playerView := model.ReadGame()
+	debugAvailable := flow.ReadBool()
 	return ServerMessageGetOrder{
 		PlayerView:     playerView,
 		DebugAvailable: debugAvailable,
@@ -103,10 +102,10 @@ func ReadServerMessageGetOrder(reader io.Reader) ServerMessageGetOrder {
 }
 
 // Write GetOrder to writer
-func (serverMessageGetOrder ServerMessageGetOrder) Write(writer io.Writer) {
-	stream.WriteInt32(writer, 1)
+func (serverMessageGetOrder ServerMessageGetOrder) Write() {
+	flow.WriteInt32(1)
 	playerView := serverMessageGetOrder.PlayerView
-	playerView.Write(writer)
+	playerView.Write()
 	debugAvailable := serverMessageGetOrder.DebugAvailable
 	flow.WriteBool(debugAvailable)
 }
@@ -134,14 +133,14 @@ func NewServerMessageFinish() ServerMessageFinish {
 }
 
 // Read Finish from reader
-func ReadServerMessageFinish(reader io.Reader) ServerMessageFinish {
+func ReadServerMessageFinish() ServerMessageFinish {
 	return ServerMessageFinish{}
 }
 
 // Write Finish to writer
-func (serverMessageFinish ServerMessageFinish) Write(writer io.Writer) {
+func (serverMessageFinish ServerMessageFinish) Write() {
 	// FIXME: магическая константа
-	stream.WriteInt32(writer, 2)
+	flow.WriteInt32(2)
 }
 
 // Get string representation of Finish
@@ -164,19 +163,19 @@ func NewServerMessageDebugUpdate(displayedTick int32) ServerMessageDebugUpdate {
 }
 
 // Read DebugUpdate from reader
-func ReadServerMessageDebugUpdate(reader io.Reader) ServerMessageDebugUpdate {
-	displayedTick := stream.Flow().ReadInt32()
+func ReadServerMessageDebugUpdate() ServerMessageDebugUpdate {
+	displayedTick := flow.ReadInt32()
 	return ServerMessageDebugUpdate{
 		DisplayedTick: displayedTick,
 	}
 }
 
 // Write DebugUpdate to writer
-func (serverMessageDebugUpdate ServerMessageDebugUpdate) Write(writer io.Writer) {
+func (serverMessageDebugUpdate ServerMessageDebugUpdate) Write() {
 	// FIXME: магическая константа
-	stream.WriteInt32(writer, 3)
+	flow.WriteInt32(3)
 	displayedTick := serverMessageDebugUpdate.DisplayedTick
-	stream.WriteInt32(writer, displayedTick)
+	flow.WriteInt32(displayedTick)
 }
 
 // Get string representation of DebugUpdate

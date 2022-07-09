@@ -2,9 +2,6 @@ package model
 
 import (
 	"fmt"
-	"io"
-
-	"aicup22/pkg/stream"
 )
 
 // Player's (team's) orders
@@ -20,12 +17,12 @@ func NewOrder(unitOrders map[int32]UnitOrder) Order {
 }
 
 // Read Order from reader
-func ReadOrder(reader io.Reader) Order {
-	unitOrdersSize := stream.Flow().ReadInt32()
+func ReadOrder() Order {
+	unitOrdersSize := flow.ReadInt32()
 	unitOrders := make(map[int32]UnitOrder)
 	for unitOrdersIndex := int32(0); unitOrdersIndex < unitOrdersSize; unitOrdersIndex++ {
-		unitOrdersKey := stream.Flow().ReadInt32()
-		unitOrdersValue := ReadUnitOrder(reader)
+		unitOrdersKey := flow.ReadInt32()
+		unitOrdersValue := ReadUnitOrder()
 		unitOrders[unitOrdersKey] = unitOrdersValue
 	}
 	return Order{
@@ -34,12 +31,12 @@ func ReadOrder(reader io.Reader) Order {
 }
 
 // Write Order to writer
-func (order Order) Write(writer io.Writer) {
+func (order Order) Write() {
 	unitOrders := order.UnitOrders
-	stream.WriteInt32(writer, int32(len(unitOrders)))
+	flow.WriteInt32(int32(len(unitOrders)))
 	for unitOrdersKey, unitOrdersValue := range unitOrders {
-		stream.WriteInt32(writer, unitOrdersKey)
-		unitOrdersValue.Write(writer)
+		flow.WriteInt32(unitOrdersKey)
+		unitOrdersValue.Write()
 	}
 }
 

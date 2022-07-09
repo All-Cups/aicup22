@@ -2,9 +2,6 @@ package model
 
 import (
 	"fmt"
-	"io"
-
-	"aicup22/pkg/stream"
 )
 
 // Action unit is currently performing
@@ -23,9 +20,9 @@ func NewAction(finishTick int32, actionType ActionType) Action {
 }
 
 // Read Action from reader
-func ReadAction(reader io.Reader) Action {
-	finishTick := stream.Flow().ReadInt32()
-	actionType := ReadActionType(reader)
+func ReadAction() Action {
+	finishTick := flow.ReadInt32()
+	actionType := ReadActionType()
 	return Action{
 		FinishTick: finishTick,
 		ActionType: actionType,
@@ -33,11 +30,11 @@ func ReadAction(reader io.Reader) Action {
 }
 
 // Write Action to writer
-func (action Action) Write(writer io.Writer) {
+func (action Action) Write() {
 	finishTick := action.FinishTick
-	stream.WriteInt32(writer, finishTick)
+	flow.WriteInt32(finishTick)
 	actionType := action.ActionType
-	stream.WriteInt32(writer, int32(actionType))
+	flow.WriteInt32(int32(actionType))
 }
 
 // Get string representation of Action

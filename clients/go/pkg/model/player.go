@@ -2,9 +2,6 @@ package model
 
 import (
 	"fmt"
-	"io"
-
-	"aicup22/pkg/stream"
 )
 
 // Game's participant (team of units)
@@ -32,7 +29,7 @@ func NewPlayer(id, kills int32, damage float64, place int32, score float64) Play
 }
 
 // Read Player from reader
-func ReadPlayer(reader io.Reader) Player {
+func ReadPlayer() Player {
 	id := flow.ReadInt32()
 	kills := flow.ReadInt32()
 	damage := flow.ReadFloat64()
@@ -48,17 +45,17 @@ func ReadPlayer(reader io.Reader) Player {
 }
 
 // Write Player to writer
-func (player Player) Write(writer io.Writer) {
+func (player Player) Write() {
 	id := player.Id
-	stream.WriteInt32(writer, id)
+	flow.WriteInt32(id)
 	kills := player.Kills
-	stream.WriteInt32(writer, kills)
+	flow.WriteInt32(kills)
 	damage := player.Damage
-	stream.WriteFloat64(writer, damage)
+	flow.WriteFloat64(damage)
 	place := player.Place
-	stream.WriteInt32(writer, place)
+	flow.WriteInt32(place)
 	score := player.Score
-	stream.WriteFloat64(writer, score)
+	flow.WriteFloat64(score)
 }
 
 // Get string representation of Player

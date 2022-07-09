@@ -2,9 +2,7 @@ package model
 
 import (
 	"fmt"
-	"io"
-
-	"aicup22/pkg/stream"
+	// "aicup22/pkg/stream"
 )
 
 // An obstacle on the map
@@ -32,12 +30,12 @@ func NewObstacle(id int32, position Vec2, radius float64, canSeeThrough, canShoo
 }
 
 // Read Obstacle from reader
-func ReadObstacle(reader io.Reader) Obstacle {
-	id := stream.Flow().ReadInt32()
-	position := ReadVec2(reader)
+func ReadObstacle() Obstacle {
+	id := flow.ReadInt32()
+	position := ReadVec2()
 	radius := flow.ReadFloat64()
 	canSeeThrough := flow.ReadBool()
-	canShootThrough := stream.Flow().ReadBool()
+	canShootThrough := flow.ReadBool()
 	return Obstacle{
 		Id:              id,
 		Position:        position,
@@ -48,13 +46,13 @@ func ReadObstacle(reader io.Reader) Obstacle {
 }
 
 // Write Obstacle to writer
-func (obstacle Obstacle) Write(writer io.Writer) {
+func (obstacle Obstacle) Write() {
 	id := obstacle.Id
-	stream.WriteInt32(writer, id)
+	flow.WriteInt32(id)
 	position := obstacle.Position
-	position.Write(writer)
+	position.Write()
 	radius := obstacle.Radius
-	stream.WriteFloat64(writer, radius)
+	flow.WriteFloat64(radius)
 	canSeeThrough := obstacle.CanSeeThrough
 	flow.WriteBool(canSeeThrough)
 	canShootThrough := obstacle.CanShootThrough

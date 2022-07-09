@@ -1,8 +1,6 @@
 package codegame
 
 import (
-	"io"
-
 	"aicup22/pkg/debugging"
 	"aicup22/pkg/model"
 	"aicup22/pkg/stream"
@@ -11,23 +9,23 @@ import (
 // Message sent from client
 type ClientMessage interface {
 	// Write ClientMessage to writer
-	Write(writer io.Writer)
+	Write()
 
 	// Get string representation of ClientMessage
 	String() string
 }
 
 // Read ClientMessage from reader
-func ReadClientMessage(reader io.Reader) ClientMessage {
+func ReadClientMessage() ClientMessage {
 	switch stream.Flow().ReadInt32() {
 	case 0:
-		return ReadClientMessageDebugMessage(reader)
+		return ReadClientMessageDebugMessage()
 	case 1:
-		return ReadClientMessageOrderMessage(reader)
+		return ReadClientMessageOrderMessage()
 	case 2:
-		return ReadClientMessageDebugUpdateDone(reader)
+		return ReadClientMessageDebugUpdateDone()
 	case 3:
-		return ReadClientMessageRequestDebugState(reader)
+		return ReadClientMessageRequestDebugState()
 	}
 	// FIXME: НИКОГДА не используйте панику в инфраструктурном коде
 	panic("Unexpected tag value")
@@ -46,18 +44,18 @@ func NewClientMessageDebugMessage(command debugging.DebugCommand) ClientMessageD
 }
 
 // Read DebugMessage from reader
-func ReadClientMessageDebugMessage(reader io.Reader) ClientMessageDebugMessage {
-	command := debugging.ReadDebugCommand(reader)
+func ReadClientMessageDebugMessage() ClientMessageDebugMessage {
+	command := debugging.ReadDebugCommand()
 	return ClientMessageDebugMessage{
 		Command: command,
 	}
 }
 
 // Write DebugMessage to writer
-func (clientMessageDebugMessage ClientMessageDebugMessage) Write(writer io.Writer) {
-	stream.WriteInt32(writer, 0)
+func (clientMessageDebugMessage ClientMessageDebugMessage) Write() {
+	flow.WriteInt32(0)
 	command := clientMessageDebugMessage.Command
-	command.Write(writer)
+	command.Write()
 }
 
 // Get string representation of DebugMessage
@@ -83,18 +81,18 @@ func NewClientMessageOrderMessage(order model.Order) ClientMessageOrderMessage {
 }
 
 // Read OrderMessage from reader
-func ReadClientMessageOrderMessage(reader io.Reader) ClientMessageOrderMessage {
-	order := model.ReadOrder(reader)
+func ReadClientMessageOrderMessage() ClientMessageOrderMessage {
+	order := model.ReadOrder()
 	return ClientMessageOrderMessage{
 		Order: order,
 	}
 }
 
 // Write OrderMessage to writer
-func (clientMessageOrderMessage ClientMessageOrderMessage) Write(writer io.Writer) {
-	stream.WriteInt32(writer, 1)
+func (clientMessageOrderMessage ClientMessageOrderMessage) Write() {
+	flow.WriteInt32(1)
 	order := clientMessageOrderMessage.Order
-	order.Write(writer)
+	order.Write()
 }
 
 // Get string representation of OrderMessage
@@ -116,13 +114,14 @@ func NewClientMessageDebugUpdateDone() ClientMessageDebugUpdateDone {
 }
 
 // Read DebugUpdateDone from reader
-func ReadClientMessageDebugUpdateDone(reader io.Reader) ClientMessageDebugUpdateDone {
+func ReadClientMessageDebugUpdateDone() ClientMessageDebugUpdateDone {
 	return ClientMessageDebugUpdateDone{}
 }
 
 // Write DebugUpdateDone to writer
-func (clientMessageDebugUpdateDone ClientMessageDebugUpdateDone) Write(writer io.Writer) {
-	stream.WriteInt32(writer, 2)
+func (clientMessageDebugUpdateDone ClientMessageDebugUpdateDone) Write() {
+	// FIXME: магическая константа
+	flow.WriteInt32(2)
 }
 
 // Get string representation of DebugUpdateDone
@@ -141,13 +140,13 @@ func NewClientMessageRequestDebugState() ClientMessageRequestDebugState {
 }
 
 // Read RequestDebugState from reader
-func ReadClientMessageRequestDebugState(reader io.Reader) ClientMessageRequestDebugState {
+func ReadClientMessageRequestDebugState() ClientMessageRequestDebugState {
 	return ClientMessageRequestDebugState{}
 }
 
 // Write RequestDebugState to writer
-func (clientMessageRequestDebugState ClientMessageRequestDebugState) Write(writer io.Writer) {
-	stream.WriteInt32(writer, 3)
+func (clientMessageRequestDebugState ClientMessageRequestDebugState) Write() {
+	flow.WriteInt32(3)
 }
 
 // Get string representation of RequestDebugState

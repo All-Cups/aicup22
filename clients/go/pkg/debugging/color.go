@@ -2,9 +2,6 @@ package debugging
 
 import (
 	"fmt"
-	"io"
-
-	"aicup22/pkg/stream"
 )
 
 // RGBA Color
@@ -29,7 +26,7 @@ func NewColor(r, g, b, a float64) Color {
 }
 
 // Read Color from reader
-func ReadColor(reader io.Reader) Color {
+func ReadColor() Color {
 	r := flow.ReadFloat64()
 	g := flow.ReadFloat64()
 	b := flow.ReadFloat64()
@@ -43,15 +40,15 @@ func ReadColor(reader io.Reader) Color {
 }
 
 // Write Color to writer
-func (color Color) Write(writer io.Writer) {
+func (color Color) Write() {
 	r := color.R
-	stream.WriteFloat64(writer, r)
+	flow.WriteFloat64(r)
 	g := color.G
-	stream.WriteFloat64(writer, g)
+	flow.WriteFloat64(g)
 	b := color.B
-	stream.WriteFloat64(writer, b)
+	flow.WriteFloat64(b)
 	a := color.A
-	stream.WriteFloat64(writer, a)
+	flow.WriteFloat64(a)
 }
 
 // Get string representation of Color

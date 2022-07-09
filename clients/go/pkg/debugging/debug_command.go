@@ -2,32 +2,29 @@ package debugging
 
 import (
 	"fmt"
-	"io"
-
-	"aicup22/pkg/stream"
 )
 
 // Debug commands that can be sent while debugging with the app
 type DebugCommand interface {
 	// Write DebugCommand to writer
-	Write(writer io.Writer)
+	Write()
 
 	// Get string representation of DebugCommand
 	String() string
 }
 
 // Read DebugCommand from reader
-func ReadDebugCommand(reader io.Reader) DebugCommand {
+func ReadDebugCommand() DebugCommand {
 	// FIXME: магические константы
-	switch stream.Flow().ReadInt32() {
+	switch flow.ReadInt32() {
 	case 0:
-		return ReadDebugCommandAdd(reader)
+		return ReadDebugCommandAdd()
 	case 1:
-		return ReadDebugCommandClear(reader)
+		return ReadDebugCommandClear()
 	case 2:
-		return ReadDebugCommandSetAutoFlush(reader)
+		return ReadDebugCommandSetAutoFlush()
 	case 3:
-		return ReadDebugCommandFlush(reader)
+		return ReadDebugCommandFlush()
 	}
 	panic("Unexpected tag value")
 }
@@ -45,18 +42,18 @@ func NewDebugCommandAdd(debugData DebugData) DebugCommandAdd {
 }
 
 // Read Add from reader
-func ReadDebugCommandAdd(reader io.Reader) DebugCommandAdd {
-	debugData := ReadDebugData(reader)
+func ReadDebugCommandAdd() DebugCommandAdd {
+	debugData := ReadDebugData()
 	return DebugCommandAdd{
 		DebugData: debugData,
 	}
 }
 
 // Write Add to writer
-func (debugCommandAdd DebugCommandAdd) Write(writer io.Writer) {
-	stream.WriteInt32(writer, 0)
+func (debugCommandAdd DebugCommandAdd) Write() {
+	flow.WriteInt32(0)
 	debugData := debugCommandAdd.DebugData
-	debugData.Write(writer)
+	debugData.Write()
 }
 
 // Get string representation of Add
@@ -78,13 +75,13 @@ func NewDebugCommandClear() DebugCommandClear {
 }
 
 // Read Clear from reader
-func ReadDebugCommandClear(reader io.Reader) DebugCommandClear {
+func ReadDebugCommandClear() DebugCommandClear {
 	return DebugCommandClear{}
 }
 
 // Write Clear to writer
-func (debugCommandClear DebugCommandClear) Write(writer io.Writer) {
-	stream.WriteInt32(writer, 1)
+func (debugCommandClear DebugCommandClear) Write() {
+	flow.WriteInt32(1)
 }
 
 // Get string representation of Clear
@@ -107,16 +104,16 @@ func NewDebugCommandSetAutoFlush(enable bool) DebugCommandSetAutoFlush {
 }
 
 // Read SetAutoFlush from reader
-func ReadDebugCommandSetAutoFlush(reader io.Reader) DebugCommandSetAutoFlush {
-	enable := stream.Flow().ReadBool()
+func ReadDebugCommandSetAutoFlush() DebugCommandSetAutoFlush {
+	enable := flow.ReadBool()
 	return DebugCommandSetAutoFlush{
 		Enable: enable,
 	}
 }
 
 // Write SetAutoFlush to writer
-func (debugCommandSetAutoFlush DebugCommandSetAutoFlush) Write(writer io.Writer) {
-	stream.WriteInt32(writer, 2)
+func (debugCommandSetAutoFlush DebugCommandSetAutoFlush) Write() {
+	flow.WriteInt32(2)
 	enable := debugCommandSetAutoFlush.Enable
 	flow.WriteBool(enable)
 }
@@ -140,13 +137,13 @@ func NewDebugCommandFlush() DebugCommandFlush {
 }
 
 // Read Flush from reader
-func ReadDebugCommandFlush(reader io.Reader) DebugCommandFlush {
+func ReadDebugCommandFlush() DebugCommandFlush {
 	return DebugCommandFlush{}
 }
 
 // Write Flush to writer
-func (debugCommandFlush DebugCommandFlush) Write(writer io.Writer) {
-	stream.WriteInt32(writer, 3)
+func (debugCommandFlush DebugCommandFlush) Write() {
+	flow.WriteInt32(3)
 }
 
 // Get string representation of Flush

@@ -2,7 +2,6 @@ package model
 
 import (
 	"fmt"
-	"io"
 
 	"aicup22/pkg/stream"
 )
@@ -26,10 +25,10 @@ func NewLoot(id int32, position Vec2, item Item) Loot {
 }
 
 // Read Loot from reader
-func ReadLoot(reader io.Reader) Loot {
+func ReadLoot() Loot {
 	id := stream.Flow().ReadInt32()
-	position := ReadVec2(reader)
-	item := ReadItem(reader)
+	position := ReadVec2()
+	item := ReadItem()
 	return Loot{
 		Id:       id,
 		Position: position,
@@ -38,13 +37,13 @@ func ReadLoot(reader io.Reader) Loot {
 }
 
 // Write Loot to writer
-func (loot Loot) Write(writer io.Writer) {
+func (loot Loot) Write() {
 	id := loot.Id
-	stream.WriteInt32(writer, id)
+	flow.WriteInt32(id)
 	position := loot.Position
-	position.Write(writer)
+	position.Write()
 	item := loot.Item
-	item.Write(writer)
+	item.Write()
 }
 
 // Get string representation of Loot

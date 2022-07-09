@@ -2,9 +2,7 @@ package model
 
 import (
 	"fmt"
-	"io"
-
-	"aicup22/pkg/stream"
+	// "aicup22/pkg/stream"
 )
 
 // 2 dimensional vector.
@@ -23,7 +21,7 @@ func NewVec2(x, y float64) Vec2 {
 }
 
 // Read Vec2 from reader
-func ReadVec2(reader io.Reader) Vec2 {
+func ReadVec2() Vec2 {
 	x := flow.ReadFloat64()
 	y := flow.ReadFloat64()
 	return Vec2{
@@ -33,11 +31,11 @@ func ReadVec2(reader io.Reader) Vec2 {
 }
 
 // Write Vec2 to writer
-func (vec2 Vec2) Write(writer io.Writer) {
+func (vec2 Vec2) Write() {
 	x := vec2.X
-	stream.WriteFloat64(writer, x)
+	flow.WriteFloat64(x)
 	y := vec2.Y
-	stream.WriteFloat64(writer, y)
+	flow.WriteFloat64(y)
 }
 
 // Get string representation of Vec2

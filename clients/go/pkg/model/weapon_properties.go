@@ -2,7 +2,6 @@ package model
 
 import (
 	"fmt"
-	"io"
 
 	"aicup22/pkg/stream"
 )
@@ -59,7 +58,7 @@ func NewWeaponProperties(name string,
 }
 
 // Read WeaponProperties from reader
-func ReadWeaponProperties(reader io.Reader) WeaponProperties {
+func ReadWeaponProperties() WeaponProperties {
 	name := flow.ReadString()
 	roundsPerSecond := flow.ReadFloat64()
 	spread := flow.ReadFloat64()
@@ -103,34 +102,34 @@ func ReadWeaponProperties(reader io.Reader) WeaponProperties {
 }
 
 // Write WeaponProperties to writer
-func (weaponProperties WeaponProperties) Write(writer io.Writer) {
+func (weaponProperties WeaponProperties) Write() {
 	name := weaponProperties.Name
-	stream.WriteString(writer, name)
+	flow.WriteString(name)
 	roundsPerSecond := weaponProperties.RoundsPerSecond
-	stream.WriteFloat64(writer, roundsPerSecond)
+	flow.WriteFloat64(roundsPerSecond)
 	spread := weaponProperties.Spread
-	stream.WriteFloat64(writer, spread)
+	flow.WriteFloat64(spread)
 	aimTime := weaponProperties.AimTime
-	stream.WriteFloat64(writer, aimTime)
+	flow.WriteFloat64(aimTime)
 	aimFieldOfView := weaponProperties.AimFieldOfView
-	stream.WriteFloat64(writer, aimFieldOfView)
+	flow.WriteFloat64(aimFieldOfView)
 	aimRotationSpeed := weaponProperties.AimRotationSpeed
-	stream.WriteFloat64(writer, aimRotationSpeed)
+	flow.WriteFloat64(aimRotationSpeed)
 	aimMovementSpeedModifier := weaponProperties.AimMovementSpeedModifier
-	stream.WriteFloat64(writer, aimMovementSpeedModifier)
+	flow.WriteFloat64(aimMovementSpeedModifier)
 	projectileSpeed := weaponProperties.ProjectileSpeed
-	stream.WriteFloat64(writer, projectileSpeed)
+	flow.WriteFloat64(projectileSpeed)
 	projectileDamage := weaponProperties.ProjectileDamage
-	stream.WriteFloat64(writer, projectileDamage)
+	flow.WriteFloat64(projectileDamage)
 	projectileLifeTime := weaponProperties.ProjectileLifeTime
-	stream.WriteFloat64(writer, projectileLifeTime)
+	flow.WriteFloat64(projectileLifeTime)
 	shotSoundTypeIndex := weaponProperties.ShotSoundTypeIndex
 	if shotSoundTypeIndex == nil {
 		flow.WriteBool(false)
 	} else {
 		flow.WriteBool(true)
 		shotSoundTypeIndexValue := *shotSoundTypeIndex
-		stream.WriteInt32(writer, shotSoundTypeIndexValue)
+		flow.WriteInt32(shotSoundTypeIndexValue)
 	}
 	projectileHitSoundTypeIndex := weaponProperties.ProjectileHitSoundTypeIndex
 	if projectileHitSoundTypeIndex == nil {
@@ -138,10 +137,10 @@ func (weaponProperties WeaponProperties) Write(writer io.Writer) {
 	} else {
 		flow.WriteBool(true)
 		projectileHitSoundTypeIndexValue := *projectileHitSoundTypeIndex
-		stream.WriteInt32(writer, projectileHitSoundTypeIndexValue)
+		flow.WriteInt32(projectileHitSoundTypeIndexValue)
 	}
 	maxInventoryAmmo := weaponProperties.MaxInventoryAmmo
-	stream.WriteInt32(writer, maxInventoryAmmo)
+	flow.WriteInt32(maxInventoryAmmo)
 }
 
 // Get string representation of WeaponProperties

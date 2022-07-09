@@ -1,11 +1,5 @@
 package model
 
-import (
-	"io"
-
-	"aicup22/pkg/stream"
-)
-
 // Type of action a unit is currently performing
 type ActionType int32
 
@@ -17,9 +11,9 @@ const (
 )
 
 // Read ActionType from reader
-func ReadActionType(reader io.Reader) ActionType {
+func ReadActionType() ActionType {
 	// FIXME: опять магические константы?! Да сколько можно-то?!
-	switch stream.Flow().ReadInt32() {
+	switch flow.ReadInt32() {
 	case 0:
 		return ActionTypeLooting
 	case 1:
