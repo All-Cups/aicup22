@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"io"
 
-	. "aicup22/stream"
+	"aicup22/stream"
 )
 
 // Debug commands that can be sent while debugging with the app
@@ -18,7 +18,7 @@ type DebugCommand interface {
 
 // Read DebugCommand from reader
 func ReadDebugCommand(reader io.Reader) DebugCommand {
-	switch ReadInt32(reader) {
+	switch stream.ReadInt32(reader) {
 	case 0:
 		return ReadDebugCommandAdd(reader)
 	case 1:
@@ -53,7 +53,7 @@ func ReadDebugCommandAdd(reader io.Reader) DebugCommandAdd {
 
 // Write Add to writer
 func (debugCommandAdd DebugCommandAdd) Write(writer io.Writer) {
-	WriteInt32(writer, 0)
+	stream.WriteInt32(writer, 0)
 	debugData := debugCommandAdd.DebugData
 	debugData.Write(writer)
 }
@@ -83,7 +83,7 @@ func ReadDebugCommandClear(reader io.Reader) DebugCommandClear {
 
 // Write Clear to writer
 func (debugCommandClear DebugCommandClear) Write(writer io.Writer) {
-	WriteInt32(writer, 1)
+	stream.WriteInt32(writer, 1)
 }
 
 // Get string representation of Clear
@@ -107,7 +107,7 @@ func NewDebugCommandSetAutoFlush(enable bool) DebugCommandSetAutoFlush {
 
 // Read SetAutoFlush from reader
 func ReadDebugCommandSetAutoFlush(reader io.Reader) DebugCommandSetAutoFlush {
-	enable := ReadBool(reader)
+	enable := stream.ReadBool(reader)
 	return DebugCommandSetAutoFlush{
 		Enable: enable,
 	}
@@ -115,9 +115,9 @@ func ReadDebugCommandSetAutoFlush(reader io.Reader) DebugCommandSetAutoFlush {
 
 // Write SetAutoFlush to writer
 func (debugCommandSetAutoFlush DebugCommandSetAutoFlush) Write(writer io.Writer) {
-	WriteInt32(writer, 2)
+	stream.WriteInt32(writer, 2)
 	enable := debugCommandSetAutoFlush.Enable
-	WriteBool(writer, enable)
+	stream.WriteBool(writer, enable)
 }
 
 // Get string representation of SetAutoFlush
@@ -145,7 +145,7 @@ func ReadDebugCommandFlush(reader io.Reader) DebugCommandFlush {
 
 // Write Flush to writer
 func (debugCommandFlush DebugCommandFlush) Write(writer io.Writer) {
-	WriteInt32(writer, 3)
+	stream.WriteInt32(writer, 3)
 }
 
 // Get string representation of Flush
