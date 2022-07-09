@@ -132,6 +132,7 @@ func ReadServerMessageFinish(reader io.Reader) ServerMessageFinish {
 
 // Write Finish to writer
 func (serverMessageFinish ServerMessageFinish) Write(writer io.Writer) {
+	// FIXME: магическая константа
 	stream.WriteInt32(writer, 2)
 }
 
@@ -164,6 +165,7 @@ func ReadServerMessageDebugUpdate(reader io.Reader) ServerMessageDebugUpdate {
 
 // Write DebugUpdate to writer
 func (serverMessageDebugUpdate ServerMessageDebugUpdate) Write(writer io.Writer) {
+	// FIXME: магическая константа
 	stream.WriteInt32(writer, 3)
 	displayedTick := serverMessageDebugUpdate.DisplayedTick
 	stream.WriteInt32(writer, displayedTick)
