@@ -4,8 +4,7 @@ import (
 	"fmt"
 	"io"
 
-	. "aicup22/model"
-
+	"aicup22/model"
 	. "aicup22/stream"
 )
 
@@ -54,18 +53,18 @@ func ReadDebugData(reader io.Reader) DebugData {
 // Text
 type DebugDataPlacedText struct {
 	// Position
-	Position Vec2
+	Position model.Vec2
 	// Text
 	Text string
 	// Alignment, separate for x and y. From 0 to 1. 0.5 - center alignment
-	Alignment Vec2
+	Alignment model.Vec2
 	// Size
 	Size float64
 	// Color
 	Color Color
 }
 
-func NewDebugDataPlacedText(position Vec2, text string, alignment Vec2, size float64, color Color) DebugDataPlacedText {
+func NewDebugDataPlacedText(position model.Vec2, text string, alignment model.Vec2, size float64, color Color) DebugDataPlacedText {
 	return DebugDataPlacedText{
 		Position:  position,
 		Text:      text,
@@ -77,9 +76,9 @@ func NewDebugDataPlacedText(position Vec2, text string, alignment Vec2, size flo
 
 // Read PlacedText from reader
 func ReadDebugDataPlacedText(reader io.Reader) DebugDataPlacedText {
-	position := ReadVec2(reader)
+	position := model.ReadVec2(reader)
 	text := ReadString(reader)
-	alignment := ReadVec2(reader)
+	alignment := model.ReadVec2(reader)
 	size := ReadFloat64(reader)
 	color := ReadColor(reader)
 	return DebugDataPlacedText{
@@ -135,14 +134,14 @@ func (debugDataPlacedText DebugDataPlacedText) String() string {
 // Circle
 type DebugDataCircle struct {
 	// Position of the center
-	Position Vec2
+	Position model.Vec2
 	// Radius
 	Radius float64
 	// Color
 	Color Color
 }
 
-func NewDebugDataCircle(position Vec2, radius float64, color Color) DebugDataCircle {
+func NewDebugDataCircle(position model.Vec2, radius float64, color Color) DebugDataCircle {
 	return DebugDataCircle{
 		Position: position,
 		Radius:   radius,
@@ -152,7 +151,7 @@ func NewDebugDataCircle(position Vec2, radius float64, color Color) DebugDataCir
 
 // Read Circle from reader
 func ReadDebugDataCircle(reader io.Reader) DebugDataCircle {
-	position := ReadVec2(reader)
+	position := model.ReadVec2(reader)
 	radius := ReadFloat64(reader)
 	color := ReadColor(reader)
 	return DebugDataCircle{
@@ -194,7 +193,7 @@ func (debugDataCircle DebugDataCircle) String() string {
 // Circle with gradient fill
 type DebugDataGradientCircle struct {
 	// Position of the center
-	Position Vec2
+	Position model.Vec2
 	// Radius
 	Radius float64
 	// Color of the center
@@ -203,7 +202,7 @@ type DebugDataGradientCircle struct {
 	OuterColor Color
 }
 
-func NewDebugDataGradientCircle(position Vec2, radius float64, innerColor Color, outerColor Color) DebugDataGradientCircle {
+func NewDebugDataGradientCircle(position model.Vec2, radius float64, innerColor Color, outerColor Color) DebugDataGradientCircle {
 	return DebugDataGradientCircle{
 		Position:   position,
 		Radius:     radius,
@@ -214,7 +213,7 @@ func NewDebugDataGradientCircle(position Vec2, radius float64, innerColor Color,
 
 // Read GradientCircle from reader
 func ReadDebugDataGradientCircle(reader io.Reader) DebugDataGradientCircle {
-	position := ReadVec2(reader)
+	position := model.ReadVec2(reader)
 	radius := ReadFloat64(reader)
 	innerColor := ReadColor(reader)
 	outerColor := ReadColor(reader)
@@ -264,7 +263,7 @@ func (debugDataGradientCircle DebugDataGradientCircle) String() string {
 // Ring
 type DebugDataRing struct {
 	// Position of the center
-	Position Vec2
+	Position model.Vec2
 	// Radius
 	Radius float64
 	// Width
@@ -273,7 +272,7 @@ type DebugDataRing struct {
 	Color Color
 }
 
-func NewDebugDataRing(position Vec2, radius, width float64, color Color) DebugDataRing {
+func NewDebugDataRing(position model.Vec2, radius, width float64, color Color) DebugDataRing {
 	return DebugDataRing{
 		Position: position,
 		Radius:   radius,
@@ -284,7 +283,7 @@ func NewDebugDataRing(position Vec2, radius, width float64, color Color) DebugDa
 
 // Read Ring from reader
 func ReadDebugDataRing(reader io.Reader) DebugDataRing {
-	position := ReadVec2(reader)
+	position := model.ReadVec2(reader)
 	radius := ReadFloat64(reader)
 	width := ReadFloat64(reader)
 	color := ReadColor(reader)
@@ -334,7 +333,7 @@ func (debugDataRing DebugDataRing) String() string {
 // Sector of a circle
 type DebugDataPie struct {
 	// Position of the center
-	Position Vec2
+	Position model.Vec2
 	// Radius
 	Radius float64
 	// Start angle
@@ -345,7 +344,7 @@ type DebugDataPie struct {
 	Color Color
 }
 
-func NewDebugDataPie(position Vec2, radius float64, startAngle float64, endAngle float64, color Color) DebugDataPie {
+func NewDebugDataPie(position model.Vec2, radius, startAngle, endAngle float64, color Color) DebugDataPie {
 	return DebugDataPie{
 		Position:   position,
 		Radius:     radius,
@@ -357,7 +356,7 @@ func NewDebugDataPie(position Vec2, radius float64, startAngle float64, endAngle
 
 // Read Pie from reader
 func ReadDebugDataPie(reader io.Reader) DebugDataPie {
-	position := ReadVec2(reader)
+	position := model.ReadVec2(reader)
 	radius := ReadFloat64(reader)
 	startAngle := ReadFloat64(reader)
 	endAngle := ReadFloat64(reader)
@@ -415,7 +414,7 @@ func (debugDataPie DebugDataPie) String() string {
 // Arc
 type DebugDataArc struct {
 	// Position of the center
-	Position Vec2
+	Position model.Vec2
 	// Radius
 	Radius float64
 	// Width
@@ -428,7 +427,7 @@ type DebugDataArc struct {
 	Color Color
 }
 
-func NewDebugDataArc(position Vec2, radius, width, startAngle, endAngle float64, color Color) DebugDataArc {
+func NewDebugDataArc(position model.Vec2, radius, width, startAngle, endAngle float64, color Color) DebugDataArc {
 	return DebugDataArc{
 		Position:   position,
 		Radius:     radius,
@@ -441,7 +440,7 @@ func NewDebugDataArc(position Vec2, radius, width, startAngle, endAngle float64,
 
 // Read Arc from reader
 func ReadDebugDataArc(reader io.Reader) DebugDataArc {
-	position := ReadVec2(reader)
+	position := model.ReadVec2(reader)
 	radius := ReadFloat64(reader)
 	width := ReadFloat64(reader)
 	startAngle := ReadFloat64(reader)
@@ -507,14 +506,14 @@ func (debugDataArc DebugDataArc) String() string {
 // Rectancle
 type DebugDataRect struct {
 	// Bottom left position
-	BottomLeft Vec2
+	BottomLeft model.Vec2
 	// Size
-	Size Vec2
+	Size model.Vec2
 	// Color
 	Color Color
 }
 
-func NewDebugDataRect(bottomLeft Vec2, size Vec2, color Color) DebugDataRect {
+func NewDebugDataRect(bottomLeft, size model.Vec2, color Color) DebugDataRect {
 	return DebugDataRect{
 		BottomLeft: bottomLeft,
 		Size:       size,
@@ -524,8 +523,8 @@ func NewDebugDataRect(bottomLeft Vec2, size Vec2, color Color) DebugDataRect {
 
 // Read Rect from reader
 func ReadDebugDataRect(reader io.Reader) DebugDataRect {
-	bottomLeft := ReadVec2(reader)
-	size := ReadVec2(reader)
+	bottomLeft := model.ReadVec2(reader)
+	size := model.ReadVec2(reader)
 	color := ReadColor(reader)
 	return DebugDataRect{
 		BottomLeft: bottomLeft,
@@ -566,12 +565,12 @@ func (debugDataRect DebugDataRect) String() string {
 // Polygon (convex)
 type DebugDataPolygon struct {
 	// Positions of vertices in order
-	Vertices []Vec2
+	Vertices []model.Vec2
 	// Color
 	Color Color
 }
 
-func NewDebugDataPolygon(vertices []Vec2, color Color) DebugDataPolygon {
+func NewDebugDataPolygon(vertices []model.Vec2, color Color) DebugDataPolygon {
 	return DebugDataPolygon{
 		Vertices: vertices,
 		Color:    color,
@@ -580,9 +579,9 @@ func NewDebugDataPolygon(vertices []Vec2, color Color) DebugDataPolygon {
 
 // Read Polygon from reader
 func ReadDebugDataPolygon(reader io.Reader) DebugDataPolygon {
-	vertices := make([]Vec2, ReadInt32(reader))
+	vertices := make([]model.Vec2, ReadInt32(reader))
 	for verticesIndex := range vertices {
-		verticesElement := ReadVec2(reader)
+		verticesElement := model.ReadVec2(reader)
 		vertices[verticesIndex] = verticesElement
 	}
 	color := ReadColor(reader)
@@ -679,16 +678,16 @@ func (debugDataGradientPolygon DebugDataGradientPolygon) String() string {
 // Segment
 type DebugDataSegment struct {
 	// Position of the first end
-	FirstEnd Vec2
+	FirstEnd model.Vec2
 	// Position of the second end
-	SecondEnd Vec2
+	SecondEnd model.Vec2
 	// Width
 	Width float64
 	// Color
 	Color Color
 }
 
-func NewDebugDataSegment(firstEnd, secondEnd Vec2, width float64, color Color) DebugDataSegment {
+func NewDebugDataSegment(firstEnd, secondEnd model.Vec2, width float64, color Color) DebugDataSegment {
 	return DebugDataSegment{
 		FirstEnd:  firstEnd,
 		SecondEnd: secondEnd,
@@ -699,8 +698,8 @@ func NewDebugDataSegment(firstEnd, secondEnd Vec2, width float64, color Color) D
 
 // Read Segment from reader
 func ReadDebugDataSegment(reader io.Reader) DebugDataSegment {
-	firstEnd := ReadVec2(reader)
-	secondEnd := ReadVec2(reader)
+	firstEnd := model.ReadVec2(reader)
+	secondEnd := model.ReadVec2(reader)
 	width := ReadFloat64(reader)
 	color := ReadColor(reader)
 	return DebugDataSegment{
@@ -749,18 +748,18 @@ func (debugDataSegment DebugDataSegment) String() string {
 // Segment with gradient fill
 type DebugDataGradientSegment struct {
 	// Position of the first end
-	FirstEnd Vec2
+	FirstEnd model.Vec2
 	// Color of the first end
 	FirstColor Color
 	// Position of the second end
-	SecondEnd Vec2
+	SecondEnd model.Vec2
 	// Color of the second end
 	SecondColor Color
 	// Width
 	Width float64
 }
 
-func NewDebugDataGradientSegment(firstEnd Vec2, firstColor Color, secondEnd Vec2, secondColor Color, width float64) DebugDataGradientSegment {
+func NewDebugDataGradientSegment(firstEnd model.Vec2, firstColor Color, secondEnd model.Vec2, secondColor Color, width float64) DebugDataGradientSegment {
 	return DebugDataGradientSegment{
 		FirstEnd:    firstEnd,
 		FirstColor:  firstColor,
@@ -772,9 +771,9 @@ func NewDebugDataGradientSegment(firstEnd Vec2, firstColor Color, secondEnd Vec2
 
 // Read GradientSegment from reader
 func ReadDebugDataGradientSegment(reader io.Reader) DebugDataGradientSegment {
-	firstEnd := ReadVec2(reader)
+	firstEnd := model.ReadVec2(reader)
 	firstColor := ReadColor(reader)
-	secondEnd := ReadVec2(reader)
+	secondEnd := model.ReadVec2(reader)
 	secondColor := ReadColor(reader)
 	width := ReadFloat64(reader)
 	return DebugDataGradientSegment{
@@ -830,14 +829,14 @@ func (debugDataGradientSegment DebugDataGradientSegment) String() string {
 // Poly line
 type DebugDataPolyLine struct {
 	// List of points in order
-	Vertices []Vec2
+	Vertices []model.Vec2
 	// Width
 	Width float64
 	// Color
 	Color Color
 }
 
-func NewDebugDataPolyLine(vertices []Vec2, width float64, color Color) DebugDataPolyLine {
+func NewDebugDataPolyLine(vertices []model.Vec2, width float64, color Color) DebugDataPolyLine {
 	return DebugDataPolyLine{
 		Vertices: vertices,
 		Width:    width,
@@ -847,9 +846,9 @@ func NewDebugDataPolyLine(vertices []Vec2, width float64, color Color) DebugData
 
 // Read PolyLine from reader
 func ReadDebugDataPolyLine(reader io.Reader) DebugDataPolyLine {
-	vertices := make([]Vec2, ReadInt32(reader))
+	vertices := make([]model.Vec2, ReadInt32(reader))
 	for verticesIndex := range vertices {
-		verticesElement := ReadVec2(reader)
+		verticesElement := model.ReadVec2(reader)
 		vertices[verticesIndex] = verticesElement
 	}
 	width := ReadFloat64(reader)
