@@ -2,7 +2,7 @@ package codegame
 
 import (
 	"aicup22/debugging"
-	. "aicup22/model"
+	"aicup22/model"
 	"io"
 
 	. "aicup22/stream"
@@ -72,10 +72,10 @@ func (clientMessageDebugMessage ClientMessageDebugMessage) String() string {
 // Reply for ServerMessage::GetOrder
 type ClientMessageOrderMessage struct {
 	// Player's order
-	Order Order
+	Order model.Order
 }
 
-func NewClientMessageOrderMessage(order Order) ClientMessageOrderMessage {
+func NewClientMessageOrderMessage(order model.Order) ClientMessageOrderMessage {
 	return ClientMessageOrderMessage{
 		Order: order,
 	}
@@ -83,7 +83,7 @@ func NewClientMessageOrderMessage(order Order) ClientMessageOrderMessage {
 
 // Read OrderMessage from reader
 func ReadClientMessageOrderMessage(reader io.Reader) ClientMessageOrderMessage {
-	order := ReadOrder(reader)
+	order := model.ReadOrder(reader)
 	return ClientMessageOrderMessage{
 		Order: order,
 	}
