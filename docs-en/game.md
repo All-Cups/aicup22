@@ -6,6 +6,21 @@ Each player (team) starts in a random point inside the zone.
 Multiple units of each team will be located near each other.
 At first, units can only move, and will be able to shoot and perform other actions only after "full spawn" after `spawn_time` game seconds.
 
+Each tick is processed in documented order:
+
+- Determining visible entities
+- Information is sent to your strategies (and neutral bots) and received orders
+- Unit actions
+- Rotation
+- Shooting
+- Movement
+- Projectiles
+- Zone
+- Death and respawn
+- Automatic health regeneration
+- Sounds
+- Applying used shield potions
+
 ## Game time
 
 Game time is measured in seconds, although logic is split into ticks.
