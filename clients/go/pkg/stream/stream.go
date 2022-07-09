@@ -108,8 +108,8 @@ func (sf *Stream) ReadString() string {
 	return string(bytes)
 }
 
-func WriteBool(writer io.Writer, value bool) {
-	err := binary.Write(writer, binary.LittleEndian, value)
+func (sf *Stream) WriteBool(value bool) {
+	err := binary.Write(sf.writer, binary.LittleEndian, value)
 	if err != nil {
 		// FIXME: так делать нельзя
 		panic(err)

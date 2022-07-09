@@ -8,6 +8,14 @@ import (
 	"aicup22/pkg/stream"
 )
 
+var(
+	flow *stream.Stream
+)
+
+func init(){
+	flow=stream.Flow()
+}
+
 // Message sent from server
 type ServerMessage interface {
 	// Write ServerMessage to writer
@@ -100,7 +108,7 @@ func (serverMessageGetOrder ServerMessageGetOrder) Write(writer io.Writer) {
 	playerView := serverMessageGetOrder.PlayerView
 	playerView.Write(writer)
 	debugAvailable := serverMessageGetOrder.DebugAvailable
-	stream.WriteBool(writer, debugAvailable)
+	flow.WriteBool(debugAvailable)
 }
 
 // Get string representation of GetOrder

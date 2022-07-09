@@ -126,17 +126,17 @@ func (weaponProperties WeaponProperties) Write(writer io.Writer) {
 	stream.WriteFloat64(writer, projectileLifeTime)
 	shotSoundTypeIndex := weaponProperties.ShotSoundTypeIndex
 	if shotSoundTypeIndex == nil {
-		stream.WriteBool(writer, false)
+		flow.WriteBool(false)
 	} else {
-		stream.WriteBool(writer, true)
+		flow.WriteBool(true)
 		shotSoundTypeIndexValue := *shotSoundTypeIndex
 		stream.WriteInt32(writer, shotSoundTypeIndexValue)
 	}
 	projectileHitSoundTypeIndex := weaponProperties.ProjectileHitSoundTypeIndex
 	if projectileHitSoundTypeIndex == nil {
-		stream.WriteBool(writer, false)
+		flow.WriteBool(false)
 	} else {
-		stream.WriteBool(writer, true)
+		flow.WriteBool(true)
 		projectileHitSoundTypeIndexValue := *projectileHitSoundTypeIndex
 		stream.WriteInt32(writer, projectileHitSoundTypeIndexValue)
 	}

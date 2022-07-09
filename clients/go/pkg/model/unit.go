@@ -140,9 +140,9 @@ func (unit Unit) Write(writer io.Writer) {
 	position.Write(writer)
 	remainingSpawnTime := unit.RemainingSpawnTime
 	if remainingSpawnTime == nil {
-		stream.WriteBool(writer, false)
+		flow.WriteBool(false)
 	} else {
-		stream.WriteBool(writer, true)
+		flow.WriteBool(true)
 		remainingSpawnTimeValue := *remainingSpawnTime
 		stream.WriteFloat64(writer, remainingSpawnTimeValue)
 	}
@@ -154,9 +154,9 @@ func (unit Unit) Write(writer io.Writer) {
 	stream.WriteFloat64(writer, aim)
 	action := unit.Action
 	if action == nil {
-		stream.WriteBool(writer, false)
+		flow.WriteBool(false)
 	} else {
-		stream.WriteBool(writer, true)
+		flow.WriteBool(true)
 		actionValue := *action
 		actionValue.Write(writer)
 	}
@@ -164,9 +164,9 @@ func (unit Unit) Write(writer io.Writer) {
 	stream.WriteInt32(writer, healthRegenerationStartTick)
 	weapon := unit.Weapon
 	if weapon == nil {
-		stream.WriteBool(writer, false)
+		flow.WriteBool(false)
 	} else {
-		stream.WriteBool(writer, true)
+		flow.WriteBool(true)
 		weaponValue := *weapon
 		stream.WriteInt32(writer, weaponValue)
 	}

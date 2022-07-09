@@ -118,7 +118,7 @@ func ReadDebugCommandSetAutoFlush(reader io.Reader) DebugCommandSetAutoFlush {
 func (debugCommandSetAutoFlush DebugCommandSetAutoFlush) Write(writer io.Writer) {
 	stream.WriteInt32(writer, 2)
 	enable := debugCommandSetAutoFlush.Enable
-	stream.WriteBool(writer, enable)
+	flow.WriteBool(enable)
 }
 
 // Get string representation of SetAutoFlush

@@ -289,7 +289,7 @@ func (constants Constants) Write(writer io.Writer) {
 	viewDistance := constants.ViewDistance
 	stream.WriteFloat64(writer, viewDistance)
 	viewBlocking := constants.ViewBlocking
-	stream.WriteBool(writer, viewBlocking)
+	flow.WriteBool(viewBlocking)
 	rotationSpeed := constants.RotationSpeed
 	stream.WriteFloat64(writer, rotationSpeed)
 	spawnMovementSpeed := constants.SpawnMovementSpeed
@@ -301,7 +301,7 @@ func (constants Constants) Write(writer io.Writer) {
 	unitAcceleration := constants.UnitAcceleration
 	stream.WriteFloat64(writer, unitAcceleration)
 	friendlyFire := constants.FriendlyFire
-	stream.WriteBool(writer, friendlyFire)
+	flow.WriteBool(friendlyFire)
 	killScore := constants.KillScore
 	stream.WriteFloat64(writer, killScore)
 	damageScoreMultiplier := constants.DamageScoreMultiplier
@@ -315,9 +315,9 @@ func (constants Constants) Write(writer io.Writer) {
 	}
 	startingWeapon := constants.StartingWeapon
 	if startingWeapon == nil {
-		stream.WriteBool(writer, false)
+		flow.WriteBool(false)
 	} else {
-		stream.WriteBool(writer, true)
+		flow.WriteBool(true)
 		startingWeaponValue := *startingWeapon
 		stream.WriteInt32(writer, startingWeaponValue)
 	}
@@ -336,9 +336,9 @@ func (constants Constants) Write(writer io.Writer) {
 	}
 	stepsSoundTypeIndex := constants.StepsSoundTypeIndex
 	if stepsSoundTypeIndex == nil {
-		stream.WriteBool(writer, false)
+		flow.WriteBool(false)
 	} else {
-		stream.WriteBool(writer, true)
+		flow.WriteBool(true)
 		stepsSoundTypeIndexValue := *stepsSoundTypeIndex
 		stream.WriteInt32(writer, stepsSoundTypeIndexValue)
 	}

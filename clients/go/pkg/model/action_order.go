@@ -232,7 +232,7 @@ func ReadActionOrderAim(reader io.Reader) ActionOrderAim {
 func (actionOrderAim ActionOrderAim) Write(writer io.Writer) {
 	stream.WriteInt32(writer, 5)
 	shoot := actionOrderAim.Shoot
-	stream.WriteBool(writer, shoot)
+	flow.WriteBool(shoot)
 }
 
 // Get string representation of Aim

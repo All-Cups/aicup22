@@ -50,9 +50,9 @@ func (unitOrder UnitOrder) Write(writer io.Writer) {
 	targetDirection.Write(writer)
 	action := unitOrder.Action
 	if action == nil {
-		stream.WriteBool(writer, false)
+		flow.WriteBool(false)
 	} else {
-		stream.WriteBool(writer, true)
+		flow.WriteBool(true)
 		actionValue := *action
 		actionValue.Write(writer)
 	}

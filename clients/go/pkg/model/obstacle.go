@@ -56,9 +56,9 @@ func (obstacle Obstacle) Write(writer io.Writer) {
 	radius := obstacle.Radius
 	stream.WriteFloat64(writer, radius)
 	canSeeThrough := obstacle.CanSeeThrough
-	stream.WriteBool(writer, canSeeThrough)
+	flow.WriteBool(canSeeThrough)
 	canShootThrough := obstacle.CanShootThrough
-	stream.WriteBool(writer, canShootThrough)
+	flow.WriteBool(canShootThrough)
 }
 
 // Get string representation of Obstacle

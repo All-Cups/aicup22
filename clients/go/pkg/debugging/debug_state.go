@@ -64,9 +64,9 @@ func (debugState DebugState) Write(writer io.Writer) {
 	cursorWorldPosition.Write(writer)
 	lockedUnit := debugState.LockedUnit
 	if lockedUnit == nil {
-		stream.WriteBool(writer, false)
+		flow.WriteBool(false)
 	} else {
-		stream.WriteBool(writer, true)
+		flow.WriteBool(true)
 		lockedUnitValue := *lockedUnit
 		stream.WriteInt32(writer, lockedUnitValue)
 	}
