@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"io"
 
-	. "aicup22/stream"
+	"aicup22/stream"
 )
 
 // Lootable item
@@ -18,7 +18,8 @@ type Item interface {
 
 // Read Item from reader
 func ReadItem(reader io.Reader) Item {
-	switch ReadInt32(reader) {
+	// FIXME: магические константы
+	switch stream.ReadInt32(reader) {
 	case 0:
 		return ReadItemWeapon(reader)
 	case 1:
@@ -26,6 +27,7 @@ func ReadItem(reader io.Reader) Item {
 	case 2:
 		return ReadItemAmmo(reader)
 	}
+	// FIXME: панику убрать из кода!!
 	panic("Unexpected tag value")
 }
 
@@ -43,8 +45,7 @@ func NewItemWeapon(typeIndex int32) ItemWeapon {
 
 // Read Weapon from reader
 func ReadItemWeapon(reader io.Reader) ItemWeapon {
-	var typeIndex int32
-	typeIndex = ReadInt32(reader)
+	typeIndex := stream.ReadInt32(reader)
 	return ItemWeapon{
 		TypeIndex: typeIndex,
 	}
@@ -52,9 +53,9 @@ func ReadItemWeapon(reader io.Reader) ItemWeapon {
 
 // Write Weapon to writer
 func (itemWeapon ItemWeapon) Write(writer io.Writer) {
-	WriteInt32(writer, 0)
+	stream.WriteInt32(writer, 0)
 	typeIndex := itemWeapon.TypeIndex
-	WriteInt32(writer, typeIndex)
+	stream.WriteInt32(writer, typeIndex)
 }
 
 // Get string representation of Weapon
@@ -81,8 +82,7 @@ func NewItemShieldPotions(amount int32) ItemShieldPotions {
 
 // Read ShieldPotions from reader
 func ReadItemShieldPotions(reader io.Reader) ItemShieldPotions {
-	var amount int32
-	amount = ReadInt32(reader)
+	amount := stream.ReadInt32(reader)
 	return ItemShieldPotions{
 		Amount: amount,
 	}
@@ -90,9 +90,10 @@ func ReadItemShieldPotions(reader io.Reader) ItemShieldPotions {
 
 // Write ShieldPotions to writer
 func (itemShieldPotions ItemShieldPotions) Write(writer io.Writer) {
-	WriteInt32(writer, 1)
+	// FIXME: магическая константа
+	stream.WriteInt32(writer, 1)
 	amount := itemShieldPotions.Amount
-	WriteInt32(writer, amount)
+	stream.WriteInt32(writer, amount)
 }
 
 // Get string representation of ShieldPotions
@@ -122,10 +123,8 @@ func NewItemAmmo(weaponTypeIndex int32, amount int32) ItemAmmo {
 
 // Read Ammo from reader
 func ReadItemAmmo(reader io.Reader) ItemAmmo {
-	var weaponTypeIndex int32
-	weaponTypeIndex = ReadInt32(reader)
-	var amount int32
-	amount = ReadInt32(reader)
+	weaponTypeIndex := stream.ReadInt32(reader)
+	amount := stream.ReadInt32(reader)
 	return ItemAmmo{
 		WeaponTypeIndex: weaponTypeIndex,
 		Amount:          amount,
@@ -134,11 +133,11 @@ func ReadItemAmmo(reader io.Reader) ItemAmmo {
 
 // Write Ammo to writer
 func (itemAmmo ItemAmmo) Write(writer io.Writer) {
-	WriteInt32(writer, 2)
+	stream.WriteInt32(writer, 2)
 	weaponTypeIndex := itemAmmo.WeaponTypeIndex
-	WriteInt32(writer, weaponTypeIndex)
+	stream.WriteInt32(writer, weaponTypeIndex)
 	amount := itemAmmo.Amount
-	WriteInt32(writer, amount)
+	stream.WriteInt32(writer, amount)
 }
 
 // Get string representation of Ammo
