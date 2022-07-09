@@ -26,7 +26,7 @@ type ServerMessage interface {
 
 // Read ServerMessage from reader
 func ReadServerMessage() ServerMessage {
-	switch stream.Flow().ReadInt32() {
+	switch flow.ReadInt32() {
 	case 0:
 		return ReadServerMessageUpdateConstants()
 	case 1:
@@ -53,27 +53,20 @@ func NewServerMessageUpdateConstants(constants model.Constants) ServerMessageUpd
 
 // Read UpdateConstants from reader
 func ReadServerMessageUpdateConstants() ServerMessageUpdateConstants {
-	constants := model.ReadConstants()
 	return ServerMessageUpdateConstants{
-		Constants: constants,
+		Constants: model.ReadConstants(),
 	}
 }
 
 // Write UpdateConstants to writer
-func (serverMessageUpdateConstants ServerMessageUpdateConstants) Write() {
+func (sf ServerMessageUpdateConstants) Write() {
 	flow.WriteInt32(0)
-	constants := serverMessageUpdateConstants.Constants
-	constants.Write()
+	sf.Constants.Write()
 }
 
 // Get string representation of UpdateConstants
-func (serverMessageUpdateConstants ServerMessageUpdateConstants) String() string {
-	stringResult := "{ "
-	stringResult += "Constants: "
-	constants := serverMessageUpdateConstants.Constants
-	stringResult += constants.String()
-	stringResult += " }"
-	return stringResult
+func (sf ServerMessageUpdateConstants) String() string {
+	return "{Constants:" + sf.Constants.String() + "}"
 }
 
 // Get order for next tick
@@ -102,25 +95,16 @@ func ReadServerMessageGetOrder() ServerMessageGetOrder {
 }
 
 // Write GetOrder to writer
-func (serverMessageGetOrder ServerMessageGetOrder) Write() {
+func (sf ServerMessageGetOrder) Write() {
 	flow.WriteInt32(1)
-	playerView := serverMessageGetOrder.PlayerView
-	playerView.Write()
-	debugAvailable := serverMessageGetOrder.DebugAvailable
-	flow.WriteBool(debugAvailable)
+	sf.PlayerView.Write()
+	flow.WriteBool(sf.DebugAvailable)
 }
 
 // Get string representation of GetOrder
-func (serverMessageGetOrder ServerMessageGetOrder) String() string {
-	stringResult := "{ "
-	stringResult += "PlayerView: "
-	playerView := serverMessageGetOrder.PlayerView
-	stringResult += playerView.String()
-	stringResult += ", "
-	stringResult += "DebugAvailable: "
-	debugAvailable := serverMessageGetOrder.DebugAvailable
-	stringResult += fmt.Sprint(debugAvailable)
-	stringResult += " }"
+func (sf ServerMessageGetOrder) String() string {
+	stringResult := "{PlayerView:" + sf.PlayerView.String() + ","
+	stringResult += "DebugAvailable:" + fmt.Sprint(sf.DebugAvailable) + "}"
 	return stringResult
 }
 
@@ -138,16 +122,14 @@ func ReadServerMessageFinish() ServerMessageFinish {
 }
 
 // Write Finish to writer
-func (serverMessageFinish ServerMessageFinish) Write() {
+func (sf ServerMessageFinish) Write() {
 	// FIXME: магическая константа
 	flow.WriteInt32(2)
 }
 
 // Get string representation of Finish
-func (serverMessageFinish ServerMessageFinish) String() string {
-	stringResult := "{ "
-	stringResult += " }"
-	return stringResult
+func (sf ServerMessageFinish) String() string {
+	return "{}"
 }
 
 // Debug update
@@ -171,19 +153,13 @@ func ReadServerMessageDebugUpdate() ServerMessageDebugUpdate {
 }
 
 // Write DebugUpdate to writer
-func (serverMessageDebugUpdate ServerMessageDebugUpdate) Write() {
+func (sf ServerMessageDebugUpdate) Write() {
 	// FIXME: магическая константа
 	flow.WriteInt32(3)
-	displayedTick := serverMessageDebugUpdate.DisplayedTick
-	flow.WriteInt32(displayedTick)
+	flow.WriteInt32(sf.DisplayedTick)
 }
 
 // Get string representation of DebugUpdate
-func (serverMessageDebugUpdate ServerMessageDebugUpdate) String() string {
-	stringResult := "{ "
-	stringResult += "DisplayedTick: "
-	displayedTick := serverMessageDebugUpdate.DisplayedTick
-	stringResult += fmt.Sprint(displayedTick)
-	stringResult += " }"
-	return stringResult
+func (sf ServerMessageDebugUpdate) String() string {
+	return "{DisplayedTick:" + fmt.Sprint(sf.DisplayedTick) + "}"
 }

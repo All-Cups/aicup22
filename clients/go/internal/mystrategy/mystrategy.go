@@ -1,8 +1,8 @@
 package mystrategy
 
 import (
-	"aicup22/pkg/model"
 	"aicup22/pkg/debugout"
+	"aicup22/pkg/model"
 )
 
 type MyStrategy struct{}

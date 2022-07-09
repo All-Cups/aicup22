@@ -9,9 +9,9 @@ import (
 
 	"aicup22/internal/mystrategy"
 	"aicup22/pkg/codegame"
+	"aicup22/pkg/debugout"
 	"aicup22/pkg/model"
 	"aicup22/pkg/stream"
-	"aicup22/pkg/debugout"
 )
 
 type Runner struct {

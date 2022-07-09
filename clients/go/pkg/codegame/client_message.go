@@ -3,7 +3,6 @@ package codegame
 import (
 	"aicup22/pkg/debugging"
 	"aicup22/pkg/model"
-	"aicup22/pkg/stream"
 )
 
 // Message sent from client
@@ -17,7 +16,7 @@ type ClientMessage interface {
 
 // Read ClientMessage from reader
 func ReadClientMessage() ClientMessage {
-	switch stream.Flow().ReadInt32() {
+	switch flow.ReadInt32() {
 	case 0:
 		return ReadClientMessageDebugMessage()
 	case 1:
@@ -45,27 +44,20 @@ func NewClientMessageDebugMessage(command debugging.DebugCommand) ClientMessageD
 
 // Read DebugMessage from reader
 func ReadClientMessageDebugMessage() ClientMessageDebugMessage {
-	command := debugging.ReadDebugCommand()
 	return ClientMessageDebugMessage{
-		Command: command,
+		Command: debugging.ReadDebugCommand(),
 	}
 }
 
 // Write DebugMessage to writer
-func (clientMessageDebugMessage ClientMessageDebugMessage) Write() {
+func (sf ClientMessageDebugMessage) Write() {
 	flow.WriteInt32(0)
-	command := clientMessageDebugMessage.Command
-	command.Write()
+	sf.Command.Write()
 }
 
 // Get string representation of DebugMessage
-func (clientMessageDebugMessage ClientMessageDebugMessage) String() string {
-	stringResult := "{ "
-	stringResult += "Command: "
-	command := clientMessageDebugMessage.Command
-	stringResult += command.String()
-	stringResult += " }"
-	return stringResult
+func (sf ClientMessageDebugMessage) String() string {
+	return "{Command:" + sf.Command.String() + "}"
 }
 
 // Reply for ServerMessage::GetOrder
@@ -82,27 +74,20 @@ func NewClientMessageOrderMessage(order model.Order) ClientMessageOrderMessage {
 
 // Read OrderMessage from reader
 func ReadClientMessageOrderMessage() ClientMessageOrderMessage {
-	order := model.ReadOrder()
 	return ClientMessageOrderMessage{
-		Order: order,
+		Order: model.ReadOrder(),
 	}
 }
 
 // Write OrderMessage to writer
-func (clientMessageOrderMessage ClientMessageOrderMessage) Write() {
+func (sf ClientMessageOrderMessage) Write() {
 	flow.WriteInt32(1)
-	order := clientMessageOrderMessage.Order
-	order.Write()
+	sf.Order.Write()
 }
 
 // Get string representation of OrderMessage
-func (clientMessageOrderMessage ClientMessageOrderMessage) String() string {
-	stringResult := "{ "
-	stringResult += "Order: "
-	order := clientMessageOrderMessage.Order
-	stringResult += order.String()
-	stringResult += " }"
-	return stringResult
+func (sf ClientMessageOrderMessage) String() string {
+	return "{Order:" + sf.Order.String() + "}"
 }
 
 // Signifies finish of the debug update
@@ -119,16 +104,14 @@ func ReadClientMessageDebugUpdateDone() ClientMessageDebugUpdateDone {
 }
 
 // Write DebugUpdateDone to writer
-func (clientMessageDebugUpdateDone ClientMessageDebugUpdateDone) Write() {
+func (sf ClientMessageDebugUpdateDone) Write() {
 	// FIXME: магическая константа
 	flow.WriteInt32(2)
 }
 
 // Get string representation of DebugUpdateDone
-func (clientMessageDebugUpdateDone ClientMessageDebugUpdateDone) String() string {
-	stringResult := "{ "
-	stringResult += " }"
-	return stringResult
+func (sf ClientMessageDebugUpdateDone) String() string {
+	return "{}"
 }
 
 // Request debug state from the app
@@ -145,13 +128,11 @@ func ReadClientMessageRequestDebugState() ClientMessageRequestDebugState {
 }
 
 // Write RequestDebugState to writer
-func (clientMessageRequestDebugState ClientMessageRequestDebugState) Write() {
+func (sf ClientMessageRequestDebugState) Write() {
 	flow.WriteInt32(3)
 }
 
 // Get string representation of RequestDebugState
-func (clientMessageRequestDebugState ClientMessageRequestDebugState) String() string {
-	stringResult := "{ "
-	stringResult += " }"
-	return stringResult
+func (sf ClientMessageRequestDebugState) String() string {
+	return "{}"
 }

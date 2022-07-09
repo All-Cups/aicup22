@@ -61,22 +61,9 @@ func (sf Camera) Write() {
 
 // Get string representation of Camera
 func (sf Camera) String() string {
-	strRes := "{ "
-	strRes += "Center: "
-	center := sf.Center
-	strRes += center.String()
-	strRes += ", "
-	strRes += "Rotation: "
-	rotation := sf.Rotation
-	strRes += fmt.Sprint(rotation)
-	strRes += ", "
-	strRes += "Attack: "
-	attack := sf.Attack
-	strRes += fmt.Sprint(attack)
-	strRes += ", "
-	strRes += "Fov: "
-	fov := sf.Fov
-	strRes += fmt.Sprint(fov)
-	strRes += " }"
+	strRes := "{Center:" + sf.Center.String() + ","
+	strRes += "Rotation:" + fmt.Sprint(sf.Rotation) + ","
+	strRes += "Attack:" + fmt.Sprint(sf.Attack) + ","
+	strRes += "Fov:" + fmt.Sprint(sf.Fov) + "}"
 	return strRes
 }
