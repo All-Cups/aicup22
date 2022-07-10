@@ -16,7 +16,8 @@ type DebugCommand interface {
 // Read DebugCommand from reader
 func ReadDebugCommand() DebugCommand {
 	// FIXME: магические константы
-	switch flow.ReadInt32() {
+	tag := flow.ReadInt32()
+	switch tag {
 	case 0:
 		return ReadDebugCommandAdd()
 	case 1:
@@ -26,7 +27,7 @@ func ReadDebugCommand() DebugCommand {
 	case 3:
 		return ReadDebugCommandFlush()
 	}
-	panic("Unexpected tag value")
+	panic(fmt.Errorf("ReadDebugCommand(): unexpected tag value(%v)", tag))
 }
 
 // Add debug data to current tick
@@ -43,27 +44,20 @@ func NewDebugCommandAdd(debugData DebugData) DebugCommandAdd {
 
 // Read Add from reader
 func ReadDebugCommandAdd() DebugCommandAdd {
-	debugData := ReadDebugData()
 	return DebugCommandAdd{
-		DebugData: debugData,
+		DebugData: ReadDebugData(),
 	}
 }
 
 // Write Add to writer
 func (sf DebugCommandAdd) Write() {
 	flow.WriteInt32(0)
-	debugData := sf.DebugData
-	debugData.Write()
+	sf.DebugData.Write()
 }
 
 // Get string representation of Add
 func (sf DebugCommandAdd) String() string {
-	strRes := "{ "
-	strRes += "DebugData: "
-	debugData := sf.DebugData
-	strRes += debugData.String()
-	strRes += " }"
-	return strRes
+	return "{DebugData:" + sf.DebugData.String() + "}"
 }
 
 // Clear current tick's debug data
@@ -86,9 +80,7 @@ func (sf DebugCommandClear) Write() {
 
 // Get string representation of Clear
 func (sf DebugCommandClear) String() string {
-	stringResult := "{ "
-	stringResult += " }"
-	return stringResult
+	return "{}"
 }
 
 // Enable/disable auto performing of commands
@@ -114,18 +106,12 @@ func ReadDebugCommandSetAutoFlush() DebugCommandSetAutoFlush {
 // Write SetAutoFlush to writer
 func (sf DebugCommandSetAutoFlush) Write() {
 	flow.WriteInt32(2)
-	enable := sf.Enable
-	flow.WriteBool(enable)
+	flow.WriteBool(sf.Enable)
 }
 
 // Get string representation of SetAutoFlush
 func (sf DebugCommandSetAutoFlush) String() string {
-	strRes := "{ "
-	strRes += "Enable: "
-	enable := sf.Enable
-	strRes += fmt.Sprint(enable)
-	strRes += " }"
-	return strRes
+	return "{Enable:" + fmt.Sprint(sf.Enable) + "}"
 }
 
 // Perform all previously sent commands
@@ -148,7 +134,5 @@ func (sf DebugCommandFlush) Write() {
 
 // Get string representation of Flush
 func (sf DebugCommandFlush) String() string {
-	stringResult := "{ "
-	stringResult += " }"
-	return stringResult
+	return "{}"
 }
