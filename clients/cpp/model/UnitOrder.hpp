@@ -9,6 +9,7 @@
 #include <sstream>
 #include <stdexcept>
 #include <string>
+#include <variant>
 
 namespace model {
 
@@ -20,9 +21,9 @@ public:
     // Target view direction (vector length doesn't matter)
     model::Vec2 targetDirection;
     // Order to perform an action, or None
-    std::optional<std::shared_ptr<model::ActionOrder>> action;
+    std::optional<model::ActionOrder> action;
 
-    UnitOrder(model::Vec2 targetVelocity, model::Vec2 targetDirection, std::optional<std::shared_ptr<model::ActionOrder>> action);
+    UnitOrder(model::Vec2 targetVelocity, model::Vec2 targetDirection, std::optional<model::ActionOrder> action);
 
     // Read UnitOrder from input stream
     static UnitOrder readFrom(InputStream& stream);

@@ -2,15 +2,15 @@
 
 namespace model {
 
-UnitOrder::UnitOrder(model::Vec2 targetVelocity, model::Vec2 targetDirection, std::optional<std::shared_ptr<model::ActionOrder>> action) : targetVelocity(targetVelocity), targetDirection(targetDirection), action(action) { }
+UnitOrder::UnitOrder(model::Vec2 targetVelocity, model::Vec2 targetDirection, std::optional<model::ActionOrder> action) : targetVelocity(targetVelocity), targetDirection(targetDirection), action(action) { }
 
 // Read UnitOrder from input stream
 UnitOrder UnitOrder::readFrom(InputStream& stream) {
     model::Vec2 targetVelocity = model::Vec2::readFrom(stream);
     model::Vec2 targetDirection = model::Vec2::readFrom(stream);
-    std::optional<std::shared_ptr<model::ActionOrder>> action = std::optional<std::shared_ptr<model::ActionOrder>>();
+    std::optional<model::ActionOrder> action = std::optional<model::ActionOrder>();
     if (stream.readBool()) {
-        std::shared_ptr<model::ActionOrder> actionValue = model::ActionOrder::readFrom(stream);
+        model::ActionOrder actionValue = model::readActionOrder(stream);
         action.emplace(actionValue);
     }
     return UnitOrder(targetVelocity, targetDirection, action);
@@ -22,8 +22,8 @@ void UnitOrder::writeTo(OutputStream& stream) const {
     targetDirection.writeTo(stream);
     if (action) {
         stream.write(true);
-        const std::shared_ptr<model::ActionOrder>& actionValue = *action;
-        actionValue->writeTo(stream);
+        const model::ActionOrder& actionValue = *action;
+        writeActionOrder(actionValue, stream);
     } else {
         stream.write(false);
     }
@@ -41,8 +41,8 @@ std::string UnitOrder::toString() const {
     ss << ", ";
     ss << "action: ";
     if (action) {
-        const std::shared_ptr<model::ActionOrder>& actionValue = *action;
-        ss << actionValue->toString();
+        const model::ActionOrder& actionValue = *action;
+        ss << actionOrderToString(actionValue);
     } else {
         ss << "none";
     }

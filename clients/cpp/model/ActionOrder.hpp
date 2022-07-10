@@ -5,40 +5,14 @@
 #include <memory>
 #include <sstream>
 #include <string>
+#include <variant>
 
 namespace model {
 
-// Order to perform an action for unit
-class ActionOrder {
-public:
-    // Pick up loot
-    class Pickup;
-    // Use shield potion
-    class UseShieldPotion;
-    // Drop shield potions on the ground
-    class DropShieldPotions;
-    // Drop current weapon
-    class DropWeapon;
-    // Drop ammo
-    class DropAmmo;
-    // Start/continue aiming
-    class Aim;
-
-    // Read ActionOrder from input stream
-    static std::shared_ptr<ActionOrder> readFrom(InputStream& stream);
-
-    // Write ActionOrder to output stream
-    virtual void writeTo(OutputStream& stream) const = 0;
-
-    // Get string representation of ActionOrder
-    virtual std::string toString() const = 0;
-};
 
 // Pick up loot
-class ActionOrder::Pickup : public ActionOrder {
+class Pickup {
 public:
-    static const int TAG = 0;
-
     // Loot id
     int loot;
 
@@ -57,10 +31,8 @@ public:
 };
 
 // Use shield potion
-class ActionOrder::UseShieldPotion : public ActionOrder {
+class UseShieldPotion {
 public:
-    static const int TAG = 1;
-
 
     UseShieldPotion();
 
@@ -77,10 +49,8 @@ public:
 };
 
 // Drop shield potions on the ground
-class ActionOrder::DropShieldPotions : public ActionOrder {
+class DropShieldPotions {
 public:
-    static const int TAG = 2;
-
     // Amount of potions
     int amount;
 
@@ -99,10 +69,8 @@ public:
 };
 
 // Drop current weapon
-class ActionOrder::DropWeapon : public ActionOrder {
+class DropWeapon {
 public:
-    static const int TAG = 3;
-
 
     DropWeapon();
 
@@ -119,10 +87,8 @@ public:
 };
 
 // Drop ammo
-class ActionOrder::DropAmmo : public ActionOrder {
+class DropAmmo {
 public:
-    static const int TAG = 4;
-
     // Weapon type index (starting with 0)
     int weaponTypeIndex;
     // Amount of ammo
@@ -143,10 +109,8 @@ public:
 };
 
 // Start/continue aiming
-class ActionOrder::Aim : public ActionOrder {
+class Aim {
 public:
-    static const int TAG = 5;
-
     // Shoot (only possible in full aim)
     bool shoot;
 
@@ -163,6 +127,18 @@ public:
 
     bool operator ==(const Aim& other) const;
 };
+
+// Order to perform an action for unit
+typedef std::variant<Pickup, UseShieldPotion, DropShieldPotions, DropWeapon, DropAmmo, Aim> ActionOrder;
+
+// Read ActionOrder from input stream
+ActionOrder readActionOrder(InputStream& stream);
+
+// Write ActionOrder to output stream
+void writeActionOrder(const ActionOrder& value, OutputStream& stream);
+
+// Get string representation of ActionOrder
+std::string actionOrderToString(const ActionOrder& value);
 
 }
 

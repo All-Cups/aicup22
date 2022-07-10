@@ -8,6 +8,7 @@
 #include <sstream>
 #include <stdexcept>
 #include <string>
+#include <variant>
 
 namespace model {
 
@@ -19,9 +20,9 @@ public:
     // Position
     model::Vec2 position;
     // Item
-    std::shared_ptr<model::Item> item;
+    model::Item item;
 
-    Loot(int id, model::Vec2 position, std::shared_ptr<model::Item> item);
+    Loot(int id, model::Vec2 position, model::Item item);
 
     // Read Loot from input stream
     static Loot readFrom(InputStream& stream);

@@ -3,50 +3,48 @@
 
 namespace codegame {
 
-ServerMessage::UpdateConstants::UpdateConstants(model::Constants constants) : constants(constants) { }
+UpdateConstants::UpdateConstants(model::Constants constants) : constants(constants) { }
 
 // Read UpdateConstants from input stream
-ServerMessage::UpdateConstants ServerMessage::UpdateConstants::readFrom(InputStream& stream) {
+UpdateConstants UpdateConstants::readFrom(InputStream& stream) {
     model::Constants constants = model::Constants::readFrom(stream);
-    return ServerMessage::UpdateConstants(constants);
+    return UpdateConstants(constants);
 }
 
 // Write UpdateConstants to output stream
-void ServerMessage::UpdateConstants::writeTo(OutputStream& stream) const {
-    stream.write(TAG);
+void UpdateConstants::writeTo(OutputStream& stream) const {
     constants.writeTo(stream);
 }
 
 // Get string representation of UpdateConstants
-std::string ServerMessage::UpdateConstants::toString() const {
+std::string UpdateConstants::toString() const {
     std::stringstream ss;
-    ss << "ServerMessage::UpdateConstants { ";
+    ss << "UpdateConstants { ";
     ss << "constants: ";
     ss << constants.toString();
     ss << " }";
     return ss.str();
 }
 
-ServerMessage::GetOrder::GetOrder(model::Game playerView, bool debugAvailable) : playerView(playerView), debugAvailable(debugAvailable) { }
+GetOrder::GetOrder(model::Game playerView, bool debugAvailable) : playerView(playerView), debugAvailable(debugAvailable) { }
 
 // Read GetOrder from input stream
-ServerMessage::GetOrder ServerMessage::GetOrder::readFrom(InputStream& stream) {
+GetOrder GetOrder::readFrom(InputStream& stream) {
     model::Game playerView = model::Game::readFrom(stream);
     bool debugAvailable = stream.readBool();
-    return ServerMessage::GetOrder(playerView, debugAvailable);
+    return GetOrder(playerView, debugAvailable);
 }
 
 // Write GetOrder to output stream
-void ServerMessage::GetOrder::writeTo(OutputStream& stream) const {
-    stream.write(TAG);
+void GetOrder::writeTo(OutputStream& stream) const {
     playerView.writeTo(stream);
     stream.write(debugAvailable);
 }
 
 // Get string representation of GetOrder
-std::string ServerMessage::GetOrder::toString() const {
+std::string GetOrder::toString() const {
     std::stringstream ss;
-    ss << "ServerMessage::GetOrder { ";
+    ss << "GetOrder { ";
     ss << "playerView: ";
     ss << playerView.toString();
     ss << ", ";
@@ -56,72 +54,99 @@ std::string ServerMessage::GetOrder::toString() const {
     return ss.str();
 }
 
-ServerMessage::Finish::Finish() { }
+Finish::Finish() { }
 
 // Read Finish from input stream
-ServerMessage::Finish ServerMessage::Finish::readFrom(InputStream& stream) {
-    return ServerMessage::Finish();
+Finish Finish::readFrom(InputStream& stream) {
+    return Finish();
 }
 
 // Write Finish to output stream
-void ServerMessage::Finish::writeTo(OutputStream& stream) const {
-    stream.write(TAG);
+void Finish::writeTo(OutputStream& stream) const {
 }
 
 // Get string representation of Finish
-std::string ServerMessage::Finish::toString() const {
+std::string Finish::toString() const {
     std::stringstream ss;
-    ss << "ServerMessage::Finish { ";
+    ss << "Finish { ";
     ss << " }";
     return ss.str();
 }
 
-bool ServerMessage::Finish::operator ==(const ServerMessage::Finish& other) const {
+bool Finish::operator ==(const Finish& other) const {
     return true;
 }
 
-ServerMessage::DebugUpdate::DebugUpdate(int displayedTick) : displayedTick(displayedTick) { }
+DebugUpdate::DebugUpdate(int displayedTick) : displayedTick(displayedTick) { }
 
 // Read DebugUpdate from input stream
-ServerMessage::DebugUpdate ServerMessage::DebugUpdate::readFrom(InputStream& stream) {
+DebugUpdate DebugUpdate::readFrom(InputStream& stream) {
     int displayedTick = stream.readInt();
-    return ServerMessage::DebugUpdate(displayedTick);
+    return DebugUpdate(displayedTick);
 }
 
 // Write DebugUpdate to output stream
-void ServerMessage::DebugUpdate::writeTo(OutputStream& stream) const {
-    stream.write(TAG);
+void DebugUpdate::writeTo(OutputStream& stream) const {
     stream.write(displayedTick);
 }
 
 // Get string representation of DebugUpdate
-std::string ServerMessage::DebugUpdate::toString() const {
+std::string DebugUpdate::toString() const {
     std::stringstream ss;
-    ss << "ServerMessage::DebugUpdate { ";
+    ss << "DebugUpdate { ";
     ss << "displayedTick: ";
     ss << displayedTick;
     ss << " }";
     return ss.str();
 }
 
-bool ServerMessage::DebugUpdate::operator ==(const ServerMessage::DebugUpdate& other) const {
+bool DebugUpdate::operator ==(const DebugUpdate& other) const {
     return displayedTick == other.displayedTick;
 }
 
+    
 // Read ServerMessage from input stream
-std::shared_ptr<ServerMessage> ServerMessage::readFrom(InputStream& stream) {
+ServerMessage readServerMessage(InputStream& stream) {
     switch (stream.readInt()) {
     case 0:
-        return std::shared_ptr<ServerMessage::UpdateConstants>(new ServerMessage::UpdateConstants(ServerMessage::UpdateConstants::readFrom(stream)));
+        return UpdateConstants::readFrom(stream);
     case 1:
-        return std::shared_ptr<ServerMessage::GetOrder>(new ServerMessage::GetOrder(ServerMessage::GetOrder::readFrom(stream)));
+        return GetOrder::readFrom(stream);
     case 2:
-        return std::shared_ptr<ServerMessage::Finish>(new ServerMessage::Finish(ServerMessage::Finish::readFrom(stream)));
+        return Finish::readFrom(stream);
     case 3:
-        return std::shared_ptr<ServerMessage::DebugUpdate>(new ServerMessage::DebugUpdate(ServerMessage::DebugUpdate::readFrom(stream)));
+        return DebugUpdate::readFrom(stream);
     default:
         throw std::runtime_error("Unexpected tag value");
     }
 }
+
+// Write ServerMessage to output stream
+void writeServerMessage(const ServerMessage& value, OutputStream& stream) {
+    std::visit([&](auto& arg) {
+        using T = std::decay_t<decltype(arg)>;
+        if constexpr (std::is_same_v<T, UpdateConstants>) {
+            stream.write((int) 0);
+        }
+        if constexpr (std::is_same_v<T, GetOrder>) {
+            stream.write((int) 1);
+        }
+        if constexpr (std::is_same_v<T, Finish>) {
+            stream.write((int) 2);
+        }
+        if constexpr (std::is_same_v<T, DebugUpdate>) {
+            stream.write((int) 3);
+        }
+        arg.writeTo(stream);
+    }, value);
+}
+
+// Get string representation of ServerMessage
+std::string serverMessageToString(const ServerMessage& value) {
+    return std::visit([](auto& arg) {
+        return arg.toString();
+    }, value);
+}
+
 
 }

@@ -16,41 +16,19 @@
 #include <stdexcept>
 #include <string>
 #include <unordered_map>
+#include <variant>
 #include <vector>
 
 namespace codegame {
 
-// Message sent from client
-class ClientMessage {
-public:
-    // Ask app to perform new debug command
-    class DebugMessage;
-    // Reply for ServerMessage::GetOrder
-    class OrderMessage;
-    // Signifies finish of the debug update
-    class DebugUpdateDone;
-    // Request debug state from the app
-    class RequestDebugState;
-
-    // Read ClientMessage from input stream
-    static std::shared_ptr<ClientMessage> readFrom(InputStream& stream);
-
-    // Write ClientMessage to output stream
-    virtual void writeTo(OutputStream& stream) const = 0;
-
-    // Get string representation of ClientMessage
-    virtual std::string toString() const = 0;
-};
 
 // Ask app to perform new debug command
-class ClientMessage::DebugMessage : public ClientMessage {
+class DebugMessage {
 public:
-    static const int TAG = 0;
-
     // Command to perform
-    std::shared_ptr<debugging::DebugCommand> command;
+    debugging::DebugCommand command;
 
-    DebugMessage(std::shared_ptr<debugging::DebugCommand> command);
+    DebugMessage(debugging::DebugCommand command);
 
     // Read DebugMessage from input stream
     static DebugMessage readFrom(InputStream& stream);
@@ -63,10 +41,8 @@ public:
 };
 
 // Reply for ServerMessage::GetOrder
-class ClientMessage::OrderMessage : public ClientMessage {
+class OrderMessage {
 public:
-    static const int TAG = 1;
-
     // Player's order
     model::Order order;
 
@@ -83,10 +59,8 @@ public:
 };
 
 // Signifies finish of the debug update
-class ClientMessage::DebugUpdateDone : public ClientMessage {
+class DebugUpdateDone {
 public:
-    static const int TAG = 2;
-
 
     DebugUpdateDone();
 
@@ -103,10 +77,8 @@ public:
 };
 
 // Request debug state from the app
-class ClientMessage::RequestDebugState : public ClientMessage {
+class RequestDebugState {
 public:
-    static const int TAG = 3;
-
 
     RequestDebugState();
 
@@ -121,6 +93,18 @@ public:
 
     bool operator ==(const RequestDebugState& other) const;
 };
+
+// Message sent from client
+typedef std::variant<DebugMessage, OrderMessage, DebugUpdateDone, RequestDebugState> ClientMessage;
+
+// Read ClientMessage from input stream
+ClientMessage readClientMessage(InputStream& stream);
+
+// Write ClientMessage to output stream
+void writeClientMessage(const ClientMessage& value, OutputStream& stream);
+
+// Get string representation of ClientMessage
+std::string clientMessageToString(const ClientMessage& value);
 
 }
 

@@ -9,55 +9,15 @@
 #include <sstream>
 #include <stdexcept>
 #include <string>
+#include <variant>
 #include <vector>
 
 namespace debugging {
 
-// Data for debug rendering
-class DebugData {
-public:
-    // Text
-    class PlacedText;
-    // Circle
-    class Circle;
-    // Circle with gradient fill
-    class GradientCircle;
-    // Ring
-    class Ring;
-    // Sector of a circle
-    class Pie;
-    // Arc
-    class Arc;
-    // Rectancle
-    class Rect;
-    // Polygon (convex)
-    class Polygon;
-    // Polygon with gradient fill
-    class GradientPolygon;
-    // Segment
-    class Segment;
-    // Segment with gradient fill
-    class GradientSegment;
-    // Poly line
-    class PolyLine;
-    // Poly line with gradient fill
-    class GradientPolyLine;
-
-    // Read DebugData from input stream
-    static std::shared_ptr<DebugData> readFrom(InputStream& stream);
-
-    // Write DebugData to output stream
-    virtual void writeTo(OutputStream& stream) const = 0;
-
-    // Get string representation of DebugData
-    virtual std::string toString() const = 0;
-};
 
 // Text
-class DebugData::PlacedText : public DebugData {
+class PlacedText {
 public:
-    static const int TAG = 0;
-
     // Position
     model::Vec2 position;
     // Text
@@ -82,10 +42,8 @@ public:
 };
 
 // Circle
-class DebugData::Circle : public DebugData {
+class Circle {
 public:
-    static const int TAG = 1;
-
     // Position of the center
     model::Vec2 position;
     // Radius
@@ -106,10 +64,8 @@ public:
 };
 
 // Circle with gradient fill
-class DebugData::GradientCircle : public DebugData {
+class GradientCircle {
 public:
-    static const int TAG = 2;
-
     // Position of the center
     model::Vec2 position;
     // Radius
@@ -132,10 +88,8 @@ public:
 };
 
 // Ring
-class DebugData::Ring : public DebugData {
+class Ring {
 public:
-    static const int TAG = 3;
-
     // Position of the center
     model::Vec2 position;
     // Radius
@@ -158,10 +112,8 @@ public:
 };
 
 // Sector of a circle
-class DebugData::Pie : public DebugData {
+class Pie {
 public:
-    static const int TAG = 4;
-
     // Position of the center
     model::Vec2 position;
     // Radius
@@ -186,10 +138,8 @@ public:
 };
 
 // Arc
-class DebugData::Arc : public DebugData {
+class Arc {
 public:
-    static const int TAG = 5;
-
     // Position of the center
     model::Vec2 position;
     // Radius
@@ -216,10 +166,8 @@ public:
 };
 
 // Rectancle
-class DebugData::Rect : public DebugData {
+class Rect {
 public:
-    static const int TAG = 6;
-
     // Bottom left position
     model::Vec2 bottomLeft;
     // Size
@@ -240,10 +188,8 @@ public:
 };
 
 // Polygon (convex)
-class DebugData::Polygon : public DebugData {
+class Polygon {
 public:
-    static const int TAG = 7;
-
     // Positions of vertices in order
     std::vector<model::Vec2> vertices;
     // Color
@@ -262,10 +208,8 @@ public:
 };
 
 // Polygon with gradient fill
-class DebugData::GradientPolygon : public DebugData {
+class GradientPolygon {
 public:
-    static const int TAG = 8;
-
     // List of vertices in order
     std::vector<debugging::ColoredVertex> vertices;
 
@@ -282,10 +226,8 @@ public:
 };
 
 // Segment
-class DebugData::Segment : public DebugData {
+class Segment {
 public:
-    static const int TAG = 9;
-
     // Position of the first end
     model::Vec2 firstEnd;
     // Position of the second end
@@ -308,10 +250,8 @@ public:
 };
 
 // Segment with gradient fill
-class DebugData::GradientSegment : public DebugData {
+class GradientSegment {
 public:
-    static const int TAG = 10;
-
     // Position of the first end
     model::Vec2 firstEnd;
     // Color of the first end
@@ -336,10 +276,8 @@ public:
 };
 
 // Poly line
-class DebugData::PolyLine : public DebugData {
+class PolyLine {
 public:
-    static const int TAG = 11;
-
     // List of points in order
     std::vector<model::Vec2> vertices;
     // Width
@@ -360,10 +298,8 @@ public:
 };
 
 // Poly line with gradient fill
-class DebugData::GradientPolyLine : public DebugData {
+class GradientPolyLine {
 public:
-    static const int TAG = 12;
-
     // List of points and colors in order
     std::vector<debugging::ColoredVertex> vertices;
     // Width
@@ -380,6 +316,18 @@ public:
     // Get string representation of GradientPolyLine
     std::string toString() const;
 };
+
+// Data for debug rendering
+typedef std::variant<PlacedText, Circle, GradientCircle, Ring, Pie, Arc, Rect, Polygon, GradientPolygon, Segment, GradientSegment, PolyLine, GradientPolyLine> DebugData;
+
+// Read DebugData from input stream
+DebugData readDebugData(InputStream& stream);
+
+// Write DebugData to output stream
+void writeDebugData(const DebugData& value, OutputStream& stream);
+
+// Get string representation of DebugData
+std::string debugDataToString(const DebugData& value);
 
 }
 

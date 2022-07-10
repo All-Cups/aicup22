@@ -22,37 +22,15 @@
 #include <sstream>
 #include <stdexcept>
 #include <string>
+#include <variant>
 #include <vector>
 
 namespace codegame {
 
-// Message sent from server
-class ServerMessage {
-public:
-    // Update constants
-    class UpdateConstants;
-    // Get order for next tick
-    class GetOrder;
-    // Signifies end of the game
-    class Finish;
-    // Debug update
-    class DebugUpdate;
-
-    // Read ServerMessage from input stream
-    static std::shared_ptr<ServerMessage> readFrom(InputStream& stream);
-
-    // Write ServerMessage to output stream
-    virtual void writeTo(OutputStream& stream) const = 0;
-
-    // Get string representation of ServerMessage
-    virtual std::string toString() const = 0;
-};
 
 // Update constants
-class ServerMessage::UpdateConstants : public ServerMessage {
+class UpdateConstants {
 public:
-    static const int TAG = 0;
-
     // New constants
     model::Constants constants;
 
@@ -69,10 +47,8 @@ public:
 };
 
 // Get order for next tick
-class ServerMessage::GetOrder : public ServerMessage {
+class GetOrder {
 public:
-    static const int TAG = 1;
-
     // Player's view
     model::Game playerView;
     // Whether app is running with debug interface available
@@ -91,10 +67,8 @@ public:
 };
 
 // Signifies end of the game
-class ServerMessage::Finish : public ServerMessage {
+class Finish {
 public:
-    static const int TAG = 2;
-
 
     Finish();
 
@@ -111,10 +85,8 @@ public:
 };
 
 // Debug update
-class ServerMessage::DebugUpdate : public ServerMessage {
+class DebugUpdate {
 public:
-    static const int TAG = 3;
-
     // Displayed tick
     int displayedTick;
 
@@ -131,6 +103,18 @@ public:
 
     bool operator ==(const DebugUpdate& other) const;
 };
+
+// Message sent from server
+typedef std::variant<UpdateConstants, GetOrder, Finish, DebugUpdate> ServerMessage;
+
+// Read ServerMessage from input stream
+ServerMessage readServerMessage(InputStream& stream);
+
+// Write ServerMessage to output stream
+void writeServerMessage(const ServerMessage& value, OutputStream& stream);
+
+// Get string representation of ServerMessage
+std::string serverMessageToString(const ServerMessage& value);
 
 }
 

@@ -3,120 +3,145 @@
 
 namespace debugging {
 
-DebugCommand::Add::Add(std::shared_ptr<debugging::DebugData> debugData) : debugData(debugData) { }
+Add::Add(debugging::DebugData debugData) : debugData(debugData) { }
 
 // Read Add from input stream
-DebugCommand::Add DebugCommand::Add::readFrom(InputStream& stream) {
-    std::shared_ptr<debugging::DebugData> debugData = debugging::DebugData::readFrom(stream);
-    return DebugCommand::Add(debugData);
+Add Add::readFrom(InputStream& stream) {
+    debugging::DebugData debugData = debugging::readDebugData(stream);
+    return Add(debugData);
 }
 
 // Write Add to output stream
-void DebugCommand::Add::writeTo(OutputStream& stream) const {
-    stream.write(TAG);
-    debugData->writeTo(stream);
+void Add::writeTo(OutputStream& stream) const {
+    writeDebugData(debugData, stream);
 }
 
 // Get string representation of Add
-std::string DebugCommand::Add::toString() const {
+std::string Add::toString() const {
     std::stringstream ss;
-    ss << "DebugCommand::Add { ";
+    ss << "Add { ";
     ss << "debugData: ";
-    ss << debugData->toString();
+    ss << debugDataToString(debugData);
     ss << " }";
     return ss.str();
 }
 
-DebugCommand::Clear::Clear() { }
+Clear::Clear() { }
 
 // Read Clear from input stream
-DebugCommand::Clear DebugCommand::Clear::readFrom(InputStream& stream) {
-    return DebugCommand::Clear();
+Clear Clear::readFrom(InputStream& stream) {
+    return Clear();
 }
 
 // Write Clear to output stream
-void DebugCommand::Clear::writeTo(OutputStream& stream) const {
-    stream.write(TAG);
+void Clear::writeTo(OutputStream& stream) const {
 }
 
 // Get string representation of Clear
-std::string DebugCommand::Clear::toString() const {
+std::string Clear::toString() const {
     std::stringstream ss;
-    ss << "DebugCommand::Clear { ";
+    ss << "Clear { ";
     ss << " }";
     return ss.str();
 }
 
-bool DebugCommand::Clear::operator ==(const DebugCommand::Clear& other) const {
+bool Clear::operator ==(const Clear& other) const {
     return true;
 }
 
-DebugCommand::SetAutoFlush::SetAutoFlush(bool enable) : enable(enable) { }
+SetAutoFlush::SetAutoFlush(bool enable) : enable(enable) { }
 
 // Read SetAutoFlush from input stream
-DebugCommand::SetAutoFlush DebugCommand::SetAutoFlush::readFrom(InputStream& stream) {
+SetAutoFlush SetAutoFlush::readFrom(InputStream& stream) {
     bool enable = stream.readBool();
-    return DebugCommand::SetAutoFlush(enable);
+    return SetAutoFlush(enable);
 }
 
 // Write SetAutoFlush to output stream
-void DebugCommand::SetAutoFlush::writeTo(OutputStream& stream) const {
-    stream.write(TAG);
+void SetAutoFlush::writeTo(OutputStream& stream) const {
     stream.write(enable);
 }
 
 // Get string representation of SetAutoFlush
-std::string DebugCommand::SetAutoFlush::toString() const {
+std::string SetAutoFlush::toString() const {
     std::stringstream ss;
-    ss << "DebugCommand::SetAutoFlush { ";
+    ss << "SetAutoFlush { ";
     ss << "enable: ";
     ss << enable;
     ss << " }";
     return ss.str();
 }
 
-bool DebugCommand::SetAutoFlush::operator ==(const DebugCommand::SetAutoFlush& other) const {
+bool SetAutoFlush::operator ==(const SetAutoFlush& other) const {
     return enable == other.enable;
 }
 
-DebugCommand::Flush::Flush() { }
+Flush::Flush() { }
 
 // Read Flush from input stream
-DebugCommand::Flush DebugCommand::Flush::readFrom(InputStream& stream) {
-    return DebugCommand::Flush();
+Flush Flush::readFrom(InputStream& stream) {
+    return Flush();
 }
 
 // Write Flush to output stream
-void DebugCommand::Flush::writeTo(OutputStream& stream) const {
-    stream.write(TAG);
+void Flush::writeTo(OutputStream& stream) const {
 }
 
 // Get string representation of Flush
-std::string DebugCommand::Flush::toString() const {
+std::string Flush::toString() const {
     std::stringstream ss;
-    ss << "DebugCommand::Flush { ";
+    ss << "Flush { ";
     ss << " }";
     return ss.str();
 }
 
-bool DebugCommand::Flush::operator ==(const DebugCommand::Flush& other) const {
+bool Flush::operator ==(const Flush& other) const {
     return true;
 }
 
+    
 // Read DebugCommand from input stream
-std::shared_ptr<DebugCommand> DebugCommand::readFrom(InputStream& stream) {
+DebugCommand readDebugCommand(InputStream& stream) {
     switch (stream.readInt()) {
     case 0:
-        return std::shared_ptr<DebugCommand::Add>(new DebugCommand::Add(DebugCommand::Add::readFrom(stream)));
+        return Add::readFrom(stream);
     case 1:
-        return std::shared_ptr<DebugCommand::Clear>(new DebugCommand::Clear(DebugCommand::Clear::readFrom(stream)));
+        return Clear::readFrom(stream);
     case 2:
-        return std::shared_ptr<DebugCommand::SetAutoFlush>(new DebugCommand::SetAutoFlush(DebugCommand::SetAutoFlush::readFrom(stream)));
+        return SetAutoFlush::readFrom(stream);
     case 3:
-        return std::shared_ptr<DebugCommand::Flush>(new DebugCommand::Flush(DebugCommand::Flush::readFrom(stream)));
+        return Flush::readFrom(stream);
     default:
         throw std::runtime_error("Unexpected tag value");
     }
 }
+
+// Write DebugCommand to output stream
+void writeDebugCommand(const DebugCommand& value, OutputStream& stream) {
+    std::visit([&](auto& arg) {
+        using T = std::decay_t<decltype(arg)>;
+        if constexpr (std::is_same_v<T, Add>) {
+            stream.write((int) 0);
+        }
+        if constexpr (std::is_same_v<T, Clear>) {
+            stream.write((int) 1);
+        }
+        if constexpr (std::is_same_v<T, SetAutoFlush>) {
+            stream.write((int) 2);
+        }
+        if constexpr (std::is_same_v<T, Flush>) {
+            stream.write((int) 3);
+        }
+        arg.writeTo(stream);
+    }, value);
+}
+
+// Get string representation of DebugCommand
+std::string debugCommandToString(const DebugCommand& value) {
+    return std::visit([](auto& arg) {
+        return arg.toString();
+    }, value);
+}
+
 
 }

@@ -3,116 +3,141 @@
 
 namespace codegame {
 
-ClientMessage::DebugMessage::DebugMessage(std::shared_ptr<debugging::DebugCommand> command) : command(command) { }
+DebugMessage::DebugMessage(debugging::DebugCommand command) : command(command) { }
 
 // Read DebugMessage from input stream
-ClientMessage::DebugMessage ClientMessage::DebugMessage::readFrom(InputStream& stream) {
-    std::shared_ptr<debugging::DebugCommand> command = debugging::DebugCommand::readFrom(stream);
-    return ClientMessage::DebugMessage(command);
+DebugMessage DebugMessage::readFrom(InputStream& stream) {
+    debugging::DebugCommand command = debugging::readDebugCommand(stream);
+    return DebugMessage(command);
 }
 
 // Write DebugMessage to output stream
-void ClientMessage::DebugMessage::writeTo(OutputStream& stream) const {
-    stream.write(TAG);
-    command->writeTo(stream);
+void DebugMessage::writeTo(OutputStream& stream) const {
+    writeDebugCommand(command, stream);
 }
 
 // Get string representation of DebugMessage
-std::string ClientMessage::DebugMessage::toString() const {
+std::string DebugMessage::toString() const {
     std::stringstream ss;
-    ss << "ClientMessage::DebugMessage { ";
+    ss << "DebugMessage { ";
     ss << "command: ";
-    ss << command->toString();
+    ss << debugCommandToString(command);
     ss << " }";
     return ss.str();
 }
 
-ClientMessage::OrderMessage::OrderMessage(model::Order order) : order(order) { }
+OrderMessage::OrderMessage(model::Order order) : order(order) { }
 
 // Read OrderMessage from input stream
-ClientMessage::OrderMessage ClientMessage::OrderMessage::readFrom(InputStream& stream) {
+OrderMessage OrderMessage::readFrom(InputStream& stream) {
     model::Order order = model::Order::readFrom(stream);
-    return ClientMessage::OrderMessage(order);
+    return OrderMessage(order);
 }
 
 // Write OrderMessage to output stream
-void ClientMessage::OrderMessage::writeTo(OutputStream& stream) const {
-    stream.write(TAG);
+void OrderMessage::writeTo(OutputStream& stream) const {
     order.writeTo(stream);
 }
 
 // Get string representation of OrderMessage
-std::string ClientMessage::OrderMessage::toString() const {
+std::string OrderMessage::toString() const {
     std::stringstream ss;
-    ss << "ClientMessage::OrderMessage { ";
+    ss << "OrderMessage { ";
     ss << "order: ";
     ss << order.toString();
     ss << " }";
     return ss.str();
 }
 
-ClientMessage::DebugUpdateDone::DebugUpdateDone() { }
+DebugUpdateDone::DebugUpdateDone() { }
 
 // Read DebugUpdateDone from input stream
-ClientMessage::DebugUpdateDone ClientMessage::DebugUpdateDone::readFrom(InputStream& stream) {
-    return ClientMessage::DebugUpdateDone();
+DebugUpdateDone DebugUpdateDone::readFrom(InputStream& stream) {
+    return DebugUpdateDone();
 }
 
 // Write DebugUpdateDone to output stream
-void ClientMessage::DebugUpdateDone::writeTo(OutputStream& stream) const {
-    stream.write(TAG);
+void DebugUpdateDone::writeTo(OutputStream& stream) const {
 }
 
 // Get string representation of DebugUpdateDone
-std::string ClientMessage::DebugUpdateDone::toString() const {
+std::string DebugUpdateDone::toString() const {
     std::stringstream ss;
-    ss << "ClientMessage::DebugUpdateDone { ";
+    ss << "DebugUpdateDone { ";
     ss << " }";
     return ss.str();
 }
 
-bool ClientMessage::DebugUpdateDone::operator ==(const ClientMessage::DebugUpdateDone& other) const {
+bool DebugUpdateDone::operator ==(const DebugUpdateDone& other) const {
     return true;
 }
 
-ClientMessage::RequestDebugState::RequestDebugState() { }
+RequestDebugState::RequestDebugState() { }
 
 // Read RequestDebugState from input stream
-ClientMessage::RequestDebugState ClientMessage::RequestDebugState::readFrom(InputStream& stream) {
-    return ClientMessage::RequestDebugState();
+RequestDebugState RequestDebugState::readFrom(InputStream& stream) {
+    return RequestDebugState();
 }
 
 // Write RequestDebugState to output stream
-void ClientMessage::RequestDebugState::writeTo(OutputStream& stream) const {
-    stream.write(TAG);
+void RequestDebugState::writeTo(OutputStream& stream) const {
 }
 
 // Get string representation of RequestDebugState
-std::string ClientMessage::RequestDebugState::toString() const {
+std::string RequestDebugState::toString() const {
     std::stringstream ss;
-    ss << "ClientMessage::RequestDebugState { ";
+    ss << "RequestDebugState { ";
     ss << " }";
     return ss.str();
 }
 
-bool ClientMessage::RequestDebugState::operator ==(const ClientMessage::RequestDebugState& other) const {
+bool RequestDebugState::operator ==(const RequestDebugState& other) const {
     return true;
 }
 
+    
 // Read ClientMessage from input stream
-std::shared_ptr<ClientMessage> ClientMessage::readFrom(InputStream& stream) {
+ClientMessage readClientMessage(InputStream& stream) {
     switch (stream.readInt()) {
     case 0:
-        return std::shared_ptr<ClientMessage::DebugMessage>(new ClientMessage::DebugMessage(ClientMessage::DebugMessage::readFrom(stream)));
+        return DebugMessage::readFrom(stream);
     case 1:
-        return std::shared_ptr<ClientMessage::OrderMessage>(new ClientMessage::OrderMessage(ClientMessage::OrderMessage::readFrom(stream)));
+        return OrderMessage::readFrom(stream);
     case 2:
-        return std::shared_ptr<ClientMessage::DebugUpdateDone>(new ClientMessage::DebugUpdateDone(ClientMessage::DebugUpdateDone::readFrom(stream)));
+        return DebugUpdateDone::readFrom(stream);
     case 3:
-        return std::shared_ptr<ClientMessage::RequestDebugState>(new ClientMessage::RequestDebugState(ClientMessage::RequestDebugState::readFrom(stream)));
+        return RequestDebugState::readFrom(stream);
     default:
         throw std::runtime_error("Unexpected tag value");
     }
 }
+
+// Write ClientMessage to output stream
+void writeClientMessage(const ClientMessage& value, OutputStream& stream) {
+    std::visit([&](auto& arg) {
+        using T = std::decay_t<decltype(arg)>;
+        if constexpr (std::is_same_v<T, DebugMessage>) {
+            stream.write((int) 0);
+        }
+        if constexpr (std::is_same_v<T, OrderMessage>) {
+            stream.write((int) 1);
+        }
+        if constexpr (std::is_same_v<T, DebugUpdateDone>) {
+            stream.write((int) 2);
+        }
+        if constexpr (std::is_same_v<T, RequestDebugState>) {
+            stream.write((int) 3);
+        }
+        arg.writeTo(stream);
+    }, value);
+}
+
+// Get string representation of ClientMessage
+std::string clientMessageToString(const ClientMessage& value) {
+    return std::visit([](auto& arg) {
+        return arg.toString();
+    }, value);
+}
+
 
 }

@@ -23,11 +23,11 @@ public:
     void addGradientSegment(model::Vec2 firstEnd, debugging::Color firstColor, model::Vec2 secondEnd, debugging::Color secondColor, double width);
     void addPolyLine(std::vector<model::Vec2> vertices, double width, debugging::Color color);
     void addGradientPolyLine(std::vector<debugging::ColoredVertex> vertices, double width);
-    void add(std::shared_ptr<debugging::DebugData> debugData);
+    void add(debugging::DebugData debugData);
     void clear();
     void setAutoFlush(bool enable);
     void flush();
-    void send(std::shared_ptr<debugging::DebugCommand> command);
+    void send(debugging::DebugCommand command);
     debugging::DebugState getState();
 
 private:

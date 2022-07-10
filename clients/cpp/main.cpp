@@ -21,18 +21,20 @@ public:
         DebugInterface debugInterface(&tcpStream);
         std::shared_ptr<MyStrategy> myStrategy = std::shared_ptr<MyStrategy>();
         while (true) {
-            auto message = codegame::ServerMessage::readFrom(tcpStream);
-            if (auto updateConstantsMessage = std::dynamic_pointer_cast<codegame::ServerMessage::UpdateConstants>(message)) {
+            auto message = codegame::readServerMessage(tcpStream);
+            if (const codegame::UpdateConstants* updateConstantsMessage = std::get_if<codegame::UpdateConstants>(&message)) {
                 myStrategy.reset(new MyStrategy(updateConstantsMessage->constants));
-            } else if (auto getOrderMessage = std::dynamic_pointer_cast<codegame::ServerMessage::GetOrder>(message)) {
-                codegame::ClientMessage::OrderMessage(myStrategy->getOrder(getOrderMessage->playerView, getOrderMessage->debugAvailable ? &debugInterface : nullptr)).writeTo(tcpStream);
+            } else if (const codegame::GetOrder* getOrderMessage = std::get_if<codegame::GetOrder>(&message)) {
+                codegame::ClientMessage message = codegame::OrderMessage(myStrategy->getOrder(getOrderMessage->playerView, getOrderMessage->debugAvailable ? &debugInterface : nullptr));
+                codegame::writeClientMessage(message, tcpStream);
                 tcpStream.flush();
-            } else if (auto finishMessage = std::dynamic_pointer_cast<codegame::ServerMessage::Finish>(message)) {
+            } else if (const codegame::Finish* finishMessage = std::get_if<codegame::Finish>(&message)) {
                 myStrategy->finish();
                 break;
-            } else if (auto debugUpdateMessage = std::dynamic_pointer_cast<codegame::ServerMessage::DebugUpdate>(message)) {
+            } else if (const codegame::DebugUpdate* debugUpdateMessage = std::get_if<codegame::DebugUpdate>(&message)) {
                 myStrategy->debugUpdate(debugUpdateMessage->displayedTick, debugInterface);
-                codegame::ClientMessage::DebugUpdateDone().writeTo(tcpStream);
+                codegame::ClientMessage message = codegame::DebugUpdateDone();
+                codegame::writeClientMessage(message, tcpStream);
                 tcpStream.flush();
             } else {
                 throw std::runtime_error("Unexpected server message");

@@ -10,41 +10,19 @@
 #include <sstream>
 #include <stdexcept>
 #include <string>
+#include <variant>
 #include <vector>
 
 namespace debugging {
 
-// Debug commands that can be sent while debugging with the app
-class DebugCommand {
-public:
-    // Add debug data to current tick
-    class Add;
-    // Clear current tick's debug data
-    class Clear;
-    // Enable/disable auto performing of commands
-    class SetAutoFlush;
-    // Perform all previously sent commands
-    class Flush;
-
-    // Read DebugCommand from input stream
-    static std::shared_ptr<DebugCommand> readFrom(InputStream& stream);
-
-    // Write DebugCommand to output stream
-    virtual void writeTo(OutputStream& stream) const = 0;
-
-    // Get string representation of DebugCommand
-    virtual std::string toString() const = 0;
-};
 
 // Add debug data to current tick
-class DebugCommand::Add : public DebugCommand {
+class Add {
 public:
-    static const int TAG = 0;
-
     // Data to add
-    std::shared_ptr<debugging::DebugData> debugData;
+    debugging::DebugData debugData;
 
-    Add(std::shared_ptr<debugging::DebugData> debugData);
+    Add(debugging::DebugData debugData);
 
     // Read Add from input stream
     static Add readFrom(InputStream& stream);
@@ -57,10 +35,8 @@ public:
 };
 
 // Clear current tick's debug data
-class DebugCommand::Clear : public DebugCommand {
+class Clear {
 public:
-    static const int TAG = 1;
-
 
     Clear();
 
@@ -77,10 +53,8 @@ public:
 };
 
 // Enable/disable auto performing of commands
-class DebugCommand::SetAutoFlush : public DebugCommand {
+class SetAutoFlush {
 public:
-    static const int TAG = 2;
-
     // Enable/disable autoflush
     bool enable;
 
@@ -99,10 +73,8 @@ public:
 };
 
 // Perform all previously sent commands
-class DebugCommand::Flush : public DebugCommand {
+class Flush {
 public:
-    static const int TAG = 3;
-
 
     Flush();
 
@@ -117,6 +89,18 @@ public:
 
     bool operator ==(const Flush& other) const;
 };
+
+// Debug commands that can be sent while debugging with the app
+typedef std::variant<Add, Clear, SetAutoFlush, Flush> DebugCommand;
+
+// Read DebugCommand from input stream
+DebugCommand readDebugCommand(InputStream& stream);
+
+// Write DebugCommand to output stream
+void writeDebugCommand(const DebugCommand& value, OutputStream& stream);
+
+// Get string representation of DebugCommand
+std::string debugCommandToString(const DebugCommand& value);
 
 }
 
