@@ -97,9 +97,8 @@ func NewDebugCommandSetAutoFlush(enable bool) DebugCommandSetAutoFlush {
 
 // Read SetAutoFlush from reader
 func ReadDebugCommandSetAutoFlush() DebugCommandSetAutoFlush {
-	enable := flow.ReadBool()
 	return DebugCommandSetAutoFlush{
-		Enable: enable,
+		Enable: flow.ReadBool(),
 	}
 }
 
