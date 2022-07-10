@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## v1.2.0
+
+- fixed occasional server crash
+- show current alive teams/units count
+- show player tags above units (togglable with `N` key)
+- show cursor coordinates in schematic mode (togglable with `C` key)
+- handle multiline `PlacedText` and fix its size & alignment
+- view speed control
+- improved camera following the unit
+- `U` hotkey to toggle drawing data sent through debug interface
+
 ## v1.1.1
 
 - camera now centers at unit's position without considering its direction when following
