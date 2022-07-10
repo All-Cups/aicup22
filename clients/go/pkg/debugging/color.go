@@ -27,48 +27,27 @@ func NewColor(r, g, b, a float64) Color {
 
 // Read Color from reader
 func ReadColor() Color {
-	r := flow.ReadFloat64()
-	g := flow.ReadFloat64()
-	b := flow.ReadFloat64()
-	a := flow.ReadFloat64()
 	return Color{
-		R: r,
-		G: g,
-		B: b,
-		A: a,
+		R: flow.ReadFloat64(),
+		G: flow.ReadFloat64(),
+		B: flow.ReadFloat64(),
+		A: flow.ReadFloat64(),
 	}
 }
 
 // Write Color to writer
 func (sf Color) Write() {
-	r := sf.R
-	flow.WriteFloat64(r)
-	g := sf.G
-	flow.WriteFloat64(g)
-	b := sf.B
-	flow.WriteFloat64(b)
-	a := sf.A
-	flow.WriteFloat64(a)
+	flow.WriteFloat64(sf.R)
+	flow.WriteFloat64(sf.G)
+	flow.WriteFloat64(sf.B)
+	flow.WriteFloat64(sf.A)
 }
 
 // Get string representation of Color
 func (sf Color) String() string {
-	strRes := "{ "
-	strRes += "R: "
-	r := sf.R
-	strRes += fmt.Sprint(r)
-	strRes += ", "
-	strRes += "G: "
-	g := sf.G
-	strRes += fmt.Sprint(g)
-	strRes += ", "
-	strRes += "B: "
-	b := sf.B
-	strRes += fmt.Sprint(b)
-	strRes += ", "
-	strRes += "A: "
-	a := sf.A
-	strRes += fmt.Sprint(a)
-	strRes += " }"
+	strRes := "{R:" + fmt.Sprint(sf.R) + ","
+	strRes += "G:" + fmt.Sprint(sf.G) + ","
+	strRes += "B:" + fmt.Sprint(sf.B) + ","
+	strRes += "A:" + strRes + fmt.Sprint(sf.A) + "}"
 	return strRes
 }
