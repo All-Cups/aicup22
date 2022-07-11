@@ -29,9 +29,9 @@ class MyStrategy
                 continue;
             }
 
-            $order[] = new UnitOrder(
+            $order[$unit->id] = new UnitOrder(
                 new Vec2(-$unit->position->x, -$unit->position->y),
-                new Vec2(-$unit->direction->x, $unit->direction->y),
+                new Vec2(-$unit->direction->y, $unit->direction->x),
                 new Model\ActionOrder\Aim(true)
             );
         }
