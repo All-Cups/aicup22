@@ -38,7 +38,7 @@ class MyStrategy
         return new Order($order);
     }
 
-    function debugUpdate(DebugInterface $debug_interface)
+    function debugUpdate(int $displayedTick, DebugInterface $debug_interface)
     {
     }
 
