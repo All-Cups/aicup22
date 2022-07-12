@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## v1.2.1
+
+- Player and bot ids are now randomly shuffled
+- Increased Staff `rounds_per_second` to 15 and decreased `spread` to 15
+- `bot_strength >= 3` adds simple avoiding projectiles bot behavior
+- Fixed shown tick in the app
+- Added alternative C++ client using `std::variant` instead of abstract classes for variadic types
+- Added clang compiler option for C++
+
 ## v1.2.0
 
 - fixed occasional server crash

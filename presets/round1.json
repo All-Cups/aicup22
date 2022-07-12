@@ -6,6 +6,7 @@
     "loot_multiplier": 5.0,
     "min_distance_between_obstacles": 4.5,
     "bot_players": 114,
+    "bot_strength": 1,
     "extra_lives": 0,
     "last_respawn_zone_radius": 0.0,
     "view_blocking": false,
