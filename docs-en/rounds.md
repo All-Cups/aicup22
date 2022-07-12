@@ -30,4 +30,6 @@ Units' view will now be blocked by obstacles, and friendly fire will be turned o
 
 Units will start without a weapon and without ammo.
 
+Also, neutral bots will be a bit better at dodging projectiles.
+
 In one game 2 participant teams and 38 bot teams will fight - same 120 units split into 40 teams
