@@ -6,6 +6,9 @@
 - Drag LMB - move camera
 - Scroll - zoom camera
 - V - change visualization mode (schematic/magical)
+- N - toggle showing player names above units
+- C - toggle showing cursor coordinates in schematic view
+- U - toggle showing debug data
 
 ## Controlling keyboard player
 
