@@ -9,7 +9,7 @@ function compile() (
 COMPILED_FILE_PATH="$SOLUTION_CODE_PATH/target/$PROJECT_NAME-jar-with-dependencies.jar"
 function run() (
     set -e
-    java -Xmx$(expr $RAM_MB - 16)m -jar $MOUNT_POINT "$@"
+    java --enable-preview -Xmx$(expr $RAM_MB - 16)m -jar $MOUNT_POINT "$@"
 )
 
 function copy_solution() (
