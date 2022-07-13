@@ -1,4 +1,4 @@
-FROM ghcr.io/graalvm/native-image:21.2.0
+FROM ghcr.io/graalvm/native-image:22.1.0
 RUN microdnf install jq unzip maven
 
 ENV MOUNT_POINT="/opt/mount-point"
