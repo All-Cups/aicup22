@@ -29,8 +29,8 @@ impl MyStrategy {
                         y: -unit.position.y,
                     },
                     target_direction: model::Vec2 {
-                        x: -unit.direction.x,
-                        y: unit.direction.y,
+                        x: -unit.direction.y,
+                        y: unit.direction.x,
                     },
                     action: Option::from(model::ActionOrder::Aim { shoot: true }),
                 },
