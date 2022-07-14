@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## v1.2.2
+
+- Show health & shield bars in fancy mode
+- Show player names above unit in schematic mode
+- Middle mouse drag rotates the camera
+- Fixed app crashes for some users
+
 ## v1.2.1
 
 - Player and bot ids are now randomly shuffled
