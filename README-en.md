@@ -9,7 +9,7 @@
 In this repository you can download everything needed for participating.
 If needed you can see history of changes on [releases page](https://github.com/All-Cups/aicup22/releases).
 
-Current version: **1.2.2** ([Changelog](CHANGELOG-en.md))
+Current version: **1.2.3** ([Changelog](CHANGELOG-en.md))
 
 [**Documentation**](docs-en/doc.md)
 
@@ -23,10 +23,10 @@ You can see example strategy in several languages that goes to center of the map
 
 ### Current version of app for local testing for each OS
 
-- [Windows](https://github.com/All-Cups/aicup22/releases/download/v1.2.2/app-windows.zip)
-- [MacOS](https://github.com/All-Cups/aicup22/releases/download/v1.2.2/app-macos.tar.gz)
-- [Linux](https://github.com/All-Cups/aicup22/releases/download/v1.2.2/app-linux.tar.gz)
-- [Linux ARMv7](https://github.com/All-Cups/aicup22/releases/download/v1.2.2/app-linux-armv7.tar.gz)
+- [Windows](https://github.com/All-Cups/aicup22/releases/download/v1.2.3/app-windows.zip)
+- [MacOS](https://github.com/All-Cups/aicup22/releases/download/v1.2.3/app-macos.tar.gz)
+- [Linux](https://github.com/All-Cups/aicup22/releases/download/v1.2.3/app-linux.tar.gz)
+- [Linux ARMv7](https://github.com/All-Cups/aicup22/releases/download/v1.2.3/app-linux-armv7.tar.gz)
 
 ### Language packages
 

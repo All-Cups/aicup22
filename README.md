@@ -11,7 +11,7 @@
 В этом репозитории можно скачать всё необходимое для участия в чемпионате.
 При необходимости, можно ознакомиться с историей изменений на странице [релизов](https://github.com/All-Cups/aicup22/releases).
 
-Текущая версия: **1.2.2** ([Changelog](CHANGELOG.md))
+Текущая версия: **1.2.3** ([Changelog](CHANGELOG.md))
 
 [**Документация**](docs-ru/doc.md)
 
@@ -25,10 +25,10 @@
 
 ### Актуальные версии приложения под различные ОС
 
-- [Windows](https://github.com/All-Cups/aicup22/releases/download/v1.2.2/app-windows.zip)
-- [MacOS](https://github.com/All-Cups/aicup22/releases/download/v1.2.2/app-macos.tar.gz)
-- [Linux](https://github.com/All-Cups/aicup22/releases/download/v1.2.2/app-linux.tar.gz)
-- [Linux ARMv7](https://github.com/All-Cups/aicup22/releases/download/v1.2.2/app-linux-armv7.tar.gz)
+- [Windows](https://github.com/All-Cups/aicup22/releases/download/v1.2.3/app-windows.zip)
+- [MacOS](https://github.com/All-Cups/aicup22/releases/download/v1.2.3/app-macos.tar.gz)
+- [Linux](https://github.com/All-Cups/aicup22/releases/download/v1.2.3/app-linux.tar.gz)
+- [Linux ARMv7](https://github.com/All-Cups/aicup22/releases/download/v1.2.3/app-linux-armv7.tar.gz)
 
 ### Языковые пакеты
 

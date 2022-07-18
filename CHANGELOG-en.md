@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## v1.2.3
+
+- Fixed units sometimes visible in corners of the view
+- Time used & crash tick for players in results
+- Fixed incorrect displayed_tick sent to the client
+
 ## v1.2.2
 
 - Show health & shield bars in fancy mode
