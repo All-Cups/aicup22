@@ -5,9 +5,9 @@ SOLUTION_CODE_ENTRYPOINT="my_strategy.py"
 function compile() (
     set -e
     if [ -f "setup.py" ]; then
-      python setup.py build_ext --inplace
+        python setup.py build_ext --inplace
     else
-      find . -name '*.pyx' -exec cythonize -i {} \;
+        find . -name '*.pyx' -exec cythonize -i {} \;
     fi
     python -m py_compile main.py
     zip -r - . > /tmp/$PROJECT_NAME.zip
