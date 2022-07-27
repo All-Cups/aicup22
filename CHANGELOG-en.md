@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## v1.2.5
+
+- Zone positions now determined at the beginning of the game and not affected by players' actions
+- Fixed occasional server crashes
+
 ## v1.2.3
 
 - Fixed units sometimes visible in corners of the view
