@@ -1,3 +1,7 @@
+#ifndef _WIN32
+#include <netinet/tcp.h>
+#include <netinet/in.h>
+#endif
 #include "TcpStream.hpp"
 #include <cstring>
 #include <stdexcept>
