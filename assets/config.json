@@ -1,0 +1,100 @@
+{
+    "loot_radius": 0.5,
+    "wisp_height": 1.0,
+    "character_scale": 2.0,
+    "steps": {
+        "time_scale": 10.0,
+        "height_amp": 0.1,
+        "rotate_amp": 0.1
+    },
+    "light_direction": [
+        2.0,
+        -1.0,
+        -5.0
+    ],
+    "storm": {
+        "color": "#ccc",
+        "gradient_size": 50.0,
+        "texture_size": 256,
+        "snowflakes": 50,
+        "snowflake_size": 0.1,
+        "snowflakes_color": "#bbb3"
+    },
+    "obstacles": {
+        "Mushrooms": {
+            "obj": "mushroom1",
+            "scale": 1.0
+        },
+        "Big mushroom": {
+            "obj": "mushroom2",
+            "scale": 1.0
+        },
+        "Well": {
+            "obj": "pit",
+            "scale": 1.0
+        },
+        "Stone": {
+            "obj": "Stone",
+            "scale": 1.0
+        },
+        "Stump": {
+            "obj": "Stump",
+            "scale": 1.0
+        },
+        "Tree": {
+            "obj": "Tree_2",
+            "scale": 1.0
+        },
+        "Bare tree": {
+            "obj": "Tree_1",
+            "scale": 2.0
+        }
+    },
+    "weapons": {
+        "Magic wand": {
+            "hold": "wand/hold",
+            "hold_color": "wand/hold_color",
+            "shoot": "wand/shoot",
+            "shoot_color": "wand/shoot_color",
+            "item": "wand/item",
+            "ammo": "item/crystals",
+            "projectile": "projectiles/shoot_stick",
+            "projectile_color": "#f0f",
+            "projectile_size": 0.7,
+            "shoot_effect": "shoot",
+            "shoot_effect_color": "#f0f",
+            "hit_effect": "projectiles/shoot_stick",
+            "hit_effect_color": "#f00",
+            "icon": "wand/icon"
+        },
+        "Staff": {
+            "hold": "staff/hold",
+            "hold_color": "staff/hold_color",
+            "shoot": "staff/shoot",
+            "shoot_color": "staff/shoot_color",
+            "item": "staff/item",
+            "ammo": "item/orange_crystals",
+            "projectile": "projectiles/shoot_bow",
+            "projectile_color": "#f70",
+            "shoot_effect": "shoot",
+            "shoot_effect_color": "#f00",
+            "hit_effect": "projectiles/shoot_stick",
+            "hit_effect_color": "#f00",
+            "icon": "staff/icon"
+        },
+        "Bow": {
+            "hold": "bow/hold",
+            "hold_color": "bow/hold_color",
+            "shoot": "bow/shoot",
+            "shoot_color": "bow/shoot_color",
+            "item": "bow/item",
+            "ammo": "item/red_arrows",
+            "projectile": "bow/arrow",
+            "shoot_effect": "shoot",
+            "shoot_effect_color": "#f00",
+            "hit_effect": "projectiles/shoot_stick",
+            "hit_effect_color": "#f00",
+            "icon": "bow/icon"
+        }
+    }
+}
