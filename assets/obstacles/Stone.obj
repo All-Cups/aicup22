@@ -1,6 +1,6 @@
 # Blender v3.0.0 OBJ File: 'Boy.blend'
 # www.blender.org
-mtllib Stone.mtl
+mtllib stone.mtl
 o Rock_03.004_Cube.105
 v -0.874735 -0.093506 0.958785
 v 1.275774 -0.024208 -0.914139
